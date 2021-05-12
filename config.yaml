@@ -1,6 +1,6 @@
 baseurl: /
 languageCode: en-us
-title: raminala - Fundamentals of Analytics
+title: raminala - Fundamentals of Analytics............
 theme: hugo-lithium
 googleAnalytics: ''
 disqusShortname: ''
@@ -18,8 +18,6 @@ menu:
       url: /about/
     - name: GitHub
       url: https://github.com/raminala/
-    - name: Twitter
-      url: https://twitter.com/rstudio
     - name: LinkedIn
       url: https://www.linkedin.com/in/ramin-ala-6645b3188/
 params:
