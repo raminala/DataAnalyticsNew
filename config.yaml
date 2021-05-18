@@ -1,6 +1,10 @@
 baseurl: /
 languageCode: en-us
+<<<<<<< HEAD
 title: raminala - Fundamentals of Analytics............
+=======
+title: raminala - Fundamentals of Analytics...
+>>>>>>> 6e480298daf604006fc87e46743ce1130a20466e
 theme: hugo-lithium
 googleAnalytics: ''
 disqusShortname: ''
