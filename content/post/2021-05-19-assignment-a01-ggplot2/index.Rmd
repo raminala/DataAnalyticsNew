@@ -1,0 +1,11 @@
+---
+title: 'Assignment A01: GGPLOT2'
+author: Ramin Ala
+date: '2021-05-19'
+slug: assignment-a01-ggplot2
+categories:
+  - ggplot2
+tags: []
+---
+
+In this post, the solution for assignment 01 is provided.
