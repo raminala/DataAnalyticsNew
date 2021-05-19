@@ -25,7 +25,7 @@ cw_summary <-  filter(ChickWeight, (Time == 0) | (Time == 21)) %>%
   group_by(Diet, Time) %>%
   summarise(Mean = mean(weight),se = sd(weight)/(sqrt(n()))) 
 
-# Let's take a peek at the data
+# Let's take a peek at the data--
 head(cw_summary)
 
 cw_summary$Time <- as.factor(cw_summary$Time) 
