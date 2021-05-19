@@ -16,9 +16,11 @@ tags: []
 ```{r}
 library(ggplot2)
 library(datasets)
+
 #head(Titanic)
 
-
+ggplot(ChickWeight, aes(x=Diet)) + # aesthetics
+  geom_bar()
 ```
 
 2. plots
