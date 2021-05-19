@@ -18,22 +18,7 @@ library(ggplot2)
 library(datasets)
 #head(Titanic)
 
-ChickWeight <- ChickWeight
-levels(ChickWeight$Diet) <- c("Diet 1","Diet 2","Diet 3","Diet 4")
 
-cw_summary <-  filter(ChickWeight, (Time == 0) | (Time == 21)) %>%
-  group_by(Diet, Time) %>%
-  summarise(Mean = mean(weight),se = sd(weight)/(sqrt(n()))) 
-
-# Let's take a peek at the data--
-head(cw_summary)
-
-cw_summary$Time <- as.factor(cw_summary$Time) 
-
-ggplot(cw_summary, aes(x=Diet, y=Mean, fill=Time)) + # aesthetics
-  geom_bar(stat="identity", position=position_dodge()) +# geom for bar plots
-  # scale_fill_brewer(palette="Paired") +
-  geom_errorbar(aes(ymin=Mean-se, ymax=Mean+se), width=.2,position=position_dodge(.9))  #geom for error bars
 ```
 
 2. plots
