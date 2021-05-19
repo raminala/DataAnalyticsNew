@@ -22,6 +22,11 @@
 
 
 
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
 <link rel="stylesheet" href="/css/fonts.css" media="all">
 <link rel="stylesheet" href="/css/main.css" media="all">
 
@@ -71,7 +76,60 @@
 <script src="/2021/05/19/assignment-a01-ggplot2/index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>In this post, the solution for assignment 01 is provided.</p>
+<ol style="list-style-type: decimal">
+<li>Introduction:</li>
+</ol>
+<p>In this post, the solution for assignment 01 is provided. I selected “Titanic” dataset because it consists of both Numerical and Categorical data.
+This data set provides information on the fate of passengers on of the ocean liner ‘Titanic’. This dataset has four variable, economic status (class), sex, age, and survival.</p>
+<pre class="r"><code>library(datasets)
+head(Titanic)</code></pre>
+<pre><code>## , , Age = Child, Survived = No
+## 
+##       Sex
+## Class  Male Female
+##   1st     0      0
+##   2nd     0      0
+##   3rd    35     17
+##   Crew    0      0
+## 
+## , , Age = Adult, Survived = No
+## 
+##       Sex
+## Class  Male Female
+##   1st   118      4
+##   2nd   154     13
+##   3rd   387     89
+##   Crew  670      3
+## 
+## , , Age = Child, Survived = Yes
+## 
+##       Sex
+## Class  Male Female
+##   1st     5      1
+##   2nd    11     13
+##   3rd    13     14
+##   Crew    0      0
+## 
+## , , Age = Adult, Survived = Yes
+## 
+##       Sex
+## Class  Male Female
+##   1st    57    140
+##   2nd    14     80
+##   3rd    75     76
+##   Crew  192     20</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>plots</li>
+</ol>
+<div id="categorical" class="section level2">
+<h2>categorical</h2>
+</div>
+<div id="numerical" class="section level2">
+<h2>numerical</h2>
+<ol start="3" style="list-style-type: decimal">
+<li>discussion</li>
+</ol>
+</div>
 
     </div>
   </article>
@@ -94,6 +152,18 @@
 
     </div>
     
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
 
     
 

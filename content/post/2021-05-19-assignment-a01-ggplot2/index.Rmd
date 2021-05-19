@@ -8,7 +8,9 @@ categories:
 tags: []
 ---
 
-  In this post, the solution for assignment 01 is provided.I selected "Titanic" dataset because it consists of both Numerical and Categorical data.
+1. Introduction:
+
+  In this post, the solution for assignment 01 is provided. I selected "Titanic" dataset because it consists of both Numerical and Categorical data.
   This data set provides information on the fate of passengers on of the ocean liner ‘Titanic’. This dataset has four variable, economic status (class), sex, age, and survival.
 
 ```{r}
@@ -16,3 +18,12 @@ library(datasets)
 head(Titanic)
 ```
 
+2. plots
+
+## categorical
+
+## numerical
+
+
+
+3. discussion
