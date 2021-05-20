@@ -37,16 +37,15 @@ head(ChickWeight)
 
 ## categorical
 
-```{r  warning=FALSE, echo=FALSE, message=FALSE}
+aaa
 
+```{r  warning=FALSE, echo=FALSE, message=FALSE}
 
 
 ggplot(ChickWeight, aes( Diet)) +
   geom_bar()
  
  
-
-
 ```
 
 
