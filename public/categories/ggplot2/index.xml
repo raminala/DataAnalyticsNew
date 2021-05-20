@@ -13,8 +13,8 @@
       <pubDate>Wed, 19 May 2021 00:00:00 +0000</pubDate>
       
       <guid>/2021/05/19/assignment-a01-ggplot2/</guid>
-      <description>Introduction:In this post, the solution for assignment 01 is provided. I selected “Titanic” dataset because it consists of both Numerical and Categorical data.This data set provides information on the fate of passengers on of the ocean liner ‘Titanic’. This dataset has four variables: economic status (class), sex, age, and survival.
-library(datasets)head(Titanic)## , , Age = Child, Survived = No## ## Sex## Class Male Female## 1st 0 0## 2nd 0 0## 3rd 35 17## Crew 0 0## ## , , Age = Adult, Survived = No## ## Sex## Class Male Female## 1st 118 4## 2nd 154 13## 3rd 387 89## Crew 670 3## ## , , Age = Child, Survived = Yes## ## Sex## Class Male Female## 1st 5 1## 2nd 11 13## 3rd 13 14## Crew 0 0## ## , , Age = Adult, Survived = Yes## ## Sex## Class Male Female## 1st 57 140## 2nd 14 80## 3rd 75 76## Crew 192 20plotscategoricalnumericaldiscussion</description>
+      <description>Introduction:In this post, the solution for assignment 01 is provided. I selected “Titanic” dataset because it consists of both Numerical and Categorical data.This data set provides information on the fate of passengers on of the ocean liner ‘Titanic’. This dataset has four variables: economic status (class), sex, age, and survival.
+library(ggplot2)library(datasets)#head(Titanic)ggplot(ChickWeight, aes(x=Diet)) + # aestheticsgeom_bar()plotscategoricalnumericaldiscussionkkkkkkkkkkkkkkkkkkkkkk</description>
     </item>
     
     <item>
