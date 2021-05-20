@@ -37,7 +37,14 @@ head(ChickWeight)
 
 ## categorical
 
-```{r}
+```{r  warning=FALSE, echo=FALSE, message=FALSE}
+
+# First we're going to make a background dataset with the diet variable removed. 
+
+
+ggplot(ChickWeight, aes(Time, weight)) +
+  geom_point() 
+
 
 ```
 
@@ -45,6 +52,13 @@ head(ChickWeight)
 
 ## numerical
 
+```{r}
+
+ggplot(ChickWeight, aes(Time, weight)) +
+  geom_point() 
+
+
+```
 
 
 3. discussion
