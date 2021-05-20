@@ -25,7 +25,7 @@ tags: []
 library(ggplot2)
 library(datasets)
 
-head(ChickWeight)
+#head(ChickWeight)
 
 ```
 
