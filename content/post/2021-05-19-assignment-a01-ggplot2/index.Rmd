@@ -25,17 +25,23 @@ tags: []
   
   Lets take a look at data:
 
-```{r}
+```{r warning=FALSE, echo=FALSE, message=FALSE}
 library(ggplot2)
 library(datasets)
 
-#head(ChickWeight)
+head(ChickWeight)
 
 ```
 
 2. plots
 
 ## categorical
+
+```{r}
+
+```
+
+
 
 ## numerical
 
