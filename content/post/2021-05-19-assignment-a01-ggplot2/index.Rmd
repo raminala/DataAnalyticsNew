@@ -37,7 +37,7 @@ head(ChickWeight)
 
 ## categorical
 
-aaa
+Plot mean of chick weight at birthday and day 21 in terms of four different diet plans.
 
 ```{r  warning=FALSE, echo=FALSE, message=FALSE}
 
