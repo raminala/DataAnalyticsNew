@@ -41,7 +41,7 @@ Plot mean of chick weight at birthday and day 21 in terms of four different diet
 
 ```{r  warning=FALSE, echo=FALSE, message=FALSE}
 
-#library(dplyr)
+library(dplyr)
 #Mean = mean(ChickWeight$weight)
 #Mean
 cw_summary <-  filter(ChickWeight, (Time == 0) | (Time == 21)) %>%
@@ -76,4 +76,4 @@ ggplot(ChickWeight, aes(Time, weight)) +
 3. discussion
 
 
-kkkkkkkkkkkkkkkkkkkkkk
+  From bar chart, it seems the diet 3 results in to heaviest chicks in average on the day 21, followed by diet 4,diet 2, and diet 1.
