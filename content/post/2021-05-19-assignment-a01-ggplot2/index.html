@@ -39,8 +39,13 @@ This data frame has 578 rows and 4 columns from an experiment on the effect of d
 </div>
 <div id="numerical" class="section level2">
 <h2>numerical</h2>
-<pre class="r"><code>ggplot(ChickWeight, aes(Time, weight)) +
-  geom_point() </code></pre>
+<pre class="r"><code># First we&#39;re going to make a background dataset with the diet variable removed. 
+ChickWeight_bg &lt;- ChickWeight %&gt;% filter((Time == 0) | (Time == 21)) %&gt;% select(-Diet)
+
+# let&#39;s group the data by each chick; this will carry out any subsequent geoms for each chick
+ggplot(ChickWeight, aes(Time, weight, color = Diet, group = Chick))+
+  geom_line() + # line plot
+  facet_wrap(~Diet)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>discussion</li>

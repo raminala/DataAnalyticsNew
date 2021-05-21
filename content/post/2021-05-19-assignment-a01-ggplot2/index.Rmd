@@ -62,17 +62,19 @@ ggplot(ChickWeight_reorganized, aes(x=Diet, y=Mean, fill=Time)) +
 
 ```{r}
 
-ggplot(ChickWeight, aes(Time, weight)) +
-  geom_point() 
+# First we're going to make a background dataset with the diet variable removed. 
+ChickWeight_bg <- ChickWeight %>% filter((Time == 0) | (Time == 21)) %>% select(-Diet)
 
-
-
-  
+# let's group the data by each chick; this will carry out any subsequent geoms for each chick
+ggplot(ChickWeight, aes(Time, weight, color = Diet, group = Chick))+
+  geom_line() + # line plot
+  facet_wrap(~Diet)
 
 ```
 
 
 3. discussion
 
-
   From bar chart, it seems the diet 3 results in the heaviest chicks in average on the day 21, followed by diet 4,diet 2, and diet 1.Besides, average weight at birthda prove that chicks have approximately the same weight at day 0.
+  
+  
