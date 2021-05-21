@@ -11,7 +11,8 @@ tags: []
 1. Introduction:
 
   In this post, the solution for assignment 01 is provided. I selected "ChickWeight" dataset because it consists of both Numerical and Categorical data.
-  This data frame has 578 rows and 4 columns from an experiment on the effect of diet on early growth of chicks. This dataset has two numeric variables:
+  
+  This data frame has 578 rows and 4 columns from an experiment on the effect of diet on the early growth of chicks. This dataset has two numeric variables:
   
   weight: weight of specific chick at specific day (Time), and
   
@@ -37,10 +38,10 @@ head(ChickWeight)
 
 ## categorical
 
-Plot mean of chick weight at birthday and day 21 in terms of four different diet plans.
+Plot mean of chicks weight at birthday and day 21 in terms of four different diet plans. These plots aresuitable for comparing diet plans.
 
 ```{r  warning=FALSE, echo=FALSE, message=FALSE}
-
+library(ggplot2)
 library(dplyr)
 
 ChickWeight_reorganized <-  filter(ChickWeight, (Time == 0) | (Time == 21)) %>%
@@ -60,10 +61,9 @@ ggplot(ChickWeight_reorganized, aes(x=Diet, y=Mean, fill=Time)) +
 
 ## numerical
 
-```{r}
+Plot weight of chicks over time (day 0  to day 21). These plots are categorized in four facets each for one diet. These plots represent the weight gain of every chicks and they provide good information to examine every chicks.
 
-# First we're going to make a background dataset with the diet variable removed. 
-ChickWeight_bg <- ChickWeight %>% filter((Time == 0) | (Time == 21)) %>% select(-Diet)
+```{r}
 
 # let's group the data by each chick; this will carry out any subsequent geoms for each chick
 ggplot(ChickWeight, aes(Time, weight, color = Diet, group = Chick))+
@@ -75,6 +75,7 @@ ggplot(ChickWeight, aes(Time, weight, color = Diet, group = Chick))+
 
 3. discussion
 
-  From bar chart, it seems the diet 3 results in the heaviest chicks in average on the day 21, followed by diet 4,diet 2, and diet 1.Besides, average weight at birthda prove that chicks have approximately the same weight at day 0.
+  From the bar chart, it seems diet 3 results in the heaviest chicks on average on day 21, followed by diet 4, diet 2, and diet 1.Besides, average weight at birthday prove that chicks have approximately the same weight at day 0. Numerical plots show consistent weight gain for all chicks and all diet plans, although some chicks gain little weight (especially one chick in diet plan 2).
   
+  Categorizing and filtering data were the major issue in this assignment. For those who are new to using R, this would be a challenge.
   
