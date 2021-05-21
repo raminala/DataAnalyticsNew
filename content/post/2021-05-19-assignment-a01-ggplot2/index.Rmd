@@ -42,17 +42,16 @@ Plot mean of chick weight at birthday and day 21 in terms of four different diet
 ```{r  warning=FALSE, echo=FALSE, message=FALSE}
 
 library(dplyr)
-#Mean = mean(ChickWeight$weight)
-#Mean
-cw_summary <-  filter(ChickWeight, (Time == 0) | (Time == 21)) %>%
+
+ChickWeight_reorganized <-  filter(ChickWeight, (Time == 0) | (Time == 21)) %>%
   group_by(Diet, Time) %>%
-  summarise(Mean = mean(weight),se = sd(weight)/(sqrt(n())))
+  summarise(Mean = mean(weight))
 
-cw_summary$Time <- as.factor(cw_summary$Time) 
+ChickWeight_reorganized$Time <- as.factor(ChickWeight_reorganized$Time) 
 
-ggplot(cw_summary, aes(x=Diet, y=Mean, fill=Time)) + # aesthetics
-  geom_bar(stat="identity", position=position_dodge()) # geom for bar plots
-  
+ggplot(ChickWeight_reorganized, aes(x=Diet, y=Mean, fill=Time)) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  labs(title="Mean of chick weight", x= "Diat plans", y= "mean of chick weight")
  
  
 ```
@@ -76,4 +75,4 @@ ggplot(ChickWeight, aes(Time, weight)) +
 3. discussion
 
 
-  From bar chart, it seems the diet 3 results in to heaviest chicks in average on the day 21, followed by diet 4,diet 2, and diet 1.
+  From bar chart, it seems the diet 3 results in the heaviest chicks in average on the day 21, followed by diet 4,diet 2, and diet 1.Besides, average weight at birthda prove that chicks have approximately the same weight at day 0.
