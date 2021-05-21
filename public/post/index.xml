@@ -13,7 +13,8 @@
       <pubDate>Wed, 19 May 2021 00:00:00 +0000</pubDate>
       
       <guid>/2021/05/19/assignment-a01-ggplot2/</guid>
-      <description>Introduction:In this post, the solution for assignment 01 is provided. I selected “ChickWeight” dataset because it consists of both Numerical and Categorical data.This data frame has 578 rows and 4 columns from an experiment on the effect of diet on early growth of chicks. This dataset has two numeric variables:
+      <description>Introduction:In this post, the solution for assignment 01 is provided. I selected “ChickWeight” dataset because it consists of both Numerical and Categorical data.
+This data frame has 578 rows and 4 columns from an experiment on the effect of diet on the early growth of chicks. This dataset has two numeric variables:
 weight: weight of specific chick at specific day (Time), and
 Time: Number of days since birth to measurement day,</description>
     </item>
