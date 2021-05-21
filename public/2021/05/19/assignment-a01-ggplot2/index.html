@@ -62,7 +62,7 @@
 
   <article class="article">
     
-    <span class="article-duration">1 min read</span>
+    <span class="article-duration">2 min read</span>
     
 
     <h1 class="article-title">Assignment A01: GGPLOT2</h1>
@@ -83,7 +83,7 @@
 This data frame has 578 rows and 4 columns from an experiment on the effect of diet on early growth of chicks. This dataset has two numeric variables:</p>
 <p>weight: weight of specific chick at specific day (Time), and</p>
 <p>Time: Number of days since birth to measurement day,</p>
-<p>as well as two ordered variables:</p>
+<p>as well as two ordered and categorical variables:</p>
 <p>Chick: identifier of chick. from 1 to 48, and</p>
 <p>Diet: 4 different applied diets.</p>
 <p>Lets take a look at data:</p>
@@ -99,18 +99,23 @@ This data frame has 578 rows and 4 columns from an experiment on the effect of d
 </ol>
 <div id="categorical" class="section level2">
 <h2>categorical</h2>
-<p>aaa</p>
+<p>Plot mean of chick weight at birthday and day 21 in terms of four different diet plans.</p>
 <p><img src="/2021/05/19/assignment-a01-ggplot2/index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="numerical" class="section level2">
 <h2>numerical</h2>
-<pre class="r"><code>ggplot(ChickWeight, aes(Time, weight)) +
-  geom_point() </code></pre>
+<pre class="r"><code># First we&#39;re going to make a background dataset with the diet variable removed. 
+ChickWeight_bg &lt;- ChickWeight %&gt;% filter((Time == 0) | (Time == 21)) %&gt;% select(-Diet)
+
+# let&#39;s group the data by each chick; this will carry out any subsequent geoms for each chick
+ggplot(ChickWeight, aes(Time, weight, color = Diet, group = Chick))+
+  geom_line() + # line plot
+  facet_wrap(~Diet)</code></pre>
 <p><img src="/2021/05/19/assignment-a01-ggplot2/index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <ol start="3" style="list-style-type: decimal">
 <li>discussion</li>
 </ol>
-<p>kkkkkkkkkkkkkkkkkkkkkk</p>
+<p>From bar chart, it seems the diet 3 results in the heaviest chicks in average on the day 21, followed by diet 4,diet 2, and diet 1.Besides, average weight at birthda prove that chicks have approximately the same weight at day 0.</p>
 </div>
 
     </div>
