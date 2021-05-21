@@ -40,7 +40,8 @@ tags: []
 <div id="numerical" class="section level2">
 <h2>numerical</h2>
 <p>Plot weight of chicks over time (day 0 to day 21). These plots are categorized in four facets each for one diet. These plots represent the weight gain of every chicks and they provide good information to examine every chicks.</p>
-<pre class="r"><code># let&#39;s group the data by each chick; this will carry out any subsequent geoms for each chick
+<pre class="r"><code># Plot  numerical variables.
+
 ggplot(ChickWeight, aes(Time, weight, color = Diet, group = Chick))+
   geom_line() + # line plot
   facet_wrap(~Diet)</code></pre>

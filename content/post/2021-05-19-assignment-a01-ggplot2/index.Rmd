@@ -41,6 +41,7 @@ head(ChickWeight)
 Plot mean of chicks weight at birthday and day 21 in terms of four different diet plans. These plots aresuitable for comparing diet plans.
 
 ```{r  warning=FALSE, echo=FALSE, message=FALSE}
+
 library(ggplot2)
 library(dplyr)
 
@@ -65,7 +66,8 @@ Plot weight of chicks over time (day 0  to day 21). These plots are categorized 
 
 ```{r}
 
-# let's group the data by each chick; this will carry out any subsequent geoms for each chick
+# Plot  numerical variables.
+
 ggplot(ChickWeight, aes(Time, weight, color = Diet, group = Chick))+
   geom_line() + # line plot
   facet_wrap(~Diet)
