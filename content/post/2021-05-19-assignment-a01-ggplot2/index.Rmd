@@ -17,7 +17,7 @@ tags: []
   
   Time: Number of days  since birth to measurement day, 
   
-  as well as two ordered variables:
+  as well as two ordered and categorical variables:
   
   Chick: identifier of chick. from 1 to 48, and
   
@@ -41,9 +41,18 @@ aaa
 
 ```{r  warning=FALSE, echo=FALSE, message=FALSE}
 
+#library(dplyr)
+#Mean = mean(ChickWeight$weight)
+#Mean
+cw_summary <-  filter(ChickWeight, (Time == 0) | (Time == 21)) %>%
+  group_by(Diet, Time) %>%
+  summarise(Mean = mean(weight),se = sd(weight)/(sqrt(n())))
 
-ggplot(ChickWeight, aes( Diet)) +
-  geom_bar()
+cw_summary$Time <- as.factor(cw_summary$Time) 
+
+ggplot(cw_summary, aes(x=Diet, y=Mean, fill=Time)) + # aesthetics
+  geom_bar(stat="identity", position=position_dodge()) # geom for bar plots
+  
  
  
 ```
@@ -57,6 +66,9 @@ ggplot(ChickWeight, aes( Diet)) +
 ggplot(ChickWeight, aes(Time, weight)) +
   geom_point() 
 
+
+
+  
 
 ```
 
