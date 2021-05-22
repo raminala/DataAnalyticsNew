@@ -58,6 +58,15 @@ ggplot(ChickWeight_reorganized, aes(x=Diet, y=Mean, fill=Time)) +
  
 ```
 
+```{r  warning=FALSE, echo=FALSE, message=FALSE}
+
+ggplot(ChickWeight, aes(x=Diet)) +
+  geom_bar() +
+  labs(title="number of chicks feed by each diet", x= "Diat plans", y= "number of chicks")
+
+```
+
+
 
 
 ## numerical
@@ -71,6 +80,14 @@ Plot weight of chicks over time (day 0  to day 21). These plots are categorized 
 ggplot(ChickWeight, aes(Time, weight, color = Diet, group = Chick))+
   geom_line() + # line plot
   facet_wrap(~Diet)
+
+```
+```{r}
+
+ggplot(ChickWeight, aes(Time, weight, shape = Diet))+
+  geom_point()+
+  labs(title="Weight in each day", x= "Day", y= "Weight")
+ 
 
 ```
 
