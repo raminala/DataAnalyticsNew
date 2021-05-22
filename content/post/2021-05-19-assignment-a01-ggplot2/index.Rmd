@@ -41,7 +41,7 @@ head(ChickWeight)
 Plot mean of chicks weight at birthday and day 21 in terms of four different diet plans. These plots aresuitable for comparing diet plans.
 
 ```{r  warning=FALSE, echo=FALSE, message=FALSE}
-
+#...
 library(ggplot2)
 library(dplyr)
 
