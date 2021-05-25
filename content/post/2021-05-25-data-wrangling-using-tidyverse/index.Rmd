@@ -10,6 +10,7 @@ tags: []
 
 ## Import the Hotel.CSV file
 
+
 ```{r warning=FALSE}
 
 
