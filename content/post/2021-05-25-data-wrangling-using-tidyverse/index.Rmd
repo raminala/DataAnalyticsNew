@@ -1,0 +1,22 @@
+---
+title: Data Wrangling using Tidyverse
+author: ''
+date: '2021-05-25'
+slug: data-wrangling-using-tidyverse
+categories: []
+tags: []
+---
+
+## Import the Hotel.CSV file
+
+```{r warning=FALSE}
+
+
+library(tidyverse)
+
+#Use one of options to import hotels.CSV file
+head(hotels)
+
+names(hotels)
+
+```
