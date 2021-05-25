@@ -13,7 +13,7 @@
       <pubDate>Tue, 25 May 2021 00:00:00 +0000</pubDate>
       
       <guid>/2021/05/25/data-wrangling-using-tidyverse/</guid>
-      <description>Import the Hotel.CSV file</description>
+      <description>Import the Hotel.CSV fileprint(&amp;quot;jj&amp;quot;)## [1] &amp;quot;jj&amp;quot;</description>
     </item>
     
     <item>

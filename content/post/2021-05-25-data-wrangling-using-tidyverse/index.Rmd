@@ -10,9 +10,7 @@ tags: []
 
 ## Import the Hotel.CSV file
 
-
-```{r }
-
+```{r warning=FALSE}
 
 library(tidyverse)
 
@@ -21,4 +19,4 @@ head(hotels)
 
 names(hotels)
 
-```
+``` 
