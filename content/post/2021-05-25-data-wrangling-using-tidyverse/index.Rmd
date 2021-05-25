@@ -28,6 +28,12 @@ names(hotels)
 ## Select a variabl
 
 ```{r}
+select(hotels, lead_time)
+```
+
+
+
+```{r}
 select(hotels, hotel, lead_time)
 
 hotels %>%
@@ -57,6 +63,7 @@ hotels %>%
   filter(hotel=="City Hotel")
 
 
+
 hotels %>%
   filter( 
     adults == 0,
@@ -64,11 +71,11 @@ hotels %>%
     ) %>% 
   select(adults, babies, children)
 
-
+# bookings with no adults and some children or babies in the room
 hotels %>%
   filter( 
     adults == 0,     
-    children >= 1 & babies >= 1     # & means and
+    children >= 1 & babies >= 1     # & means and # | means or
     ) %>%
   select(adults, babies, children)
 ```

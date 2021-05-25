@@ -84,6 +84,21 @@ hotels &lt;- read_csv(&quot;hotels.csv&quot;)</code></pre>
 </div>
 <div id="select-a-variabl" class="section level2">
 <h2>Select a variabl</h2>
+<pre class="r"><code>select(hotels, lead_time)</code></pre>
+<pre><code>## # A tibble: 119,390 x 1
+##    lead_time
+##        &lt;dbl&gt;
+##  1       342
+##  2       737
+##  3         7
+##  4        13
+##  5        14
+##  6        14
+##  7         0
+##  8         9
+##  9        85
+## 10        75
+## # ... with 119,380 more rows</code></pre>
 <pre class="r"><code>select(hotels, hotel, lead_time)</code></pre>
 <pre><code>## # A tibble: 119,390 x 2
 ##    hotel        lead_time
@@ -220,10 +235,11 @@ hotels &lt;- read_csv(&quot;hotels.csv&quot;)</code></pre>
 ##  9      0      0        2
 ## 10      0      0        2
 ## # ... with 213 more rows</code></pre>
-<pre class="r"><code>hotels %&gt;%
+<pre class="r"><code># bookings with no adults and some children or babies in the room
+hotels %&gt;%
   filter( 
     adults == 0,     
-    children &gt;= 1 &amp; babies &gt;= 1     # &amp; means and
+    children &gt;= 1 &amp; babies &gt;= 1     # &amp; means and # | means or
     ) %&gt;%
   select(adults, babies, children)</code></pre>
 <pre><code>## # A tibble: 3 x 3
