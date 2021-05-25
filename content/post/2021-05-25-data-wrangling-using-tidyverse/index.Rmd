@@ -20,6 +20,10 @@ hotels <- read_csv("hotels.csv")
 head(hotels)
 
 ```
+```{r}
+names(hotels)
+```
+
 
 ## Select a variabl
 
