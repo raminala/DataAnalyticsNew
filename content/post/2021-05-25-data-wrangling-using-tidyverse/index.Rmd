@@ -7,7 +7,7 @@ categories: []
 tags: []
 ---
 
-## Import the Hotel.CSV file
+## Import the Hotels.CSV file
 
 ```{r warning=FALSE}
 
@@ -42,7 +42,7 @@ hotels %>%
   select(hotel:arrival_date_month)
 
 hotels %>%
-  select(starts_with("arrival"))
+  select(starts_with("arrival")) #selects all variables that start with word arrival
 
 ```
 
@@ -76,14 +76,28 @@ hotels %>%
 ## Summarizing
 
 ```{r}
+# count for multiple variables
 hotels %>%
   count(hotel, market_segment)
 ```
 
+```{r}
+# hotel type first
+hotels %>%
+  count(hotel, market_segment)
+```
+```{r}
+# market segment first
+hotels %>%
+  count(market_segment, hotel)
+```
+
+
+
 ## Mutation
 
 ```{r}
-
+# mutate to add a new variable
 little_ones <- hotels
 
 little_ones %<>%
@@ -97,6 +111,15 @@ little_ones %<>%
 ## Summary
 
 ```{r}
+# mean average daily rate for all bookings
+hotels %>%
+  summarise(mean_adr = mean(adr))
+```
+
+
+
+```{r}
+# mean average daily rate for all booking at city and resort hotels
 
 summary <- hotels %>%
     group_by(hotel) %>%

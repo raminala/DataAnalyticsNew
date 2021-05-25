@@ -10,8 +10,8 @@ tags: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
-<div id="import-the-hotel.csv-file" class="section level2">
-<h2>Import the Hotel.CSV file</h2>
+<div id="import-the-hotels.csv-file" class="section level2">
+<h2>Import the Hotels.CSV file</h2>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
 <pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
@@ -136,7 +136,7 @@ hotels &lt;- read_csv(&quot;hotels.csv&quot;)</code></pre>
 ## 10 Resort Hotel           1        75              2015 July              
 ## # ... with 119,380 more rows</code></pre>
 <pre class="r"><code>hotels %&gt;%
-  select(starts_with(&quot;arrival&quot;))</code></pre>
+  select(starts_with(&quot;arrival&quot;)) #selects all variables that start with word arrival</code></pre>
 <pre><code>## # A tibble: 119,390 x 4
 ##    arrival_date_year arrival_date_mon~ arrival_date_week_n~ arrival_date_day_of~
 ##                &lt;dbl&gt; &lt;chr&gt;                            &lt;dbl&gt;                &lt;dbl&gt;
@@ -235,7 +235,8 @@ hotels &lt;- read_csv(&quot;hotels.csv&quot;)</code></pre>
 </div>
 <div id="summarizing" class="section level2">
 <h2>Summarizing</h2>
-<pre class="r"><code>hotels %&gt;%
+<pre class="r"><code># count for multiple variables
+hotels %&gt;%
   count(hotel, market_segment)</code></pre>
 <pre><code>## # A tibble: 14 x 3
 ##    hotel        market_segment     n
@@ -254,10 +255,51 @@ hotels &lt;- read_csv(&quot;hotels.csv&quot;)</code></pre>
 ## 12 Resort Hotel Groups          5836
 ## 13 Resort Hotel Offline TA/TO   7472
 ## 14 Resort Hotel Online TA      17729</code></pre>
+<pre class="r"><code># hotel type first
+hotels %&gt;%
+  count(hotel, market_segment)</code></pre>
+<pre><code>## # A tibble: 14 x 3
+##    hotel        market_segment     n
+##    &lt;chr&gt;        &lt;chr&gt;          &lt;int&gt;
+##  1 City Hotel   Aviation         237
+##  2 City Hotel   Complementary    542
+##  3 City Hotel   Corporate       2986
+##  4 City Hotel   Direct          6093
+##  5 City Hotel   Groups         13975
+##  6 City Hotel   Offline TA/TO  16747
+##  7 City Hotel   Online TA      38748
+##  8 City Hotel   Undefined          2
+##  9 Resort Hotel Complementary    201
+## 10 Resort Hotel Corporate       2309
+## 11 Resort Hotel Direct          6513
+## 12 Resort Hotel Groups          5836
+## 13 Resort Hotel Offline TA/TO   7472
+## 14 Resort Hotel Online TA      17729</code></pre>
+<pre class="r"><code># market segment first
+hotels %&gt;%
+  count(market_segment, hotel)</code></pre>
+<pre><code>## # A tibble: 14 x 3
+##    market_segment hotel            n
+##    &lt;chr&gt;          &lt;chr&gt;        &lt;int&gt;
+##  1 Aviation       City Hotel     237
+##  2 Complementary  City Hotel     542
+##  3 Complementary  Resort Hotel   201
+##  4 Corporate      City Hotel    2986
+##  5 Corporate      Resort Hotel  2309
+##  6 Direct         City Hotel    6093
+##  7 Direct         Resort Hotel  6513
+##  8 Groups         City Hotel   13975
+##  9 Groups         Resort Hotel  5836
+## 10 Offline TA/TO  City Hotel   16747
+## 11 Offline TA/TO  Resort Hotel  7472
+## 12 Online TA      City Hotel   38748
+## 13 Online TA      Resort Hotel 17729
+## 14 Undefined      City Hotel       2</code></pre>
 </div>
 <div id="mutation" class="section level2">
 <h2>Mutation</h2>
-<pre class="r"><code>little_ones &lt;- hotels
+<pre class="r"><code># mutate to add a new variable
+little_ones &lt;- hotels
 
 little_ones %&lt;&gt;%
   mutate(little_ones = children + babies) %&gt;%
@@ -266,7 +308,16 @@ little_ones %&lt;&gt;%
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
-<pre class="r"><code>summary &lt;- hotels %&gt;%
+<pre class="r"><code># mean average daily rate for all bookings
+hotels %&gt;%
+  summarise(mean_adr = mean(adr))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   mean_adr
+##      &lt;dbl&gt;
+## 1     102.</code></pre>
+<pre class="r"><code># mean average daily rate for all booking at city and resort hotels
+
+summary &lt;- hotels %&gt;%
     group_by(hotel) %&gt;%
   summarise(mean_adr = mean(adr))
 
