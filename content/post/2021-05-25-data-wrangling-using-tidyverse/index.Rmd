@@ -14,9 +14,4 @@ tags: []
 
 library(tidyverse)
 
-#Use one of options to import hotels.CSV file
-head(hotels)
-
-names(hotels)
-
 ``` 
