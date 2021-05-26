@@ -122,12 +122,15 @@ stroke_predic %>%
 
 ## Vector function
 
+n(): the current group size
 
+here, I used this vector function to determine the number of observation who had stroke.
 
 
 ```{r}
 stroke_predic %>%
-  select(avg_glucose_level)
+  filter(stroke==1) %>%
+  summarise(n())
 ```
 
 
