@@ -1,0 +1,137 @@
+---
+title: 'Assignment A02: TIDYVERSE'
+author: ''
+date: '2021-05-26'
+slug: assignment-a02-tidyverse
+categories: []
+tags: []
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<ol style="list-style-type: decimal">
+<li>Introduction:</li>
+</ol>
+<p>In this post, the solution for assignment 02 is provided. I selected “Stroke Prediction Dataset” from <a href="https://www.kaggle.com/datasets" class="uri">https://www.kaggle.com/datasets</a> because I have had some basic studies on this topic, and I am eager to add more information while doing my assignment.</p>
+<p>This dataset contains 5110 rows (each row attributes to a patient), and 12 columns (11 variables and 1 column as identity number for each observation/patient).</p>
+<p>Lets take a look at data:</p>
+<pre><code>## # A tibble: 6 x 12
+##      id gender   age hypertension heart_disease ever_married work_type    
+##   &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;        
+## 1  9046 Male      67            0             1 Yes          Private      
+## 2 51676 Female    61            0             0 Yes          Self-employed
+## 3 31112 Male      80            0             1 Yes          Private      
+## 4 60182 Female    49            0             0 Yes          Private      
+## 5  1665 Female    79            1             0 Yes          Self-employed
+## 6 56669 Male      81            0             0 Yes          Private      
+## # ... with 5 more variables: Residence_type &lt;chr&gt;, avg_glucose_level &lt;dbl&gt;,
+## #   bmi &lt;chr&gt;, smoking_status &lt;chr&gt;, stroke &lt;dbl&gt;</code></pre>
+<p>This dataset has 11 variables (columns), including:</p>
+<pre><code>##  [1] &quot;id&quot;                &quot;gender&quot;            &quot;age&quot;              
+##  [4] &quot;hypertension&quot;      &quot;heart_disease&quot;     &quot;ever_married&quot;     
+##  [7] &quot;work_type&quot;         &quot;Residence_type&quot;    &quot;avg_glucose_level&quot;
+## [10] &quot;bmi&quot;               &quot;smoking_status&quot;    &quot;stroke&quot;</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>Functions (one table and two table verb)</li>
+</ol>
+<div id="one-table-verbs" class="section level2">
+<h2>one table verbs</h2>
+<p>filter(): Extract rows that satisfy specified conditions.</p>
+<p>Here, I want to create a new dataset (stroke_suffered) from those who had a stroke.</p>
+<pre class="r"><code>#...
+
+library(dplyr)
+
+stroke_suffered &lt;- stroke_predic %&gt;%
+  filter(stroke==1)
+ stroke_suffered</code></pre>
+<pre><code>## # A tibble: 249 x 12
+##       id gender   age hypertension heart_disease ever_married work_type    
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;        
+##  1  9046 Male      67            0             1 Yes          Private      
+##  2 51676 Female    61            0             0 Yes          Self-employed
+##  3 31112 Male      80            0             1 Yes          Private      
+##  4 60182 Female    49            0             0 Yes          Private      
+##  5  1665 Female    79            1             0 Yes          Self-employed
+##  6 56669 Male      81            0             0 Yes          Private      
+##  7 53882 Male      74            1             1 Yes          Private      
+##  8 10434 Female    69            0             0 No           Private      
+##  9 27419 Female    59            0             0 Yes          Private      
+## 10 60491 Female    78            0             0 Yes          Private      
+## # ... with 239 more rows, and 5 more variables: Residence_type &lt;chr&gt;,
+## #   avg_glucose_level &lt;dbl&gt;, bmi &lt;chr&gt;, smoking_status &lt;chr&gt;, stroke &lt;dbl&gt;</code></pre>
+<p>summarize(): Summarize each group to fewer rows</p>
+<p>From previously generated dataset, I want to know the average age of those who stroked.</p>
+<pre class="r"><code>stroke_suffered %&gt;%
+  summarize(mean_age=mean(age))</code></pre>
+<pre><code>## # A tibble: 1 x 1
+##   mean_age
+##      &lt;dbl&gt;
+## 1     67.7</code></pre>
+</div>
+<div id="two-table-verb" class="section level2">
+<h2>two table verb</h2>
+<p>bind_rows(): bind multiple data frames by row</p>
+<p>In order to use this function, I made a new dataframe (my own data that includes one row), and then bind that at the beginning of original dataset.</p>
+<pre class="r"><code># Plot  numerical variables.
+
+New_observation &lt;- data.frame (
+  id = 12345,
+  gender = &quot;Male&quot;,
+  age = 38,
+  hypertension = 0,
+  heart_disease = 0,
+  ever_married = &quot;Yes&quot;,
+  work_type=&quot;Private&quot;,
+  Residence_type=&quot;Urban&quot;,
+  avg_glucose_level=150,
+  bmi=&quot;20&quot;,
+  smoking_status=&quot;never smoked&quot;,
+  stroke=0
+  )
+
+New_observation</code></pre>
+<pre><code>##      id gender age hypertension heart_disease ever_married work_type
+## 1 12345   Male  38            0             0          Yes   Private
+##   Residence_type avg_glucose_level bmi smoking_status stroke
+## 1          Urban               150  20   never smoked      0</code></pre>
+<pre class="r"><code>head(bind_rows(New_observation, stroke_predic))</code></pre>
+<pre><code>##      id gender age hypertension heart_disease ever_married     work_type
+## 1 12345   Male  38            0             0          Yes       Private
+## 2  9046   Male  67            0             1          Yes       Private
+## 3 51676 Female  61            0             0          Yes Self-employed
+## 4 31112   Male  80            0             1          Yes       Private
+## 5 60182 Female  49            0             0          Yes       Private
+## 6  1665 Female  79            1             0          Yes Self-employed
+##   Residence_type avg_glucose_level  bmi  smoking_status stroke
+## 1          Urban            150.00   20    never smoked      0
+## 2          Urban            228.69 36.6 formerly smoked      1
+## 3          Rural            202.21  N/A    never smoked      1
+## 4          Rural            105.92 32.5    never smoked      1
+## 5          Urban            171.23 34.4          smokes      1
+## 6          Rural            174.12   24    never smoked      1</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Grouping and Vector functions</li>
+</ol>
+</div>
+<div id="grouping-function" class="section level2">
+<h2>Grouping function</h2>
+</div>
+<div id="vector-function" class="section level2">
+<h2>Vector function</h2>
+<ol start="4" style="list-style-type: decimal">
+<li>Pivoting and Missing Values (tidyr)</li>
+</ol>
+</div>
+<div id="pivoting" class="section level2">
+<h2>Pivoting</h2>
+</div>
+<div id="missing-values-tidyr" class="section level2">
+<h2>Missing Values (tidyr)</h2>
+<ol start="5" style="list-style-type: decimal">
+<li>discussion</li>
+</ol>
+<p>From the bar chart, it seems diet 3 results in the heaviest chicks on average on day 21, followed by diet 4, diet 2, and diet 1.Besides, average weight at birthday prove that chicks have approximately the same weight at day 0. Numerical plots show consistent weight gain for all chicks and all diet plans, although some chicks gain little weight (especially one chick in diet plan 2).</p>
+<p>Categorizing and filtering data were the major issue in this assignment. For those who are new to using R, this would be a challenge.</p>
+</div>

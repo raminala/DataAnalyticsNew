@@ -1,0 +1,136 @@
+---
+title: 'Assignment A02: TIDYVERSE'
+author: ''
+date: '2021-05-26'
+slug: assignment-a02-tidyverse
+categories: []
+tags: []
+---
+
+1. Introduction:
+
+  In this post, the solution for assignment 02 is provided. I selected "Stroke Prediction Dataset" from https://www.kaggle.com/datasets because I have had some basic studies on this topic, and I am eager to add more information while doing my assignment.
+  
+  This dataset contains 5110 rows (each row attributes to a patient), and 12 columns (11 variables and 1 column as identity number for each observation/patient).
+  
+  Lets take a look at data:
+
+```{r warning=FALSE, echo=FALSE, message=FALSE}
+
+library(ggplot2)
+library(tidyverse)
+
+stroke_predic <- read_csv("healthcare-dataset-stroke-data.csv")
+
+
+
+head(stroke_predic)
+
+```
+
+This dataset has 11 variables (columns), including:
+
+```{r  warning=FALSE, echo=FALSE, message=FALSE}
+names(stroke_predic)
+```
+
+
+2. Functions (one table and two table verb)
+
+## one table verbs
+
+filter():    Extract rows that satisfy specified conditions.
+
+Here, I want to create a new dataset (stroke_suffered) from those who had a stroke.
+
+```{r}
+#...
+
+library(dplyr)
+
+stroke_suffered <- stroke_predic %>%
+  filter(stroke==1)
+ stroke_suffered
+ 
+```
+summarize():    Summarize each group to fewer rows
+
+From previously generated dataset, I want to know the average age of those who stroked.
+
+```{r}
+
+stroke_suffered %>%
+  summarize(mean_age=mean(age))
+
+```
+
+
+## two table verb
+
+bind_rows():    bind multiple data frames by row
+
+In order to use this function, I made a new dataframe (my own data that includes one row), and then bind that at the beginning of original dataset.
+
+```{r}
+
+# Plot  numerical variables.
+
+New_observation <- data.frame (
+  id = 12345,
+  gender = "Male",
+  age = 38,
+  hypertension = 0,
+  heart_disease = 0,
+  ever_married = "Yes",
+  work_type="Private",
+  Residence_type="Urban",
+  avg_glucose_level=150,
+  bmi="20",
+  smoking_status="never smoked",
+  stroke=0
+  )
+
+New_observation
+
+
+head(bind_rows(New_observation, stroke_predic))
+
+```
+
+
+
+
+
+```{r}
+
+
+ 
+
+```
+
+
+
+3. Grouping and Vector functions
+
+## Grouping function
+
+## Vector function
+
+
+
+
+4. Pivoting and Missing Values (tidyr)
+
+
+## Pivoting
+
+
+
+## Missing Values (tidyr)
+
+
+5. discussion
+
+  From the bar chart, it seems diet 3 results in the heaviest chicks on average on day 21, followed by diet 4, diet 2, and diet 1.Besides, average weight at birthday prove that chicks have approximately the same weight at day 0. Numerical plots show consistent weight gain for all chicks and all diet plans, although some chicks gain little weight (especially one chick in diet plan 2).
+  
+  Categorizing and filtering data were the major issue in this assignment. For those who are new to using R, this would be a challenge.
