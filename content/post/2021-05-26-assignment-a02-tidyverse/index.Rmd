@@ -37,7 +37,7 @@ names(stroke_predic)
 
 2. Functions (one table and two table verb)
 
-## one table verbs
+## One table verbs
 
 filter():    Extract rows that satisfy specified conditions.
 
@@ -50,9 +50,11 @@ library(dplyr)
 
 stroke_suffered <- stroke_predic %>%
   filter(stroke==1)
+
  stroke_suffered
  
 ```
+
 summarize():    Summarize each group to fewer rows
 
 From previously generated dataset, I want to know the average age of those who stroked.
@@ -84,7 +86,7 @@ New_observation <- data.frame (
   ever_married = "Yes",
   work_type="Private",
   Residence_type="Urban",
-  avg_glucose_level=150,
+  avg_glucose_level=110,
   bmi="20",
   smoking_status="never smoked",
   stroke=0
@@ -99,23 +101,36 @@ head(bind_rows(New_observation, stroke_predic))
 
 
 
+3. Grouping and Vector functions
 
+## Grouping function
 
-```{r}
+group_by():    Group by one or more variables
 
+In this exercise, I want to know the average age of those who have hypertension, heart_disease, and stroke. For this purpose, dataset must be grouped first.
 
- 
+```{r message=FALSE}
+
+stroke_predic %>%
+  group_by(hypertension,heart_disease, stroke) %>%
+  summarize(average_age=mean(age))
 
 ```
 
 
 
-3. Grouping and Vector functions
-
-## Grouping function
 
 ## Vector function
 
+
+
+
+```{r}
+stroke_predic %>%
+  select(avg_glucose_level) %>%
+  if_else(avg_glucose_level>140,"f","ff")
+  
+```
 
 
 
@@ -133,4 +148,4 @@ head(bind_rows(New_observation, stroke_predic))
 
   From the bar chart, it seems diet 3 results in the heaviest chicks on average on day 21, followed by diet 4, diet 2, and diet 1.Besides, average weight at birthday prove that chicks have approximately the same weight at day 0. Numerical plots show consistent weight gain for all chicks and all diet plans, although some chicks gain little weight (especially one chick in diet plan 2).
   
-  Categorizing and filtering data were the major issue in this assignment. For those who are new to using R, this would be a challenge.
+  bmi is character!

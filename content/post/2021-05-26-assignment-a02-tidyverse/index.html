@@ -36,7 +36,7 @@ tags: []
 <li>Functions (one table and two table verb)</li>
 </ol>
 <div id="one-table-verbs" class="section level2">
-<h2>one table verbs</h2>
+<h2>One table verbs</h2>
 <p>filter(): Extract rows that satisfy specified conditions.</p>
 <p>Here, I want to create a new dataset (stroke_suffered) from those who had a stroke.</p>
 <pre class="r"><code>#...
@@ -45,6 +45,7 @@ library(dplyr)
 
 stroke_suffered &lt;- stroke_predic %&gt;%
   filter(stroke==1)
+
  stroke_suffered</code></pre>
 <pre><code>## # A tibble: 249 x 12
 ##       id gender   age hypertension heart_disease ever_married work_type    
@@ -117,6 +118,23 @@ New_observation</code></pre>
 </div>
 <div id="grouping-function" class="section level2">
 <h2>Grouping function</h2>
+<p>group_by(): Group by one or more variables</p>
+<p>In this exercise, I want to know the average age of those who have hypertension, heart_disease, and stroke. For this purpose, dataset must be grouped first.</p>
+<pre class="r"><code>stroke_predic %&gt;%
+  group_by(hypertension,heart_disease, stroke) %&gt;%
+  summarize(average_age=mean(age))</code></pre>
+<pre><code>## # A tibble: 8 x 4
+## # Groups:   hypertension, heart_disease [4]
+##   hypertension heart_disease stroke average_age
+##          &lt;dbl&gt;         &lt;dbl&gt;  &lt;dbl&gt;       &lt;dbl&gt;
+## 1            0             0      0        39.0
+## 2            0             0      1        65.8
+## 3            0             1      0        66.7
+## 4            0             1      1        71.4
+## 5            1             0      0        59.8
+## 6            1             0      1        69.6
+## 7            1             1      0        70.0
+## 8            1             1      1        72.8</code></pre>
 </div>
 <div id="vector-function" class="section level2">
 <h2>Vector function</h2>
