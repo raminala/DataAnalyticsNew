@@ -184,18 +184,6 @@ DS_pivot_wider
 
 ## Missing Values (tidyr)
 
-<<<<<<< HEAD
-fill(): Fill in missing values with previous or next value
-
-
-```{r}
-filled_file<- stroke_predic %>%
-  drop_na(bmi, any_of(vars))
-
-```
-
-
-=======
 drop_na(): drop the observations that contains N/A object.
 
 ```{r}
@@ -214,7 +202,7 @@ stroke_predic_drop_NA <- stroke_predic_with_NA %>%
 ```
 
 
-fill(): Fill N/A objects in "up" or "down object.
+fill(): Fill N/A objects with "up" or "down object.
 
 ```{r}
 
@@ -224,7 +212,7 @@ fill(): Fill N/A objects in "up" or "down object.
 
 5. discussion
 
-  .....................
+  ..........
   
   There were two challenges for me in this exercise:
   
