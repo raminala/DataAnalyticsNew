@@ -184,14 +184,34 @@ DS_pivot_wider
 drop_na(): drop the observations that contains N/A object.
 
 ```{r}
+#copy dataset to a new one.
+stroke_predic_with_NA <- stroke_predic
 
+#generate a NA element in the new dataset.
+stroke_predic_with_NA[1,3] = NA
+
+#delete the row with a NA element.
+stroke_predic_drop_NA <- stroke_predic_with_NA %>%
+  drop_na(age)
+#compare number of rows to know if it drops one row
+  nrow(stroke_predic_with_NA)
+  nrow(stroke_predic_drop_NA)
 ```
 
 
-fill(): 
+fill(): Fill N/A objects in "up" or "down object.
+
+```{r}
+
+```
+
 
 5. discussion
 
   From the bar chart, it seems diet 3 results in the heaviest chicks on average on day 21, followed by diet 4, diet 2, and diet 1.Besides, average weight at birthday prove that chicks have approximately the same weight at day 0. Numerical plots show consistent weight gain for all chicks and all diet plans, although some chicks gain little weight (especially one chick in diet plan 2).
   
-  There were a challenge for me in this exercise: I used another machine when I tried to do this exercise. It took some time to understand how to pull repository from git
+  There were two challenges for me in this exercise:
+  
+  - I used another machine when I tried to do this exercise. It took some time for me to figure out how to pull repository from git and use that (because I used to push to git not pull!).
+  
+  - In the selected dataset, bmi variable's class was "character" instead of numeric.
