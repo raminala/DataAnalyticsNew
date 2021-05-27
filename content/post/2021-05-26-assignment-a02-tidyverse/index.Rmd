@@ -9,7 +9,7 @@ tags: []
 
 1. Introduction:
 
-  In this post, the solution for the assignment 02 is provided. I selected "Stroke Prediction Dataset" from https://www.kaggle.com/datasets because I have had some basic studies on this topic, and I am eager to add more information while doing my assignment.
+  In this post, the solution for the assignment 02 is provided. I selected "Stroke Prediction Dataset" from https://www.kaggle.com/datasets because I have already had some basic studies on stroke, and I am eager to add more information while doing my assignment.
   
   This dataset contains 5110 rows (each row attributes to a patient), and 12 columns (11 variables and 1 column as identity number for each observation/patient).
   
@@ -22,15 +22,13 @@ library(tidyverse)
 
 stroke_predic <- read_csv("healthcare-dataset-stroke-data.csv")
 
-
-
 head(stroke_predic)
 
 ```
 
 This dataset has 11 variables (columns), including:
 
-```{r  warning=FALSE, echo=FALSE, message=FALSE}
+```{r}
 
 names(stroke_predic)
 
@@ -44,10 +42,9 @@ names(stroke_predic)
 
 filter():    Extract rows that satisfy specified conditions.
 
-Here, I want to create a new dataset (stroke_suffered) from those who had a stroke.
+Here, I want to create a new dataset (stroke_suffered) from those who experienced a stroke.
 
 ```{r}
-#...
 
 library(dplyr)
 
@@ -58,9 +55,9 @@ stroke_suffered <- stroke_predic %>%
  
 ```
 
-summarize():    Summarize each group to fewer rows
+summarize():    Summarize each group to fewer rows.
 
-From previously generated dataset, I want to know the average age of those who stroked.
+From previously generated dataset (stroke_suffered), I want to know the average age of those who stroked.
 
 ```{r}
 
@@ -77,8 +74,6 @@ bind_rows():    bind multiple data frames by row
 In order to use this function, I made a new dataframe (my own data that includes one row), and then bind that at the beginning of original dataset.
 
 ```{r}
-
-# Plot  numerical variables.
 
 New_observation <- data.frame (
   id = 12345,
@@ -108,7 +103,7 @@ head(bind_rows(New_observation, stroke_predic))
 
 ## Grouping function
 
-group_by():    Group by one or more variables
+group_by():    Group by one or more variables.
 
 In this exercise, I want to know the average age of those who have hypertension, heart_disease, and stroke. For this purpose, dataset must be grouped first.
 
@@ -138,7 +133,7 @@ stroke_predic %>%
 ```
 
 
-n(): the current group size
+n(): return the current group size.
 
 here, I used this vector function to determine the number of observation who had stroke.
 
