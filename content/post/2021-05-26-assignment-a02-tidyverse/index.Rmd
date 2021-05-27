@@ -122,6 +122,19 @@ stroke_predic %>%
 
 ## Vector function
 
+between(): determine if values in a numeric vector fall in specified range.
+
+By using combination of between() and filter() function, I filtered those who have avg_glucose_level between 250 to 300.
+
+```{r}
+
+stroke_predic %>%
+  filter(between(avg_glucose_level,250,300))
+
+
+```
+
+
 n(): the current group size
 
 here, I used this vector function to determine the number of observation who had stroke.
@@ -139,6 +152,25 @@ stroke_predic %>%
 
 
 ## Pivoting
+
+pivot_wider(): "widens" data, increasing the number of columns and decreasing the number of rows.
+
+Here, I selected three columns before applying pivot function.
+
+
+```{r warning=FALSE}
+
+library(tidyr)
+
+ DS_pivot_wider<- stroke_predic %>%
+ select(age, gender,stroke)  %>%
+  pivot_wider(names_from = stroke, values_from = gender)
+ 
+
+
+DS_pivot_wider
+
+```
 
 
 

@@ -138,6 +138,25 @@ New_observation</code></pre>
 </div>
 <div id="vector-function" class="section level2">
 <h2>Vector function</h2>
+<p>between(): determine if values in a numeric vector fall in specified range.</p>
+<p>By using combination of between() and filter() function, I filtered those who have avg_glucose_level between 250 to 300.</p>
+<pre class="r"><code>stroke_predic %&gt;%
+  filter(between(avg_glucose_level,250,300))</code></pre>
+<pre><code>## # A tibble: 25 x 12
+##       id gender   age hypertension heart_disease ever_married work_type    
+##    &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;        
+##  1 54401 Male      80            0             1 Yes          Self-employed
+##  2 13491 Male      80            0             0 Yes          Private      
+##  3 71279 Female    71            0             0 Yes          Govt_job     
+##  4 69112 Male      68            1             1 Yes          Private      
+##  5 20463 Male      81            1             1 Yes          Private      
+##  6 63732 Male      70            1             0 Yes          Self-employed
+##  7 33585 Female    64            0             0 Yes          Private      
+##  8 17813 Female    69            0             1 Yes          Private      
+##  9 55862 Male      67            1             1 Yes          Private      
+## 10 38678 Female    66            0             0 Yes          Self-employed
+## # ... with 15 more rows, and 5 more variables: Residence_type &lt;chr&gt;,
+## #   avg_glucose_level &lt;dbl&gt;, bmi &lt;chr&gt;, smoking_status &lt;chr&gt;, stroke &lt;dbl&gt;</code></pre>
 <p>n(): the current group size</p>
 <p>here, I used this vector function to determine the number of observation who had stroke.</p>
 <pre class="r"><code>stroke_predic %&gt;%
