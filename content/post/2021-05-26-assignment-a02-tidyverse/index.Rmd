@@ -31,8 +31,11 @@ head(stroke_predic)
 This dataset has 11 variables (columns), including:
 
 ```{r  warning=FALSE, echo=FALSE, message=FALSE}
+
 names(stroke_predic)
+
 ```
+
 
 
 2. Functions (one table and two table verb)
@@ -180,6 +183,17 @@ DS_pivot_wider
 
 
 ## Missing Values (tidyr)
+
+fill(): Fill in missing values with previous or next value
+
+
+```{r}
+filled_file<- stroke_predic %>%
+  drop_na(bmi, any_of(vars))
+
+```
+
+
 
 
 5. discussion
