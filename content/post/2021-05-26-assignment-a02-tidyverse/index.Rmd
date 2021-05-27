@@ -181,9 +181,17 @@ DS_pivot_wider
 
 ## Missing Values (tidyr)
 
+drop_na(): drop the observations that contains N/A object.
+
+```{r}
+
+```
+
+
+fill(): 
 
 5. discussion
 
   From the bar chart, it seems diet 3 results in the heaviest chicks on average on day 21, followed by diet 4, diet 2, and diet 1.Besides, average weight at birthday prove that chicks have approximately the same weight at day 0. Numerical plots show consistent weight gain for all chicks and all diet plans, although some chicks gain little weight (especially one chick in diet plan 2).
   
-  bmi is character!--
+  There were a challenge for me in this exercise: I used another machine when I tried to do this exercise. It took some time to understand how to pull repository from git
