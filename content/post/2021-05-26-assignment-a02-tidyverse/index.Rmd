@@ -210,10 +210,10 @@ hhh
 
 5. discussion
 
-  In this assignment, the Stroke Prediction dataset became more understandable by employing the capabilities of two libraries: dplyr and tidyr. The result of this section could be used in visualization using ggplo2. The important skill in this section is using cheetshets to apply new function on a dataset. 
+  In this assignment, the Stroke Prediction dataset became more understandable by employing the capabilities of two libraries: dplyr and tidyr. The result of this section could be used in visualization using ggplo2. The important skill gained in this assignment is using cheat sheet to apply new functions on a dataset. 
   
   There were two challenges for me in this exercise:
   
-  - I used another machine when I tried to do this exercise. It took some time for me to figure out how to pull repository from git and use that (because I used to push to git not pull!).
+  - I used new machine when I tried to do this exercise (other than what I used always). It took some time for me to figure out how to pull repository from git and use that (because I always pushed to git and did not need to use pull!).
   
-  - In the selected dataset, bmi variable's class was "character" instead of numeric.
+  - In the selected dataset, bmi variable's class was "character" instead of numeric, I do not know why a numeric variable defined so.
