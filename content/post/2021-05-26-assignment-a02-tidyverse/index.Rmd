@@ -9,7 +9,7 @@ tags: []
 
 1. Introduction:
 
-  In this post, the solution for assignment 02 is provided. I selected "Stroke Prediction Dataset" from https://www.kaggle.com/datasets because I have had some basic studies on this topic, and I am eager to add more information while doing my assignment.
+  In this post, the solution for the assignment 02 is provided. I selected "Stroke Prediction Dataset" from https://www.kaggle.com/datasets because I have had some basic studies on this topic, and I am eager to add more information while doing my assignment.
   
   This dataset contains 5110 rows (each row attributes to a patient), and 12 columns (11 variables and 1 column as identity number for each observation/patient).
   
@@ -38,7 +38,7 @@ names(stroke_predic)
 
 
 
-2. Functions (one table and two table verb)
+2. one table and two table verb Functions
 
 ## One table verbs
 
@@ -205,14 +205,17 @@ stroke_predic_drop_NA <- stroke_predic_with_NA %>%
 fill(): Fill N/A objects with "up" or "down object.
 
 ```{r}
+hhh <- stroke_predic_with_NA %>%  
+  fill(age, .direction=c("up"))  #fill with below value
 
+hhh
 ```
 
 
 
 5. discussion
 
-  ..........
+  In this assignment, the Stroke Prediction dataset became more understandable by employing the capabilities of two libraries: dplyr and tidyr. The result of this section could be used in visualization using ggplo2. The important skill in this section is using cheetshets to apply new function on a dataset. 
   
   There were two challenges for me in this exercise:
   
