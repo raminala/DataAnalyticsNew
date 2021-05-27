@@ -172,6 +172,49 @@ New_observation</code></pre>
 </div>
 <div id="pivoting" class="section level2">
 <h2>Pivoting</h2>
+<p>pivot_wider(): “widens” data, increasing the number of columns and decreasing the number of rows.</p>
+<p>Here, I selected three columns and age group between to 50 before applying pivot function. Number of rows decrease from 1468 to 21</p>
+<pre class="r"><code>library(tidyr)
+
+ selected_data&lt;- stroke_predic %&gt;%
+ select(age, gender,stroke)  %&gt;%
+   filter(between(age,30,50))
+   
+   selected_data</code></pre>
+<pre><code>## # A tibble: 1,468 x 3
+##      age gender stroke
+##    &lt;dbl&gt; &lt;chr&gt;   &lt;dbl&gt;
+##  1    49 Female      1
+##  2    50 Female      1
+##  3    42 Male        1
+##  4    48 Male        1
+##  5    49 Female      1
+##  6    39 Female      1
+##  7    45 Female      1
+##  8    43 Male        1
+##  9    47 Male        1
+## 10    45 Male        1
+## # ... with 1,458 more rows</code></pre>
+<pre class="r"><code>  DS_pivot_wider &lt;- selected_data %&gt;%
+    pivot_wider(names_from = stroke, values_from = gender)
+ 
+
+
+DS_pivot_wider</code></pre>
+<pre><code>## # A tibble: 21 x 3
+##      age `1`       `0`       
+##    &lt;dbl&gt; &lt;list&gt;    &lt;list&gt;    
+##  1    49 &lt;chr [3]&gt; &lt;chr [76]&gt;
+##  2    50 &lt;chr [3]&gt; &lt;chr [80]&gt;
+##  3    42 &lt;chr [1]&gt; &lt;chr [70]&gt;
+##  4    48 &lt;chr [2]&gt; &lt;chr [64]&gt;
+##  5    39 &lt;chr [3]&gt; &lt;chr [68]&gt;
+##  6    45 &lt;chr [3]&gt; &lt;chr [82]&gt;
+##  7    43 &lt;chr [1]&gt; &lt;chr [69]&gt;
+##  8    47 &lt;chr [1]&gt; &lt;chr [74]&gt;
+##  9    38 &lt;chr [2]&gt; &lt;chr [70]&gt;
+## 10    46 &lt;chr [1]&gt; &lt;chr [61]&gt;
+## # ... with 11 more rows</code></pre>
 </div>
 <div id="missing-values-tidyr" class="section level2">
 <h2>Missing Values (tidyr)</h2>

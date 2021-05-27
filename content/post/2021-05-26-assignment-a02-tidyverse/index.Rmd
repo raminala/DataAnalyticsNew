@@ -155,16 +155,21 @@ stroke_predic %>%
 
 pivot_wider(): "widens" data, increasing the number of columns and decreasing the number of rows.
 
-Here, I selected three columns before applying pivot function.
+Here, I selected three columns and age group between  to 50 before applying pivot function. Number of rows decrease from 1468 to 21
 
 
 ```{r warning=FALSE}
 
 library(tidyr)
 
- DS_pivot_wider<- stroke_predic %>%
+ selected_data<- stroke_predic %>%
  select(age, gender,stroke)  %>%
-  pivot_wider(names_from = stroke, values_from = gender)
+   filter(between(age,30,50))
+   
+   selected_data
+   
+  DS_pivot_wider <- selected_data %>%
+    pivot_wider(names_from = stroke, values_from = gender)
  
 
 
