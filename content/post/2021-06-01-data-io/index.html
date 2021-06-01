@@ -176,20 +176,51 @@ names(edibnb_badnames)</code></pre>
 <div id="reading-an-xlsx-file" class="section level2">
 <h2>Reading an XLSX file</h2>
 <pre class="r"><code>library(readxl)
-fav_food &lt;- read_excel(&quot;favourite-food.xlsx&quot;) %&gt;%
+fav_food &lt;- read_excel(&quot;favourite-food.xlsx&quot;,
+                       na = c(&quot;N/A&quot;, &quot;99999&quot;)) %&gt;% # handelling NAs here
 
 # instead of calling library(readxl), we could use:
 # readxl::read_excel(&quot;favourite-food.xlsx&quot;)
 
   janitor::clean_names()
+
+# Make age numeric
+
+fav_food &lt;- fav_food %&gt;%
+  mutate(
+    age = if_else(age == &quot;five&quot;, &quot;5&quot;, age),
+    age = as.numeric(age)
+    )
+
   
 fav_food</code></pre>
 <pre><code>## # A tibble: 5 x 6
-##   student_id full_name        favourite_food     meal_plan           age   ses  
-##        &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt; &lt;chr&gt;
-## 1          1 Sunil Huffmann   Strawberry yoghurt Lunch only          4     High 
-## 2          2 Barclay Lynn     French fries       Lunch only          5     Midd~
-## 3          3 Jayendra Lyne    N/A                Breakfast and lunch 7     Low  
-## 4          4 Leon Rossini     Anchovies          Lunch only          99999 Midd~
-## 5          5 Chidiegwu Dunkel Pizza              Breakfast and lunch five  High</code></pre>
+##   student_id full_name        favourite_food     meal_plan             age ses  
+##        &lt;dbl&gt; &lt;chr&gt;            &lt;chr&gt;              &lt;chr&gt;               &lt;dbl&gt; &lt;chr&gt;
+## 1          1 Sunil Huffmann   Strawberry yoghurt Lunch only              4 High 
+## 2          2 Barclay Lynn     French fries       Lunch only              5 Midd~
+## 3          3 Jayendra Lyne    &lt;NA&gt;               Breakfast and lunch     7 Low  
+## 4          4 Leon Rossini     Anchovies          Lunch only             NA Midd~
+## 5          5 Chidiegwu Dunkel Pizza              Breakfast and lunch     5 High</code></pre>
+</div>
+<div id="etl-of-ses-variable-etlextract-transform-load" class="section level2">
+<h2>ETL of SES variable (ETL:Extract, transform, load)</h2>
+<pre class="r"><code>fav_food %&gt;%
+  count(ses)</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   ses        n
+##   &lt;chr&gt;  &lt;int&gt;
+## 1 High       2
+## 2 Low        1
+## 3 Middle     2</code></pre>
+<pre class="r"><code>fav_food &lt;- fav_food %&gt;%
+  mutate(ses = fct_relevel(ses, &quot;Low&quot;, &quot;Middle&quot;, &quot;High&quot;))
+fav_food %&gt;%
+  count(ses)</code></pre>
+<pre><code>## # A tibble: 3 x 2
+##   ses        n
+##   &lt;fct&gt;  &lt;int&gt;
+## 1 Low        1
+## 2 Middle     2
+## 3 High       2</code></pre>
 </div>

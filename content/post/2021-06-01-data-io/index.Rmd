@@ -81,13 +81,38 @@ read_csv("df-na.csv",
 ```{r}
 
 library(readxl)
-fav_food <- read_excel("favourite-food.xlsx") %>%
+fav_food <- read_excel("favourite-food.xlsx",
+                       na = c("N/A", "99999")) %>% # handelling NAs here
 
 # instead of calling library(readxl), we could use:
 # readxl::read_excel("favourite-food.xlsx")
 
   janitor::clean_names()
+
+# Make age numeric
+
+fav_food <- fav_food %>%
+  mutate(
+    age = if_else(age == "five", "5", age),
+    age = as.numeric(age)
+    )
+
   
 fav_food
+
+```
+
+## ETL of SES variable (ETL:Extract, transform, load)
+
+```{r}
+
+fav_food %>%
+  count(ses)
+
+fav_food <- fav_food %>%
+  mutate(ses = fct_relevel(ses, "Low", "Middle", "High"))
+fav_food %>%
+  count(ses)
+
 ```
 
