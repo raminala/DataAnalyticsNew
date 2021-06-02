@@ -58,25 +58,48 @@ tags: []
 </div>
 <div id="among-the-most-common-theme-of-lego-sets-purchased-what-is-the-most-common-subtheme" class="section level2">
 <h2>3- Among the most common theme of lego sets purchased, what is the most common subtheme?</h2>
+<pre class="r"><code>lego %&gt;%
+    select(theme, subtheme) %&gt;%
+    filter(theme==&quot;Star Wars&quot; |
+           theme==&quot;Nexo Knights&quot; |
+           theme==&quot;Gear&quot; |
+           theme==&quot;Mixels&quot;) %&gt;%
+    count(subtheme) %&gt;%
+    arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 30 x 2
+##    subtheme              n
+##    &lt;chr&gt;             &lt;int&gt;
+##  1 &lt;NA&gt;                 42
+##  2 Ultimate             22
+##  3 Series 9             21
+##  4 Series 7             18
+##  5 Series 8             16
+##  6 The Force Awakens    15
+##  7 Buildable Figures    11
+##  8 Episode V            10
+##  9 MicroFighters        10
+## 10 Battlefront           7
+## # ... with 20 more rows</code></pre>
+<p>answer: Ultimate is the most common subtheme (purchased 22 times).</p>
 </div>
 <div id="create-a-new-variable-called-age_group-and-group-the-ages-into-the-following-categories-18-and-under-19---25-26---35-36---50-51-and-over.-be-sure-to-save-the-updated-data-set-so-you-can-use-the-new-variable-in-other-questions." class="section level2">
 <h2>4- Create a new variable called age_group and group the ages into the following categories: “18 and under”, “19 - 25”, “26 - 35”, “36 - 50”, “51 and over”. Be sure to save the updated data set so you can use the new variable in other questions.</h2>
 </div>
 <div id="what-is-the-probability-a-randomly-selected-customer" class="section level2">
-<h2>What is the probability a randomly selected customer</h2>
+<h2>5- What is the probability a randomly selected customer</h2>
 <pre><code>    is in the 19 - 25 age group?
     is in the 19 - 25 age group and purchased a Duplo theme set?
     is in the 19 - 25 age group given they purchased a Duplo theme set?  </code></pre>
 </div>
 <div id="which-age-group-has-purchased-the-largest-number-of-lego-sets-how-many-did-they-purchase" class="section level2">
-<h2>Which age group has purchased the largest number of lego sets? How many did they purchase?</h2>
+<h2>6- Which age group has purchased the largest number of lego sets? How many did they purchase?</h2>
 </div>
 <div id="which-age-group-has-spent-the-most-money-on-legos-how-much-did-they-spend" class="section level2">
-<h2>Which age group has spent the most money on legos? How much did they spend?</h2>
+<h2>7- Which age group has spent the most money on legos? How much did they spend?</h2>
 </div>
 <div id="come-up-with-a-question-you-want-to-answer-using-this-data-and-write-it-down.-then-create-a-data-visualization-that-answers-the-question-and-briefly-explain-how-your-visualization-answers-the-question." class="section level2">
-<h2>Come up with a question you want to answer using this data, and write it down. Then, create a data visualization that answers the question, and briefly explain how your visualization answers the question.</h2>
+<h2>8- Come up with a question you want to answer using this data, and write it down. Then, create a data visualization that answers the question, and briefly explain how your visualization answers the question.</h2>
 </div>
 <div id="add-one-element-to-the-plot-from-the-previous-exercise-to-change-the-look-of-the-plot-without-changing-the-underlying-data.-for-example-you-can-change-the-theme-background-color-add-annotations-etc.-state-the-change-youre-making-and-display-the-updated-visualization.-we-encourage-you-to-be-creative" class="section level2">
-<h2>Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!</h2>
+<h2>9- Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!</h2>
 </div>
