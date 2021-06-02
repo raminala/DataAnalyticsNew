@@ -11,35 +11,6 @@ tags: []
 
 
 <p>Use the attached file lego_sales.csv and complete the following tasks using tidyverse. Submit the RmD file and link to the post on your website.</p>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
-<pre><code>## v ggplot2 3.3.3     v purrr   0.3.4
-## v tibble  3.1.1     v dplyr   1.0.6
-## v tidyr   1.1.3     v stringr 1.4.0
-## v readr   1.4.0     v forcats 0.5.1</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x dplyr::filter() masks stats::filter()
-## x dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>lego &lt;- read_csv(&quot;lego_sales.csv&quot;)</code></pre>
-<pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   first_name = col_character(),
-##   last_name = col_character(),
-##   age = col_double(),
-##   phone_number = col_character(),
-##   set_id = col_double(),
-##   number = col_character(),
-##   theme = col_character(),
-##   subtheme = col_character(),
-##   year = col_double(),
-##   name = col_character(),
-##   pieces = col_double(),
-##   us_price = col_double(),
-##   image_url = col_character(),
-##   quantity = col_double()
-## )</code></pre>
-<pre class="r"><code>head(lego)</code></pre>
 <pre><code>## # A tibble: 6 x 14
 ##   first_name last_name   age phone_number set_id number theme    subtheme   year
 ##   &lt;chr&gt;      &lt;chr&gt;     &lt;dbl&gt; &lt;chr&gt;         &lt;dbl&gt; &lt;chr&gt;  &lt;chr&gt;    &lt;chr&gt;     &lt;dbl&gt;
@@ -51,7 +22,6 @@ tags: []
 ## 6 Chelsea    Bouchard     41 &lt;NA&gt;          24721 10831  Duplo    &lt;NA&gt;       2018
 ## # ... with 5 more variables: name &lt;chr&gt;, pieces &lt;dbl&gt;, us_price &lt;dbl&gt;,
 ## #   image_url &lt;chr&gt;, quantity &lt;dbl&gt;</code></pre>
-<pre class="r"><code>glimpse(lego)</code></pre>
 <pre><code>## Rows: 620
 ## Columns: 14
 ## $ first_name   &lt;chr&gt; &quot;Kimberly&quot;, &quot;Neel&quot;, &quot;Neel&quot;, &quot;Chelsea&quot;, &quot;Chelsea&quot;, &quot;Chelse~
@@ -68,7 +38,6 @@ tags: []
 ## $ us_price     &lt;dbl&gt; 9.99, 119.99, 39.99, 29.99, 119.99, 9.99, 24.99, 9.99, 9.~
 ## $ image_url    &lt;chr&gt; &quot;http://images.brickset.com/sets/images/76062-1.jpg&quot;, &quot;ht~
 ## $ quantity     &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 3, 1, 2, 1, 1, 2, 1, 1, 1, 1, 1, 1, ~</code></pre>
-<pre class="r"><code>names(lego)</code></pre>
 <pre><code>##  [1] &quot;first_name&quot;   &quot;last_name&quot;    &quot;age&quot;          &quot;phone_number&quot; &quot;set_id&quot;      
 ##  [6] &quot;number&quot;       &quot;theme&quot;        &quot;subtheme&quot;     &quot;year&quot;         &quot;name&quot;        
 ## [11] &quot;pieces&quot;       &quot;us_price&quot;     &quot;image_url&quot;    &quot;quantity&quot;</code></pre>

@@ -10,15 +10,15 @@ tags: []
 Use the attached file lego_sales.csv and complete the following tasks using tidyverse. Submit the RmD file and link to the post on your website.
 
 
-```{r}
+```{r message=FALSE, warning=FALSE, echo=FALSE}
 
 library(tidyverse)
 
 lego <- read_csv("lego_sales.csv")
 
-head(lego)
-glimpse(lego)
-names(lego)
+#head(lego)
+#glimpse(lego)
+#names(lego)
 
 ```
 
