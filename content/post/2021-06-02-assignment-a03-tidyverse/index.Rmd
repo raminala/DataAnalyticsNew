@@ -8,7 +8,7 @@ tags: []
 ---
 
 Use the attached file lego_sales.csv and complete the following tasks using tidyverse. Submit the RmD file and link to the post on your website.
-///
+...................
 
 
 ```{r message=FALSE, warning=FALSE, echo=FALSE}
