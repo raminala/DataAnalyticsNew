@@ -23,16 +23,35 @@ names(lego)
 ```
 
 
-## What are the three most common first names of customers?
+## 1- What are the three most common first names of customers?
+
+```{r}
+
+lego %>%
+    select(first_name) %>%
+    count(first_name) %>%
+    arrange(desc(n))
+
+```
+answer: 1-Jackson (13) 2,3- Jacob (11) , Jacob (11) are three most popular first names.
+
+## 2- What are the three most common themes of lego sets purchased?
+
+```{r}
+lego %>%
+    select(theme) %>%
+    count(theme) %>%
+    arrange(desc(n))
+```
+
+answer: 1-Star Wars (75) 2- Nexo Knights (64) 3- Gear & Mixels (55-tie) are common themes of lego sets purchased.
+
+## 3- Among the most common theme of lego sets purchased, what is the most common subtheme?
 
 
 
-## What are the three most common themes of lego sets purchased?
     
-
-## Among the most common theme of lego sets purchased, what is the most common subtheme?
-    
-## Create a new variable called age_group and group the ages into the following categories: “18 and under”, “19 - 25”, “26 - 35”, “36 - 50”, “51 and over”. Be sure to save the updated data set so you can use the new variable in other questions.
+## 4- Create a new variable called age_group and group the ages into the following categories: “18 and under”, “19 - 25”, “26 - 35”, “36 - 50”, “51 and over”. Be sure to save the updated data set so you can use the new variable in other questions.
     
 
 ## What is the probability a randomly selected customer

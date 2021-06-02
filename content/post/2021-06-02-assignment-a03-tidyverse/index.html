@@ -73,16 +73,54 @@ tags: []
 ##  [6] &quot;number&quot;       &quot;theme&quot;        &quot;subtheme&quot;     &quot;year&quot;         &quot;name&quot;        
 ## [11] &quot;pieces&quot;       &quot;us_price&quot;     &quot;image_url&quot;    &quot;quantity&quot;</code></pre>
 <div id="what-are-the-three-most-common-first-names-of-customers" class="section level2">
-<h2>What are the three most common first names of customers?</h2>
+<h2>1- What are the three most common first names of customers?</h2>
+<pre class="r"><code>lego %&gt;%
+    select(first_name) %&gt;%
+    count(first_name) %&gt;%
+    arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 211 x 2
+##    first_name     n
+##    &lt;chr&gt;      &lt;int&gt;
+##  1 Jackson       13
+##  2 Jacob         11
+##  3 Joseph        11
+##  4 Michael       10
+##  5 Audrey         8
+##  6 Connor         8
+##  7 Kaitlyn        8
+##  8 Lucas          8
+##  9 Amanda         7
+## 10 Joshua         7
+## # ... with 201 more rows</code></pre>
+<p>answer: 1-Jackson (13) 2,3- Jacob (11) , Jacob (11) are three most popular first names.</p>
 </div>
 <div id="what-are-the-three-most-common-themes-of-lego-sets-purchased" class="section level2">
-<h2>What are the three most common themes of lego sets purchased?</h2>
+<h2>2- What are the three most common themes of lego sets purchased?</h2>
+<pre class="r"><code>lego %&gt;%
+    select(theme) %&gt;%
+    count(theme) %&gt;%
+    arrange(desc(n))</code></pre>
+<pre><code>## # A tibble: 25 x 2
+##    theme            n
+##    &lt;chr&gt;        &lt;int&gt;
+##  1 Star Wars       75
+##  2 Nexo Knights    64
+##  3 Gear            55
+##  4 Mixels          55
+##  5 City            45
+##  6 Friends         42
+##  7 Ninjago         38
+##  8 Duplo           35
+##  9 Bionicle        34
+## 10 Creator         25
+## # ... with 15 more rows</code></pre>
+<p>answer: 1-Star Wars (75) 2- Nexo Knights (64) 3- Gear &amp; Mixels (55-tie) are common themes of lego sets purchased.</p>
 </div>
 <div id="among-the-most-common-theme-of-lego-sets-purchased-what-is-the-most-common-subtheme" class="section level2">
-<h2>Among the most common theme of lego sets purchased, what is the most common subtheme?</h2>
+<h2>3- Among the most common theme of lego sets purchased, what is the most common subtheme?</h2>
 </div>
 <div id="create-a-new-variable-called-age_group-and-group-the-ages-into-the-following-categories-18-and-under-19---25-26---35-36---50-51-and-over.-be-sure-to-save-the-updated-data-set-so-you-can-use-the-new-variable-in-other-questions." class="section level2">
-<h2>Create a new variable called age_group and group the ages into the following categories: “18 and under”, “19 - 25”, “26 - 35”, “36 - 50”, “51 and over”. Be sure to save the updated data set so you can use the new variable in other questions.</h2>
+<h2>4- Create a new variable called age_group and group the ages into the following categories: “18 and under”, “19 - 25”, “26 - 35”, “36 - 50”, “51 and over”. Be sure to save the updated data set so you can use the new variable in other questions.</h2>
 </div>
 <div id="what-is-the-probability-a-randomly-selected-customer" class="section level2">
 <h2>What is the probability a randomly selected customer</h2>
