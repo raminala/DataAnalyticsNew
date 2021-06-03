@@ -33,7 +33,7 @@ lego %>%
     arrange(desc(n))
 
 ```
-answer: 1-Jackson (13) 2,3- Jacob (11) , Jacob (11) are three most popular first names.
+answer: 1-Jackson (13) 2,3- Jacob (11) , Joseph (11) are three most popular first names.
 
 ## 2- What are the three most common themes of lego sets purchased?
 
