@@ -267,7 +267,12 @@ pp</code></pre>
 </div>
 <div id="add-one-element-to-the-plot-from-the-previous-exercise-to-change-the-look-of-the-plot-without-changing-the-underlying-data.-for-example-you-can-change-the-theme-background-color-add-annotations-etc.-state-the-change-youre-making-and-display-the-updated-visualization.-we-encourage-you-to-be-creative" class="section level2">
 <h2>9- Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!</h2>
-<p>The pie chart I made in the question 8 did not use ggplot2 library, so it looks basic.</p>
-<pre class="r"><code>write_csv(lego_age_group, &quot;lego_age_group&quot;)</code></pre>
-<p>+++++++++++++++++++++++++++++++++++++++</p>
+<p>The pie chart I made in the question 8 did not use ggplot2 library (but basic pie plot), so it looks basic. ggplot has not a dedicated geom_ for pie chat, however, it has indirect method for generating a pie plot and employing capabilities of ggplot2 on that. (coord_polar()).</p>
+<p>The question is to generate a pie chart using ggplot2 and add labels to that. Pie plot should look like previous basic pie chart but more professional.</p>
+<pre class="r"><code>ggplot(plot_, aes(x = &quot;&quot;,n, fill=NumberOfPieces))+
+  geom_bar(stat = &quot;identity&quot;, color = &quot;black&quot;)+
+  labs(title = &quot;the number of each categories&quot;) +
+  coord_polar(&quot;y&quot;) +
+  theme_void()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 </div>

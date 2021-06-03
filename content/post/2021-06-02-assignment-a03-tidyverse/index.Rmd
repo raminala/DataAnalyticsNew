@@ -231,7 +231,10 @@ ggplot(pp, aes(NumberOfPieces, average_price))+
     
 ## 9- Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!
 
-The pie chart I made in the question 8 did not use ggplot2 library, so it looks basic. ggplot has not dedicated geom_ for pie chat
+The pie chart I made in the question 8 did not use ggplot2 library (but basic pie plot), so it looks basic. ggplot has not a dedicated geom_ for pie chat, however, it has indirect method for generating a pie plot and employing capabilities of ggplot2 on that. (coord_polar()).
+
+The question is to generate a pie chart using ggplot2 and add labels to that. Pie plot should look like previous basic pie chart but more professional.
+
 
 ```{r}
 
