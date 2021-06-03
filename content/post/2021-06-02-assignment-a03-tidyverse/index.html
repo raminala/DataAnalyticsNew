@@ -11,7 +11,6 @@ tags: []
 
 
 <p>Use the attached file lego_sales.csv and complete the following tasks using tidyverse. Submit the RmD file and link to the post on your website.</p>
-<p>……………….</p>
 <div id="what-are-the-three-most-common-first-names-of-customers" class="section level2">
 <h2>1- What are the three most common first names of customers?</h2>
 <pre class="r"><code>lego %&gt;%
@@ -239,8 +238,13 @@ first, show the percentage of each catagories using bar and pie charts.</p>
         pieces &lt;= 75 ~ &quot;Under 75 pices&quot; ,
         between(pieces, 76, 150) ~ &quot;76 to 150 pieces&quot; ,
         between(pieces, 151, 400) ~ &quot;151 to 400 pieces&quot; ,
-        pieces &gt;= 401 ~ &quot;over 400 pieces&quot; ,
-    ))
+        pieces &gt;= 401 ~ &quot;over 400 pieces&quot;)) %&gt;%
+  
+        mutate(NumberOfPices=fct_relevel(NumberOfPices, &quot;Under 75 pices&quot;,
+                                    &quot;76 to 150 pieces&quot; ,
+                                   &quot;151 to 400 pieces&quot; ,
+                                  &quot;over 400 pieces&quot; )) %&gt;%
+                                   drop_na()
 
 
 
@@ -257,20 +261,23 @@ plot_ &lt;- lego_piece_price %&gt;%
 ggplot(plot_, aes(NumberOfPices, n))+
   geom_col()</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<pre class="r"><code>labels=c(lego_piece_price$NumberOfPices)
+<pre class="r"><code>labels=c(&quot;Under 75 pices&quot;,&quot;76 to 150 pieces&quot;,&quot;151 to 400 pieces&quot;,&quot;over 400 pieces&quot;)
 
 
 pie(plot_$n,labels)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
 <pre class="r"><code>#</code></pre>
 <p>Now, calculate avarage price of each catagories.</p>
-<pre class="r"><code>lego_piece_price %&gt;%
+<pre class="r"><code>pp &lt;- lego_piece_price %&gt;%
   group_by(NumberOfPices) %&gt;%
-mutate(average_price=mean(us_price))</code></pre>
-<pre><code>## # A tibble: 620 x 4
-## # Groups:   NumberOfPices [5]
+  mutate(average_price=mean(us_price))
+
+
+pp</code></pre>
+<pre><code>## # A tibble: 551 x 4
+## # Groups:   NumberOfPices [4]
 ##    pieces us_price NumberOfPices     average_price
-##     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt;
+##     &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;                     &lt;dbl&gt;
 ##  1     77     9.99 76 to 150 pieces          14.5 
 ##  2   1093   120.   over 400 pieces           77.5 
 ##  3    333    40.0  151 to 400 pieces         26.8 
@@ -280,10 +287,14 @@ mutate(average_price=mean(us_price))</code></pre>
 ##  7    233    25.0  151 to 400 pieces         26.8 
 ##  8     77     9.99 76 to 150 pieces          14.5 
 ##  9    108     9.99 76 to 150 pieces          14.5 
-## 10     NA   110.   &lt;NA&gt;                      38.1 
-## # ... with 610 more rows</code></pre>
+## 10     13     9.99 Under 75 pices             9.84
+## # ... with 541 more rows</code></pre>
+<pre class="r"><code>ggplot(pp, aes(NumberOfPices, average_price))+
+  geom_col()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="add-one-element-to-the-plot-from-the-previous-exercise-to-change-the-look-of-the-plot-without-changing-the-underlying-data.-for-example-you-can-change-the-theme-background-color-add-annotations-etc.-state-the-change-youre-making-and-display-the-updated-visualization.-we-encourage-you-to-be-creative" class="section level2">
 <h2>9- Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!</h2>
 <pre class="r"><code>write_csv(lego_age_group, &quot;lego_age_group&quot;)</code></pre>
+<p>…………………</p>
 </div>
