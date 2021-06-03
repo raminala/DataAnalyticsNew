@@ -175,8 +175,13 @@ new1
 
 ## 8- Come up with a question you want to answer using this data, and write it down. Then, create a data visualization that answers the question, and briefly explain how your visualization answers the question.
    
- I want to know the correlation between the "pieces" and "us_price". For this purpose, categorize legos to four groups:  “75 and under”, “76 - 150”, “151 - 400”, “401 and over”.
+ I want to know the correlation between the "pieces" and "us_price". For this purpose, categorize legos to four groups:  “75 and under pieces”, “76 - 150 pieces”, “151 - 400 pieces”, “401 pieces and over”.
  first, show the number of each categories using bar and pie charts.
+ In all plots:
+ 
+ - relevel x-axis parameter from fewest to largest number of pieces. (fct_relevel())
+ 
+ - delete NA elements from counting. (drop_na())
    
 ```{r}
 lego_piece_price <- lego %>%
@@ -198,7 +203,6 @@ plot_ <- lego_piece_price %>%
   group_by(NumberOfPieces) %>%
  count()
 
-
 ggplot(plot_, aes(NumberOfPieces, n))+
   geom_col()
 
@@ -207,14 +211,10 @@ labels=c("Under 75 pices","76 to 150 pieces","151 to 400 pieces","over 400 piece
 
 pie(plot_$n,labels)
 
-#
-
 ```
   
-  Now, calculate average price of each categories.
+Now, calculate average price of each categories.
   
-  
-
 ```{r}
 pp <- lego_piece_price %>%
   group_by(NumberOfPieces) %>%
@@ -231,12 +231,15 @@ ggplot(pp, aes(NumberOfPieces, average_price))+
     
 ## 9- Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!
 
-
+The pie chart I made in the question 8 did not use ggplot2 library, so it looks basic. ggplot has not dedicated geom_ for pie chat
 
 ```{r}
 
-write_csv(lego_age_group, "lego_age_group")
+ggplot(plot_, aes(x = "",n, fill=NumberOfPieces))+
+  geom_bar(stat = "identity", color = "black")+
+  labs(title = "the number of each categories") +
+  coord_polar("y") +
+  theme_void()
 
 ```
 
-+++++++++++++++++++++++++++++++++++++++

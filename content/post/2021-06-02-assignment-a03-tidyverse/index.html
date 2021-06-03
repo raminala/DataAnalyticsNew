@@ -213,8 +213,13 @@ new1</code></pre>
 </div>
 <div id="come-up-with-a-question-you-want-to-answer-using-this-data-and-write-it-down.-then-create-a-data-visualization-that-answers-the-question-and-briefly-explain-how-your-visualization-answers-the-question." class="section level2">
 <h2>8- Come up with a question you want to answer using this data, and write it down. Then, create a data visualization that answers the question, and briefly explain how your visualization answers the question.</h2>
-<p>I want to know the correlation between the “pieces” and “us_price”. For this purpose, categorize legos to four groups: “75 and under”, “76 - 150”, “151 - 400”, “401 and over”.
-first, show the number of each categories using bar and pie charts.</p>
+<p>I want to know the correlation between the “pieces” and “us_price”. For this purpose, categorize legos to four groups: “75 and under pieces”, “76 - 150 pieces”, “151 - 400 pieces”, “401 pieces and over”.
+first, show the number of each categories using bar and pie charts.
+In all plots:</p>
+<ul>
+<li><p>relevel x-axis parameter from fewest to largest number of pieces. (fct_relevel())</p></li>
+<li><p>delete NA elements from counting. (drop_na())</p></li>
+</ul>
 <pre class="r"><code>lego_piece_price &lt;- lego %&gt;%
   select(pieces, us_price) %&gt;%
     mutate(NumberOfPieces=case_when(
@@ -234,7 +239,6 @@ plot_ &lt;- lego_piece_price %&gt;%
   group_by(NumberOfPieces) %&gt;%
  count()
 
-
 ggplot(plot_, aes(NumberOfPieces, n))+
   geom_col()</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
@@ -243,7 +247,6 @@ ggplot(plot_, aes(NumberOfPieces, n))+
 
 pie(plot_$n,labels)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
-<pre class="r"><code>#</code></pre>
 <p>Now, calculate average price of each categories.</p>
 <pre class="r"><code>pp &lt;- lego_piece_price %&gt;%
   group_by(NumberOfPieces) %&gt;%
@@ -264,6 +267,7 @@ pp</code></pre>
 </div>
 <div id="add-one-element-to-the-plot-from-the-previous-exercise-to-change-the-look-of-the-plot-without-changing-the-underlying-data.-for-example-you-can-change-the-theme-background-color-add-annotations-etc.-state-the-change-youre-making-and-display-the-updated-visualization.-we-encourage-you-to-be-creative" class="section level2">
 <h2>9- Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!</h2>
+<p>The pie chart I made in the question 8 did not use ggplot2 library, so it looks basic.</p>
 <pre class="r"><code>write_csv(lego_age_group, &quot;lego_age_group&quot;)</code></pre>
 <p>+++++++++++++++++++++++++++++++++++++++</p>
 </div>
