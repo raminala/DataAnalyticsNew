@@ -8,6 +8,7 @@ tags: []
 ---
 
 Use the attached file lego_sales.csv and complete the following tasks using tidyverse. Submit the RmD file and link to the post on your website.
+
 ...................
 
 
@@ -66,29 +67,186 @@ answer: Ultimate is the most common subtheme (purchased 22 times).
     
     
 ```{r}
-#lego %>%
- #   mutate(age_group)
+lego_age_group <- lego %>%
+    mutate(age_group=case_when(
+        age <= 18 ~ "18 and under" ,
+        between(age, 19, 25) ~ "19 - 25" ,
+        between(age, 26, 35) ~ "26 - 35" ,
+        between(age, 36, 50) ~ "36 - 50" ,
+        age >= 51 ~ "51 and over" ,
+    ))
 
+# To represent result:
+lego_age_group %>%
+    select(first_name, age ,age_group)
 ```
 
 ## 5- What is the probability a randomly selected customer
 
 ## is in the 19 - 25 age group?
 
+```{r}
+lego_age_group  %>%
+    count(age_group) %>%
+    mutate(probablity=n/sum(n))
+```
+
+The probablity is 0.2080645 or nearly 20.8%.
+
 ## is in the 19 - 25 age group and purchased a Duplo theme set?
 
-## is in the 19 - 25 age group given they purchased a Duplo theme set?
-  
 
+```{r}
+
+lego_age_group  %>%
+        mutate(target_group=case_when(
+        theme== "Duplo" & between(age, 19, 25) ~ "19-25 age group and purchased a Duplo" ,
+        TRUE ~ "Not that group!" ,
+             )) %>%
+
+# To represent result:
+
+    select(theme ,age_group, target_group) %>%
+
+# To represent result:
+     count(target_group) %>%
+    mutate(probablity=n/sum(n))
+
+```
+
+
+The probablity is 0.01451613 or nearly 1.45%.
+
+## is in the 19 - 25 age group given they purchased a Duplo theme set?
+
+```{r}
+
+lego_age_group  %>%
+        filter(theme == "Duplo")  %>%
+        mutate(target_group=case_when(
+        between(age, 19, 25) ~ "purchased a Duplo an 19-25 age group" ,
+        TRUE ~ "purchased a Duplo an NOT 19-25 age group"
+             )) %>%
+
+# To represent result:
+
+    select(theme ,age_group, target_group) %>%
+
+# To represent result:
+     count(target_group) %>%
+    mutate(probablity=n/sum(n))
+```
+
+The probablity is 0.2571429 or nearly 25.71%.
 
 ## 6- Which age group has purchased the largest number of lego sets? How many did they purchase? 
 
+
+```{r}
+new <- lego_age_group  %>%
+    group_by(age_group)  %>%
+    count(quantity)  %>%
+    mutate(Number_of_Purchase=n*quantity)
+
+new %>%
+    select(age_group, Number_of_Purchase)%>%
+    mutate(total=sum(Number_of_Purchase)) %>%
+    arrange(desc(total))
+
+
+```
+
+36 - 50 years. They purchased 313 sets.
     
 ## 7- Which age group has spent the most money on legos? How much did they spend?
-    
+  
+  
+```{r}
+new1 <- lego_age_group %>%
+    group_by(age_group)   %>%
+    select(age_group, us_price, quantity) %>%
+    mutate(total_spend=quantity*us_price) %>%
+    mutate(total=sum(total_spend)) %>%
+    arrange(desc(total))
+
+new1
+```
+  36 - 50 years. They spent 9532.87 USD in total.
+
 
 
 ## 8- Come up with a question you want to answer using this data, and write it down. Then, create a data visualization that answers the question, and briefly explain how your visualization answers the question.
+   
+ I want to know the corrolation between the "pieces" and "us_price". For this purpose, categorize legos to four groups:  “75 and under”, “76 - 150”, “151 - 400”, “401 and over”.
+ first, show the percentage of each catagories using bar and pie charts.
+   
+```{r}
+lego_piece_price <- lego %>%
+  select(pieces, us_price) %>%
+    mutate(NumberOfPices=case_when(
+        pieces <= 75 ~ "Under 75 pices" ,
+        between(pieces, 76, 150) ~ "76 to 150 pieces" ,
+        between(pieces, 151, 400) ~ "151 to 400 pieces" ,
+        pieces >= 401 ~ "over 400 pieces")) %>%
+  
+        mutate(NumberOfPices=fct_relevel(NumberOfPices, "Under 75 pices",
+                                    "76 to 150 pieces" ,
+                                   "151 to 400 pieces" ,
+                                  "over 400 pieces" )) %>%
+                                   drop_na()
+
+
+
+
+plot_ <- lego_piece_price %>%
+  group_by(NumberOfPices) %>%
+ count()
+
+
+#factor and sort x elements
+
+
+
+ggplot(plot_, aes(NumberOfPices, n))+
+  geom_col()
+
+labels=c("Under 75 pices","76 to 150 pieces","151 to 400 pieces","over 400 pieces")
+
+
+pie(plot_$n,labels)
+
+#
+
+```
+  
+  Now, calculate avarage price of each catagories.
+  
+  
+```{r}
+pp <- lego_piece_price %>%
+  group_by(NumberOfPices) %>%
+  mutate(average_price=mean(us_price))
+
+
+pp
+
+ggplot(pp, aes(NumberOfPices, average_price))+
+  geom_col()
+
+
+
+```
+  
+   
     
 ## 9- Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!
-    
+
+
+
+```{r}
+
+write_csv(lego_age_group, "lego_age_group")
+
+```
+ ......................................................
+ 

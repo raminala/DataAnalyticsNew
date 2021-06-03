@@ -10,8 +10,8 @@ tags: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>Use the attached file lego_sales.csv and complete the following tasks using tidyverse. Submit the RmD file and link to the post on your website.
-……………….</p>
+<p>Use the attached file lego_sales.csv and complete the following tasks using tidyverse. Submit the RmD file and link to the post on your website.</p>
+<p>……………….</p>
 <div id="what-are-the-three-most-common-first-names-of-customers" class="section level2">
 <h2>1- What are the three most common first names of customers?</h2>
 <pre class="r"><code>lego %&gt;%
@@ -84,30 +84,206 @@ tags: []
 </div>
 <div id="create-a-new-variable-called-age_group-and-group-the-ages-into-the-following-categories-18-and-under-19---25-26---35-36---50-51-and-over.-be-sure-to-save-the-updated-data-set-so-you-can-use-the-new-variable-in-other-questions." class="section level2">
 <h2>4- Create a new variable called age_group and group the ages into the following categories: “18 and under”, “19 - 25”, “26 - 35”, “36 - 50”, “51 and over”. Be sure to save the updated data set so you can use the new variable in other questions.</h2>
-<pre class="r"><code>#lego %&gt;%
- #   mutate(age_group)</code></pre>
+<pre class="r"><code>lego_age_group &lt;- lego %&gt;%
+    mutate(age_group=case_when(
+        age &lt;= 18 ~ &quot;18 and under&quot; ,
+        between(age, 19, 25) ~ &quot;19 - 25&quot; ,
+        between(age, 26, 35) ~ &quot;26 - 35&quot; ,
+        between(age, 36, 50) ~ &quot;36 - 50&quot; ,
+        age &gt;= 51 ~ &quot;51 and over&quot; ,
+    ))
+
+# To represent result:
+lego_age_group %&gt;%
+    select(first_name, age ,age_group)</code></pre>
+<pre><code>## # A tibble: 620 x 3
+##    first_name   age age_group
+##    &lt;chr&gt;      &lt;dbl&gt; &lt;chr&gt;    
+##  1 Kimberly      24 19 - 25  
+##  2 Neel          35 26 - 35  
+##  3 Neel          35 26 - 35  
+##  4 Chelsea       41 36 - 50  
+##  5 Chelsea       41 36 - 50  
+##  6 Chelsea       41 36 - 50  
+##  7 Bryanna       19 19 - 25  
+##  8 Bryanna       19 19 - 25  
+##  9 Caleb         37 36 - 50  
+## 10 Caleb         37 36 - 50  
+## # ... with 610 more rows</code></pre>
 </div>
 <div id="what-is-the-probability-a-randomly-selected-customer" class="section level2">
 <h2>5- What is the probability a randomly selected customer</h2>
 </div>
 <div id="is-in-the-19---25-age-group" class="section level2">
 <h2>is in the 19 - 25 age group?</h2>
+<pre class="r"><code>lego_age_group  %&gt;%
+    count(age_group) %&gt;%
+    mutate(probablity=n/sum(n))</code></pre>
+<pre><code>## # A tibble: 5 x 3
+##   age_group        n probablity
+##   &lt;chr&gt;        &lt;int&gt;      &lt;dbl&gt;
+## 1 18 and under    30     0.0484
+## 2 19 - 25        129     0.208 
+## 3 26 - 35        183     0.295 
+## 4 36 - 50        216     0.348 
+## 5 51 and over     62     0.1</code></pre>
+<p>The probablity is 0.2080645 or nearly 20.8%.</p>
 </div>
 <div id="is-in-the-19---25-age-group-and-purchased-a-duplo-theme-set" class="section level2">
 <h2>is in the 19 - 25 age group and purchased a Duplo theme set?</h2>
+<pre class="r"><code>lego_age_group  %&gt;%
+        mutate(target_group=case_when(
+        theme== &quot;Duplo&quot; &amp; between(age, 19, 25) ~ &quot;19-25 age group and purchased a Duplo&quot; ,
+        TRUE ~ &quot;Not that group!&quot; ,
+             )) %&gt;%
+
+# To represent result:
+
+    select(theme ,age_group, target_group) %&gt;%
+
+# To represent result:
+     count(target_group) %&gt;%
+    mutate(probablity=n/sum(n))</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   target_group                              n probablity
+##   &lt;chr&gt;                                 &lt;int&gt;      &lt;dbl&gt;
+## 1 19-25 age group and purchased a Duplo     9     0.0145
+## 2 Not that group!                         611     0.985</code></pre>
+<p>The probablity is 0.01451613 or nearly 1.45%.</p>
 </div>
 <div id="is-in-the-19---25-age-group-given-they-purchased-a-duplo-theme-set" class="section level2">
 <h2>is in the 19 - 25 age group given they purchased a Duplo theme set?</h2>
+<pre class="r"><code>lego_age_group  %&gt;%
+        filter(theme == &quot;Duplo&quot;)  %&gt;%
+        mutate(target_group=case_when(
+        between(age, 19, 25) ~ &quot;purchased a Duplo an 19-25 age group&quot; ,
+        TRUE ~ &quot;purchased a Duplo an NOT 19-25 age group&quot;
+             )) %&gt;%
+
+# To represent result:
+
+    select(theme ,age_group, target_group) %&gt;%
+
+# To represent result:
+     count(target_group) %&gt;%
+    mutate(probablity=n/sum(n))</code></pre>
+<pre><code>## # A tibble: 2 x 3
+##   target_group                                 n probablity
+##   &lt;chr&gt;                                    &lt;int&gt;      &lt;dbl&gt;
+## 1 purchased a Duplo an 19-25 age group         9      0.257
+## 2 purchased a Duplo an NOT 19-25 age group    26      0.743</code></pre>
+<p>The probablity is 0.2571429 or nearly 25.71%.</p>
 </div>
 <div id="which-age-group-has-purchased-the-largest-number-of-lego-sets-how-many-did-they-purchase" class="section level2">
 <h2>6- Which age group has purchased the largest number of lego sets? How many did they purchase?</h2>
+<pre class="r"><code>new &lt;- lego_age_group  %&gt;%
+    group_by(age_group)  %&gt;%
+    count(quantity)  %&gt;%
+    mutate(Number_of_Purchase=n*quantity)
+
+new %&gt;%
+    select(age_group, Number_of_Purchase)%&gt;%
+    mutate(total=sum(Number_of_Purchase)) %&gt;%
+    arrange(desc(total))</code></pre>
+<pre><code>## # A tibble: 21 x 3
+## # Groups:   age_group [5]
+##    age_group Number_of_Purchase total
+##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt;
+##  1 36 - 50                  143   313
+##  2 36 - 50                  108   313
+##  3 36 - 50                   45   313
+##  4 36 - 50                   12   313
+##  5 36 - 50                    5   313
+##  6 26 - 35                  116   267
+##  7 26 - 35                  106   267
+##  8 26 - 35                   33   267
+##  9 26 - 35                   12   267
+## 10 19 - 25                   93   174
+## # ... with 11 more rows</code></pre>
+<p>36 - 50 years. They purchased 313 sets.</p>
 </div>
 <div id="which-age-group-has-spent-the-most-money-on-legos-how-much-did-they-spend" class="section level2">
 <h2>7- Which age group has spent the most money on legos? How much did they spend?</h2>
+<pre class="r"><code>new1 &lt;- lego_age_group %&gt;%
+    group_by(age_group)   %&gt;%
+    select(age_group, us_price, quantity) %&gt;%
+    mutate(total_spend=quantity*us_price) %&gt;%
+    mutate(total=sum(total_spend)) %&gt;%
+    arrange(desc(total))
+
+new1</code></pre>
+<pre><code>## # A tibble: 620 x 5
+## # Groups:   age_group [5]
+##    age_group us_price quantity total_spend total
+##    &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
+##  1 36 - 50      30.0         1       30.0  9533.
+##  2 36 - 50     120.          1      120.   9533.
+##  3 36 - 50       9.99        1        9.99 9533.
+##  4 36 - 50       9.99        1        9.99 9533.
+##  5 36 - 50     110.          2      220.   9533.
+##  6 36 - 50      15.0         1       15.0  9533.
+##  7 36 - 50      50.0         1       50.0  9533.
+##  8 36 - 50       4.99        1        4.99 9533.
+##  9 36 - 50     120.          1      120.   9533.
+## 10 36 - 50     170.          1      170.   9533.
+## # ... with 610 more rows</code></pre>
+<p>36 - 50 years. They spent 9532.87 USD in total.</p>
 </div>
 <div id="come-up-with-a-question-you-want-to-answer-using-this-data-and-write-it-down.-then-create-a-data-visualization-that-answers-the-question-and-briefly-explain-how-your-visualization-answers-the-question." class="section level2">
 <h2>8- Come up with a question you want to answer using this data, and write it down. Then, create a data visualization that answers the question, and briefly explain how your visualization answers the question.</h2>
+<p>I want to know the corrolation between the “pieces” and “us_price”. For this purpose, categorize legos to four groups: “75 and under”, “76 - 150”, “151 - 400”, “401 and over”.
+first, show the percentage of each catagories using bar and pie charts.</p>
+<pre class="r"><code>lego_piece_price &lt;- lego %&gt;%
+  select(pieces, us_price) %&gt;%
+    mutate(NumberOfPices=case_when(
+        pieces &lt;= 75 ~ &quot;Under 75 pices&quot; ,
+        between(pieces, 76, 150) ~ &quot;76 to 150 pieces&quot; ,
+        between(pieces, 151, 400) ~ &quot;151 to 400 pieces&quot; ,
+        pieces &gt;= 401 ~ &quot;over 400 pieces&quot; ,
+    ))
+
+
+
+
+plot_ &lt;- lego_piece_price %&gt;%
+  group_by(NumberOfPices) %&gt;%
+ count()
+
+
+#factor and sort x elements
+
+
+
+ggplot(plot_, aes(NumberOfPices, n))+
+  geom_col()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<pre class="r"><code>labels=c(lego_piece_price$NumberOfPices)
+
+
+pie(plot_$n,labels)</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
+<pre class="r"><code>#</code></pre>
+<p>Now, calculate avarage price of each catagories.</p>
+<pre class="r"><code>lego_piece_price %&gt;%
+  group_by(NumberOfPices) %&gt;%
+mutate(average_price=mean(us_price))</code></pre>
+<pre><code>## # A tibble: 620 x 4
+## # Groups:   NumberOfPices [5]
+##    pieces us_price NumberOfPices     average_price
+##     &lt;dbl&gt;    &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt;
+##  1     77     9.99 76 to 150 pieces          14.5 
+##  2   1093   120.   over 400 pieces           77.5 
+##  3    333    40.0  151 to 400 pieces         26.8 
+##  4    368    30.0  151 to 400 pieces         26.8 
+##  5   1093   120.   over 400 pieces           77.5 
+##  6     19     9.99 Under 75 pices             9.84
+##  7    233    25.0  151 to 400 pieces         26.8 
+##  8     77     9.99 76 to 150 pieces          14.5 
+##  9    108     9.99 76 to 150 pieces          14.5 
+## 10     NA   110.   &lt;NA&gt;                      38.1 
+## # ... with 610 more rows</code></pre>
 </div>
 <div id="add-one-element-to-the-plot-from-the-previous-exercise-to-change-the-look-of-the-plot-without-changing-the-underlying-data.-for-example-you-can-change-the-theme-background-color-add-annotations-etc.-state-the-change-youre-making-and-display-the-updated-visualization.-we-encourage-you-to-be-creative" class="section level2">
 <h2>9- Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!</h2>
+<pre class="r"><code>write_csv(lego_age_group, &quot;lego_age_group&quot;)</code></pre>
 </div>
