@@ -178,87 +178,64 @@ lego_age_group %&gt;%
 <pre class="r"><code>new &lt;- lego_age_group  %&gt;%
     group_by(age_group)  %&gt;%
     count(quantity)  %&gt;%
-    mutate(Number_of_Purchase=n*quantity)
+    summarise(Number_of_Purchase=sum(n*quantity))
 
-new %&gt;%
-    select(age_group, Number_of_Purchase)%&gt;%
-    mutate(total=sum(Number_of_Purchase)) %&gt;%
-    arrange(desc(total))</code></pre>
-<pre><code>## # A tibble: 21 x 3
-## # Groups:   age_group [5]
-##    age_group Number_of_Purchase total
-##    &lt;chr&gt;                  &lt;dbl&gt; &lt;dbl&gt;
-##  1 36 - 50                  143   313
-##  2 36 - 50                  108   313
-##  3 36 - 50                   45   313
-##  4 36 - 50                   12   313
-##  5 36 - 50                    5   313
-##  6 26 - 35                  116   267
-##  7 26 - 35                  106   267
-##  8 26 - 35                   33   267
-##  9 26 - 35                   12   267
-## 10 19 - 25                   93   174
-## # ... with 11 more rows</code></pre>
+new</code></pre>
+<pre><code>## # A tibble: 5 x 2
+##   age_group    Number_of_Purchase
+##   &lt;chr&gt;                     &lt;dbl&gt;
+## 1 18 and under                 45
+## 2 19 - 25                     174
+## 3 26 - 35                     267
+## 4 36 - 50                     313
+## 5 51 and over                  92</code></pre>
 <p>36 - 50 years. They purchased 313 sets.</p>
 </div>
 <div id="which-age-group-has-spent-the-most-money-on-legos-how-much-did-they-spend" class="section level2">
 <h2>7- Which age group has spent the most money on legos? How much did they spend?</h2>
 <pre class="r"><code>new1 &lt;- lego_age_group %&gt;%
-    group_by(age_group)   %&gt;%
     select(age_group, us_price, quantity) %&gt;%
-    mutate(total_spend=quantity*us_price) %&gt;%
-    mutate(total=sum(total_spend)) %&gt;%
-    arrange(desc(total))
+    group_by(age_group)  %&gt;%
+    summarise(Total=sum(quantity*us_price))
+
+
 
 new1</code></pre>
-<pre><code>## # A tibble: 620 x 5
-## # Groups:   age_group [5]
-##    age_group us_price quantity total_spend total
-##    &lt;chr&gt;        &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt; &lt;dbl&gt;
-##  1 36 - 50      30.0         1       30.0  9533.
-##  2 36 - 50     120.          1      120.   9533.
-##  3 36 - 50       9.99        1        9.99 9533.
-##  4 36 - 50       9.99        1        9.99 9533.
-##  5 36 - 50     110.          2      220.   9533.
-##  6 36 - 50      15.0         1       15.0  9533.
-##  7 36 - 50      50.0         1       50.0  9533.
-##  8 36 - 50       4.99        1        4.99 9533.
-##  9 36 - 50     120.          1      120.   9533.
-## 10 36 - 50     170.          1      170.   9533.
-## # ... with 610 more rows</code></pre>
+<pre><code>## # A tibble: 5 x 2
+##   age_group    Total
+##   &lt;chr&gt;        &lt;dbl&gt;
+## 1 18 and under  949.
+## 2 19 - 25      4939.
+## 3 26 - 35      7576.
+## 4 36 - 50      9533.
+## 5 51 and over  2475.</code></pre>
 <p>36 - 50 years. They spent 9532.87 USD in total.</p>
 </div>
 <div id="come-up-with-a-question-you-want-to-answer-using-this-data-and-write-it-down.-then-create-a-data-visualization-that-answers-the-question-and-briefly-explain-how-your-visualization-answers-the-question." class="section level2">
 <h2>8- Come up with a question you want to answer using this data, and write it down. Then, create a data visualization that answers the question, and briefly explain how your visualization answers the question.</h2>
-<p>I want to know the corrolation between the “pieces” and “us_price”. For this purpose, categorize legos to four groups: “75 and under”, “76 - 150”, “151 - 400”, “401 and over”.
-first, show the percentage of each catagories using bar and pie charts.</p>
+<p>I want to know the correlation between the “pieces” and “us_price”. For this purpose, categorize legos to four groups: “75 and under”, “76 - 150”, “151 - 400”, “401 and over”.
+first, show the number of each categories using bar and pie charts.</p>
 <pre class="r"><code>lego_piece_price &lt;- lego %&gt;%
   select(pieces, us_price) %&gt;%
-    mutate(NumberOfPices=case_when(
+    mutate(NumberOfPieces=case_when(
         pieces &lt;= 75 ~ &quot;Under 75 pices&quot; ,
         between(pieces, 76, 150) ~ &quot;76 to 150 pieces&quot; ,
         between(pieces, 151, 400) ~ &quot;151 to 400 pieces&quot; ,
         pieces &gt;= 401 ~ &quot;over 400 pieces&quot;)) %&gt;%
   
-        mutate(NumberOfPices=fct_relevel(NumberOfPices, &quot;Under 75 pices&quot;,
+        mutate(NumberOfPieces=fct_relevel(NumberOfPieces, &quot;Under 75 pices&quot;,
                                     &quot;76 to 150 pieces&quot; ,
                                    &quot;151 to 400 pieces&quot; ,
                                   &quot;over 400 pieces&quot; )) %&gt;%
                                    drop_na()
 
 
-
-
 plot_ &lt;- lego_piece_price %&gt;%
-  group_by(NumberOfPices) %&gt;%
+  group_by(NumberOfPieces) %&gt;%
  count()
 
 
-#factor and sort x elements
-
-
-
-ggplot(plot_, aes(NumberOfPices, n))+
+ggplot(plot_, aes(NumberOfPieces, n))+
   geom_col()</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
 <pre class="r"><code>labels=c(&quot;Under 75 pices&quot;,&quot;76 to 150 pieces&quot;,&quot;151 to 400 pieces&quot;,&quot;over 400 pieces&quot;)
@@ -267,34 +244,26 @@ ggplot(plot_, aes(NumberOfPices, n))+
 pie(plot_$n,labels)</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-2.png" width="672" /></p>
 <pre class="r"><code>#</code></pre>
-<p>Now, calculate avarage price of each catagories.</p>
+<p>Now, calculate average price of each categories.</p>
 <pre class="r"><code>pp &lt;- lego_piece_price %&gt;%
-  group_by(NumberOfPices) %&gt;%
-  mutate(average_price=mean(us_price))
-
+  group_by(NumberOfPieces) %&gt;%
+  arrange(.by_group = TRUE) %&gt;%
+  summarise(average_price=mean(us_price))
 
 pp</code></pre>
-<pre><code>## # A tibble: 551 x 4
-## # Groups:   NumberOfPices [4]
-##    pieces us_price NumberOfPices     average_price
-##     &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt;                     &lt;dbl&gt;
-##  1     77     9.99 76 to 150 pieces          14.5 
-##  2   1093   120.   over 400 pieces           77.5 
-##  3    333    40.0  151 to 400 pieces         26.8 
-##  4    368    30.0  151 to 400 pieces         26.8 
-##  5   1093   120.   over 400 pieces           77.5 
-##  6     19     9.99 Under 75 pices             9.84
-##  7    233    25.0  151 to 400 pieces         26.8 
-##  8     77     9.99 76 to 150 pieces          14.5 
-##  9    108     9.99 76 to 150 pieces          14.5 
-## 10     13     9.99 Under 75 pices             9.84
-## # ... with 541 more rows</code></pre>
-<pre class="r"><code>ggplot(pp, aes(NumberOfPices, average_price))+
+<pre><code>## # A tibble: 4 x 2
+##   NumberOfPieces    average_price
+##   &lt;fct&gt;                     &lt;dbl&gt;
+## 1 Under 75 pices             9.84
+## 2 76 to 150 pieces          14.5 
+## 3 151 to 400 pieces         26.8 
+## 4 over 400 pieces           77.5</code></pre>
+<pre class="r"><code>ggplot(pp, aes(NumberOfPieces, average_price))+
   geom_col()</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 <div id="add-one-element-to-the-plot-from-the-previous-exercise-to-change-the-look-of-the-plot-without-changing-the-underlying-data.-for-example-you-can-change-the-theme-background-color-add-annotations-etc.-state-the-change-youre-making-and-display-the-updated-visualization.-we-encourage-you-to-be-creative" class="section level2">
 <h2>9- Add one element to the plot from the previous exercise to change the look of the plot without changing the underlying data. For example, you can change the theme, background color, add annotations, etc. State the change you’re making and display the updated visualization. We encourage you to be creative!</h2>
 <pre class="r"><code>write_csv(lego_age_group, &quot;lego_age_group&quot;)</code></pre>
-<p>…………………</p>
+<p>+++++++++++++++++++++++++++++++++++++++</p>
 </div>

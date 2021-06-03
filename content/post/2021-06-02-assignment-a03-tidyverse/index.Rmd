@@ -144,33 +144,33 @@ The probablity is 0.2571429 or nearly 25.71%.
 new <- lego_age_group  %>%
     group_by(age_group)  %>%
     count(quantity)  %>%
-    mutate(Number_of_Purchase=n*quantity)
+    summarise(Number_of_Purchase=sum(n*quantity))
 
-new %>%
-    select(age_group, Number_of_Purchase)%>%
-    mutate(total=sum(Number_of_Purchase)) %>%
-    arrange(desc(total))
+new
 
 
 ```
 
 36 - 50 years. They purchased 313 sets.
-    
+
 ## 7- Which age group has spent the most money on legos? How much did they spend?
   
   
 ```{r}
 new1 <- lego_age_group %>%
-    group_by(age_group)   %>%
     select(age_group, us_price, quantity) %>%
-    mutate(total_spend=quantity*us_price) %>%
-    mutate(total=sum(total_spend)) %>%
-    arrange(desc(total))
+    group_by(age_group)  %>%
+    summarise(Total=sum(quantity*us_price))
+
+
 
 new1
 ```
+ 
+ 
   36 - 50 years. They spent 9532.87 USD in total.
-
+  
+  
 
 
 ## 8- Come up with a question you want to answer using this data, and write it down. Then, create a data visualization that answers the question, and briefly explain how your visualization answers the question.
@@ -214,18 +214,17 @@ pie(plot_$n,labels)
   Now, calculate average price of each categories.
   
   
+
 ```{r}
 pp <- lego_piece_price %>%
   group_by(NumberOfPieces) %>%
-  mutate(average_price=mean(us_price))
+  arrange(.by_group = TRUE) %>%
+  summarise(average_price=mean(us_price))
 
 pp
 
 ggplot(pp, aes(NumberOfPieces, average_price))+
   geom_col()
-
-
-
 ```
   
    
@@ -239,4 +238,5 @@ ggplot(pp, aes(NumberOfPieces, average_price))+
 write_csv(lego_age_group, "lego_age_group")
 
 ```
- .....................
+
++++++++++++++++++++++++++++++++++++++++
