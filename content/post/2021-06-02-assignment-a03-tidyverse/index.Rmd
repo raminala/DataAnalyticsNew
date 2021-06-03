@@ -175,37 +175,31 @@ new1
 
 ## 8- Come up with a question you want to answer using this data, and write it down. Then, create a data visualization that answers the question, and briefly explain how your visualization answers the question.
    
- I want to know the corrolation between the "pieces" and "us_price". For this purpose, categorize legos to four groups:  “75 and under”, “76 - 150”, “151 - 400”, “401 and over”.
- first, show the percentage of each catagories using bar and pie charts.
+ I want to know the correlation between the "pieces" and "us_price". For this purpose, categorize legos to four groups:  “75 and under”, “76 - 150”, “151 - 400”, “401 and over”.
+ first, show the number of each categories using bar and pie charts.
    
 ```{r}
 lego_piece_price <- lego %>%
   select(pieces, us_price) %>%
-    mutate(NumberOfPices=case_when(
+    mutate(NumberOfPieces=case_when(
         pieces <= 75 ~ "Under 75 pices" ,
         between(pieces, 76, 150) ~ "76 to 150 pieces" ,
         between(pieces, 151, 400) ~ "151 to 400 pieces" ,
         pieces >= 401 ~ "over 400 pieces")) %>%
   
-        mutate(NumberOfPices=fct_relevel(NumberOfPices, "Under 75 pices",
+        mutate(NumberOfPieces=fct_relevel(NumberOfPieces, "Under 75 pices",
                                     "76 to 150 pieces" ,
                                    "151 to 400 pieces" ,
                                   "over 400 pieces" )) %>%
                                    drop_na()
 
 
-
-
 plot_ <- lego_piece_price %>%
-  group_by(NumberOfPices) %>%
+  group_by(NumberOfPieces) %>%
  count()
 
 
-#factor and sort x elements
-
-
-
-ggplot(plot_, aes(NumberOfPices, n))+
+ggplot(plot_, aes(NumberOfPieces, n))+
   geom_col()
 
 labels=c("Under 75 pices","76 to 150 pieces","151 to 400 pieces","over 400 pieces")
@@ -217,18 +211,17 @@ pie(plot_$n,labels)
 
 ```
   
-  Now, calculate avarage price of each catagories.
+  Now, calculate average price of each categories.
   
   
 ```{r}
 pp <- lego_piece_price %>%
-  group_by(NumberOfPices) %>%
+  group_by(NumberOfPieces) %>%
   mutate(average_price=mean(us_price))
-
 
 pp
 
-ggplot(pp, aes(NumberOfPices, average_price))+
+ggplot(pp, aes(NumberOfPieces, average_price))+
   geom_col()
 
 
