@@ -79,7 +79,7 @@
 <ol style="list-style-type: decimal">
 <li>Introduction:</li>
 </ol>
-<p>In this post, the solution for assignment 02 is provided. I selected “Stroke Prediction Dataset” from <a href="https://www.kaggle.com/datasets" class="uri">https://www.kaggle.com/datasets</a> because I have had some basic studies on this topic, and I am eager to add more information while doing my assignment.</p>
+<p>In this post, the solution for the assignment 02 is provided. I selected “Stroke Prediction Dataset” from <a href="https://www.kaggle.com/datasets" class="uri">https://www.kaggle.com/datasets</a> because I have already had some basic studies on stroke, and I am eager to add more information while doing my assignment.</p>
 <p>This dataset contains 5110 rows (each row attributes to a patient), and 12 columns (11 variables and 1 column as identity number for each observation/patient).</p>
 <p>Lets take a look at data:</p>
 <pre><code>## # A tibble: 6 x 12
@@ -94,20 +94,19 @@
 ## # ... with 5 more variables: Residence_type &lt;chr&gt;, avg_glucose_level &lt;dbl&gt;,
 ## #   bmi &lt;chr&gt;, smoking_status &lt;chr&gt;, stroke &lt;dbl&gt;</code></pre>
 <p>This dataset has 11 variables (columns), including:</p>
+<pre class="r"><code>names(stroke_predic)</code></pre>
 <pre><code>##  [1] &quot;id&quot;                &quot;gender&quot;            &quot;age&quot;              
 ##  [4] &quot;hypertension&quot;      &quot;heart_disease&quot;     &quot;ever_married&quot;     
 ##  [7] &quot;work_type&quot;         &quot;Residence_type&quot;    &quot;avg_glucose_level&quot;
 ## [10] &quot;bmi&quot;               &quot;smoking_status&quot;    &quot;stroke&quot;</code></pre>
 <ol start="2" style="list-style-type: decimal">
-<li>Functions (one table and two table verb)</li>
+<li>one table and two table verb Functions</li>
 </ol>
 <div id="one-table-verbs" class="section level2">
 <h2>One table verbs</h2>
 <p>filter(): Extract rows that satisfy specified conditions.</p>
-<p>Here, I want to create a new dataset (stroke_suffered) from those who had a stroke.</p>
-<pre class="r"><code>#...
-
-library(dplyr)
+<p>Here, I want to create a new dataset (stroke_suffered) from those who experienced a stroke.</p>
+<pre class="r"><code>library(dplyr)
 
 stroke_suffered &lt;- stroke_predic %&gt;%
   filter(stroke==1)
@@ -128,8 +127,8 @@ stroke_suffered &lt;- stroke_predic %&gt;%
 ## 10 60491 Female    78            0             0 Yes          Private      
 ## # ... with 239 more rows, and 5 more variables: Residence_type &lt;chr&gt;,
 ## #   avg_glucose_level &lt;dbl&gt;, bmi &lt;chr&gt;, smoking_status &lt;chr&gt;, stroke &lt;dbl&gt;</code></pre>
-<p>summarize(): Summarize each group to fewer rows</p>
-<p>From previously generated dataset, I want to know the average age of those who stroked.</p>
+<p>summarize(): Summarize each group to fewer rows.</p>
+<p>From previously generated dataset (stroke_suffered), I want to know the average age of those who stroked.</p>
 <pre class="r"><code>stroke_suffered %&gt;%
   summarize(mean_age=mean(age))</code></pre>
 <pre><code>## # A tibble: 1 x 1
@@ -141,9 +140,7 @@ stroke_suffered &lt;- stroke_predic %&gt;%
 <h2>two table verb</h2>
 <p>bind_rows(): bind multiple data frames by row</p>
 <p>In order to use this function, I made a new dataframe (my own data that includes one row), and then bind that at the beginning of original dataset.</p>
-<pre class="r"><code># Plot  numerical variables.
-
-New_observation &lt;- data.frame (
+<pre class="r"><code>New_observation &lt;- data.frame (
   id = 12345,
   gender = &quot;Male&quot;,
   age = 38,
@@ -184,7 +181,7 @@ New_observation</code></pre>
 </div>
 <div id="grouping-function" class="section level2">
 <h2>Grouping function</h2>
-<p>group_by(): Group by one or more variables</p>
+<p>group_by(): Group by one or more variables.</p>
 <p>In this exercise, I want to know the average age of those who have hypertension, heart_disease, and stroke. For this purpose, dataset must be grouped first.</p>
 <pre class="r"><code>stroke_predic %&gt;%
   group_by(hypertension,heart_disease, stroke) %&gt;%
@@ -223,7 +220,7 @@ New_observation</code></pre>
 ## 10 38678 Female    66            0             0 Yes          Self-employed
 ## # ... with 15 more rows, and 5 more variables: Residence_type &lt;chr&gt;,
 ## #   avg_glucose_level &lt;dbl&gt;, bmi &lt;chr&gt;, smoking_status &lt;chr&gt;, stroke &lt;dbl&gt;</code></pre>
-<p>n(): the current group size</p>
+<p>n(): return the current group size.</p>
 <p>here, I used this vector function to determine the number of observation who had stroke.</p>
 <pre class="r"><code>stroke_predic %&gt;%
   filter(stroke==1) %&gt;%
@@ -292,34 +289,41 @@ stroke_predic_with_NA &lt;- stroke_predic
 stroke_predic_with_NA[1,3] = NA
 
 #delete the row with a NA element.
-stroke_predic_drop_na &lt;- stroke_predic_with_NA %&gt;%
+stroke_predic_drop_NA &lt;- stroke_predic_with_NA %&gt;%
   drop_na(age)
+#compare number of rows to know if it drops one row
+  nrow(stroke_predic_with_NA)</code></pre>
+<pre><code>## [1] 5110</code></pre>
+<pre class="r"><code>  nrow(stroke_predic_drop_NA)</code></pre>
+<pre><code>## [1] 5109</code></pre>
+<p>fill(): Fill N/A objects with “up” or "down object.</p>
+<pre class="r"><code>hhh &lt;- stroke_predic_with_NA %&gt;%  
+  fill(age, .direction=c(&quot;up&quot;))  #fill with below value
 
-  stroke_predic_drop_na</code></pre>
-<pre><code>## # A tibble: 5,109 x 12
+hhh</code></pre>
+<pre><code>## # A tibble: 5,110 x 12
 ##       id gender   age hypertension heart_disease ever_married work_type    
 ##    &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt;        &lt;dbl&gt;         &lt;dbl&gt; &lt;chr&gt;        &lt;chr&gt;        
-##  1 51676 Female    61            0             0 Yes          Self-employed
-##  2 31112 Male      80            0             1 Yes          Private      
-##  3 60182 Female    49            0             0 Yes          Private      
-##  4  1665 Female    79            1             0 Yes          Self-employed
-##  5 56669 Male      81            0             0 Yes          Private      
-##  6 53882 Male      74            1             1 Yes          Private      
-##  7 10434 Female    69            0             0 No           Private      
-##  8 27419 Female    59            0             0 Yes          Private      
-##  9 60491 Female    78            0             0 Yes          Private      
-## 10 12109 Female    81            1             0 Yes          Private      
-## # ... with 5,099 more rows, and 5 more variables: Residence_type &lt;chr&gt;,
+##  1  9046 Male      61            0             1 Yes          Private      
+##  2 51676 Female    61            0             0 Yes          Self-employed
+##  3 31112 Male      80            0             1 Yes          Private      
+##  4 60182 Female    49            0             0 Yes          Private      
+##  5  1665 Female    79            1             0 Yes          Self-employed
+##  6 56669 Male      81            0             0 Yes          Private      
+##  7 53882 Male      74            1             1 Yes          Private      
+##  8 10434 Female    69            0             0 No           Private      
+##  9 27419 Female    59            0             0 Yes          Private      
+## 10 60491 Female    78            0             0 Yes          Private      
+## # ... with 5,100 more rows, and 5 more variables: Residence_type &lt;chr&gt;,
 ## #   avg_glucose_level &lt;dbl&gt;, bmi &lt;chr&gt;, smoking_status &lt;chr&gt;, stroke &lt;dbl&gt;</code></pre>
-<p>fill(): Fill N/A objects in “up” or "down object.</p>
 <ol start="5" style="list-style-type: decimal">
 <li>discussion</li>
 </ol>
-<p>From the bar chart, it seems diet 3 results in the heaviest chicks on average on day 21, followed by diet 4, diet 2, and diet 1.Besides, average weight at birthday prove that chicks have approximately the same weight at day 0. Numerical plots show consistent weight gain for all chicks and all diet plans, although some chicks gain little weight (especially one chick in diet plan 2).</p>
+<p>In this assignment, the Stroke Prediction dataset became more understandable by employing the capabilities of two libraries: dplyr and tidyr. The result of this section could be used in visualization using ggplo2. The important skill gained in this assignment is using cheat sheet to apply new functions on a dataset.</p>
 <p>There were two challenges for me in this exercise:</p>
 <ul>
-<li><p>I used another machine when I tried to do this exercise. It took some time for me to figure out how to pull repository from git and use that (because I used to push to git not pull!).</p></li>
-<li><p>In the selected dataset, bmi variable’s class was “character” instead of numeric.</p></li>
+<li><p>I used new machine when I tried to do this exercise (other than what I used always). It took some time for me to figure out how to pull repository from git and use that (because I always pushed to git and did not need to use pull!).</p></li>
+<li><p>In the selected dataset, bmi variable’s class was “character” instead of numeric, I do not know why a numeric variable defined so.</p></li>
 </ul>
 </div>
 
