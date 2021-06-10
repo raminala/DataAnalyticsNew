@@ -1,0 +1,13 @@
+name: DataAnalyticsNew
+title: DataAnalyticsNew
+username:
+account: raminala
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4243451
+bundleId: 4699165
+url: https://raminala.shinyapps.io/DataAnalyticsNew/
+when: 1623289878.82134
+lastSyncTime: 1623289878.82134
+asMultiple: FALSE
+asStatic: FALSE
