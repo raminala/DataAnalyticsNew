@@ -18,28 +18,15 @@ population <- read_csv("WPP2019_TotalPopulationBySex.csv")
 
 
 
-```{r}
-#rename
-
-rename_ <- population %>%
-  filter(Location == "Iran (Islamic Republic of)") %>%
-  rename(Location = `Iran (Islamic Republic of)`,n = `Iran`)
-
-
-
-```
-
-
-
-
-
-
 
 ```{r}
 ppp <- population %>%
   select(Location, Time, PopTotal, Variant) %>%
-  filter(Location == "Asia" | Location =="Europe"| Location =="Africa"| Location =="North America"| Location =="South America"| Location =="Oceania"| Location =="India"| Location =="United States of America"| Location =="China"| Location =="Canada") %>%
-  filter(Variant=="High") %>%
+  filter(Location == "Asia" | Location =="Europe"| Location =="Africa"| Location =="North America"| Location =="South America"| Location =="Oceania"| Location =="India"| Location =="United States of America"| Location =="China"| Location =="Canada"| Location == "Iran (Islamic Republic of)", Variant=="Medium") %>%
+  
+  # change name of some cells. "Iran (Islamic Republic of)" to "Iran"
+  
+ mutate(Location = recode(Location, "Iran (Islamic Republic of)"="Iran")) %>%
  
     group_by(Location)
 ```
@@ -48,9 +35,19 @@ ppp <- population %>%
 
 
 
+
+
+
+
+
 ```{r}
 ggplot(ppp, aes(Time,PopTotal, color=Location))+
   geom_line()
-# + scale_y_log10()
+#+scale_y_log10()
 ```
+
+
+
+
+
 
