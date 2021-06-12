@@ -73,6 +73,8 @@ ui <- fluidPage(
 
 server <- function(input, output) {
   output$sentiment_plot <- renderPlotly({
+    
+    
     p <- covid_speeches_words %>%
       filter(origin == input$origin) %>%
       filter(between(date, input$date_range[1], input$date_range[2])) %>%
@@ -82,6 +84,7 @@ server <- function(input, output) {
       count(date, sentiment) %>%
       pivot_wider(names_from = sentiment, values_from = n) %>%
       mutate(sentiment = positive - negative) %>%
+      
       ggplot(aes(x = date, y = sentiment)) +
       geom_line(color = "gray") +
       geom_point(aes(color = sentiment > 0), size = 2) +

@@ -33,7 +33,7 @@ ppp <- population %>%
 
 
 
-
+c("Asia", "Europe", "Africa", "North America", "South America", "Oceania", "India", "United States of America", "China", "Canada", "Iran")
 
 
 
