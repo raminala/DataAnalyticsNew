@@ -3,7 +3,7 @@
 library(shiny)
 library(tidyverse)
 library(tidytext)
-#library(glue)
+library(glue)
 library(plotly)
 
 # import data ========================================
@@ -34,7 +34,7 @@ ui <- fluidPage(
       sliderInput(inputId = "year",
                   label = "Range:",
                   min = 1950, max = 2100,
-                  value = c(1950,2100), step = 5),
+                  value = c(1950,2100), step =50),
       
     ),
     mainPanel(
