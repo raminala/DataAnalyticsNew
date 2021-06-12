@@ -3,7 +3,7 @@
 library(shiny)
 library(tidyverse)
 library(tidytext)
-library(glue)
+#library(glue)
 library(plotly)
 
 # import data ========================================
