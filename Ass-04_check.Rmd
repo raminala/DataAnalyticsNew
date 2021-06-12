@@ -15,10 +15,6 @@ population <- read_csv("WPP2019_TotalPopulationBySex.csv")
 ```
 
 
-
-
-
-
 ```{r}
 ppp <- population %>%
   select(Location, Time, PopTotal, Variant) %>%
@@ -32,22 +28,9 @@ ppp <- population %>%
 ```
 
 
-
-c("Asia", "Europe", "Africa", "North America", "South America", "Oceania", "India", "United States of America", "China", "Canada", "Iran")
-
-
-
-
-
-
 ```{r}
 ggplot(ppp, aes(Time,PopTotal, color=Location))+
   geom_line()
 #+scale_y_log10()
 ```
-
-
-
-
-
 
