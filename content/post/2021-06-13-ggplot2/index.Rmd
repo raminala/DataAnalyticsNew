@@ -447,6 +447,15 @@ Let's wrap up this course by making a publication-ready plot communicating a cle
 
 To change stylistic elements of a plot, call theme() and set plot properties to a new value. For example, the following changes the legend position.
 
+p + theme(legend.position = new_value)
+
+Here, the new value can be
+
+"top", "bottom", "left", or "right'": place it at that side of the plot.
+"none": don't draw it.
+c(x, y): c(0, 0) means the bottom-left and c(1, 1) means the top-right.
+Let's revisit the recession period line plot (assigned to plt_prop_unemployed_over_time).
+
 ```{r}
 # Position the legend inside the plot at (0.6, 0.1)
 plt_prop_unemployed_over_time +
