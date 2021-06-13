@@ -34,7 +34,7 @@ ui <- fluidPage(
       sliderInput(inputId = "year",
                   label = "Range:",
                   min = 1950, max = 2100,
-                  value = c(1950,2100), step = 5),
+                  value = c(1950,2100), step = 1),
       
     ),
     mainPanel(
@@ -61,7 +61,7 @@ server <- function(input, output) {
       
       
       ggplot(aes(x=Time,y=PopTotal))+
-      geom_line()+ labs(title = "Population of country/continent in span of years", x= "year", y="population (/1000)")
+      geom_line(color="red")+ labs(title = "Population of country/continent in span of years", x= "year", y="population (/1000)")
     
     
     ggplotly(p, tooltip = c("x", "y"))
