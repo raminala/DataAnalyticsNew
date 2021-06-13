@@ -448,55 +448,135 @@ Let's wrap up this course by making a publication-ready plot communicating a cle
 To change stylistic elements of a plot, call theme() and set plot properties to a new value. For example, the following changes the legend position.
 
 ```{r}
-
+# Position the legend inside the plot at (0.6, 0.1)
+plt_prop_unemployed_over_time +
+  theme(legend.position=c(0.6, 0.1))
 ```
 
 # 4-2 
 
 ```{r}
-
+plt_prop_unemployed_over_time +
+  theme(
+    rect = element_rect(fill = "grey92"),
+    legend.key = element_rect(color = NA),
+    axis.ticks = element_blank(),
+    panel.grid = element_blank(),
+    panel.grid.major.y = element_line(
+      color = "white",
+      size = 0.5,
+      linetype = "dotted"
+    ),
+    # Set the axis text color to grey25
+    axis.text=element_text(
+      color = "grey25"),
+    # Set the plot title font face to italic and font size to 16
+   plot.title=element_text(
+     size=16, face = "italic"
+  ))
 ```
 
 # 4-3 
 
 ```{r}
-
+plt_mpg_vs_wt_by_cyl +
+  theme(
+    # Set the plot margin to (10, 30, 50, 70) millimeters
+    plot.margin=margin(10, 30, 50, 70, "mm")
+  )
 ```
 
 # 4-4 
 
 ```{r}
-
+# Add a void theme
+plt_prop_unemployed_over_time +
+ theme_void()
 ```
 
 # 4-5 
 
 ```{r}
-
+# Use the Wall Street Journal theme
+plt_prop_unemployed_over_time +
+  theme_wsj()
 ```
 
 # 4-6 
 
 ```{r}
+theme_recession <- theme(
+  rect = element_rect(fill = "grey92"),
+  legend.key = element_rect(color = NA),
+  axis.ticks = element_blank(),
+  panel.grid = element_blank(),
+  panel.grid.major.y = element_line(color = "white", size = 0.5, linetype = "dotted"),
+  axis.text = element_text(color = "grey25"),
+  plot.title = element_text(face = "italic", size = 16),
+  legend.position = c(0.6, 0.1)
+)
+theme_tufte_recession <- theme_tufte() + theme_recession
 
+# Set theme_tufte_recession as the default theme
+theme_set(theme_tufte_recession)
+
+# Draw the plot (without explicitly adding a theme)
+plt_prop_unemployed_over_time
 ```
 
 # 4-7 
 
 ```{r}
-
+plt_prop_unemployed_over_time +
+  theme_tufte() +
+  theme(
+    legend.position = "none",
+    axis.ticks = element_blank(),
+    axis.title = element_text(color = "grey60"),
+    axis.text = element_text(color = "grey60"),
+    # Set the panel gridlines major y values
+    panel.grid.major.y = element_line(
+      # Set the color to grey60
+     color="grey60",
+      # Set the size to 0.25
+      size=0.25,
+      # Set the linetype to dotted
+      linetype="dotted"
+    )
+  )
 ```
 
 # 4-8 
 
 ```{r}
+# Set the color scale
+palette <- brewer.pal(5, "RdYlBu")[-(2:4)]
 
+# Add a title and caption
+ggplot(gm2007, aes(x = lifeExp, y = country, color = lifeExp)) +
+  geom_point(size = 4) +
+  geom_segment(aes(xend = 30, yend = country), size = 2) +
+  geom_text(aes(label = round(lifeExp,1)), color = "white", size = 1.5) +
+  scale_x_continuous("", expand = c(0,0), limits = c(30,90), position = "top") +
+  scale_color_gradientn(colors = palette) +
+  labs(title= "Highest and lowest life expectancies, 2007", caption = "Source: gapminder")
 ```
 
 # 4-9 
 
 ```{r}
-
+# Add a curve
+plt_country_vs_lifeExp +  
+  step_1_themes +
+  geom_vline(xintercept = global_mean, color = "grey40", linetype = 3) +
+  step_3_annotation +
+  annotate(
+    "curve",
+    x = x_start, y = y_start,
+    xend = x_end, yend = y_end,
+    arrow = arrow(length = unit(0.2, "cm"), type = "closed"),
+    color = "grey40"
+  )
 ```
 
 
