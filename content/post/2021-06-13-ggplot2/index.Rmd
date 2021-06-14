@@ -442,6 +442,14 @@ fish.species contains the global capture rates of seven salmon species from 1950
 ```
 ## Themes
 
+```{r}
+plt_prop_unemployed_over_time = ggplot(economics, aes(x = date, y = unemploy/pop)) +
+  ggtitle(c("The percentage of unemployed Americans \n increases sharply during recessions")) +
+  geom_line()
+```
+
+
+
 # 4-1 Moving the legend
 Let's wrap up this course by making a publication-ready plot communicating a clear message.
 
@@ -465,6 +473,7 @@ plt_prop_unemployed_over_time +
 # 4-2 
 
 ```{r}
+library(dplyr)
 plt_prop_unemployed_over_time +
   theme(
     rect = element_rect(fill = "grey92"),
