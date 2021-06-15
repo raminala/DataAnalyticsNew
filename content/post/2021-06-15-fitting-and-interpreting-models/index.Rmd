@@ -129,9 +129,7 @@ Remember this when interpreting model coefficients
 knitr::include_graphics("cell_phones.png")
 ```
 
-.footnote[
-Source: XKCD, [Cell phones](https://xkcd.com/925/)
-]
+.footnote[Source: XKCD, [Cell phones](https://xkcd.com/925/)]
 
 ---
 
