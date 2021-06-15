@@ -81,7 +81,8 @@ linear_reg() %>%
 ```{r fit-model}
 linear_reg() %>%
   set_engine("lm") %>%
-  fit(Height_in ~ Width_in, data = pp)
+  fit(Height_in ~ Width_in, data = pp)%>%
+  tidy()
 ```
 
 ---
