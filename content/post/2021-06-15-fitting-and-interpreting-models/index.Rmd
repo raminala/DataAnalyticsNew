@@ -11,7 +11,7 @@ tags: []
 
 ## Import Libraries
 
-```{r packages, echo = FALSE, message=FALSE, warning=FALSE}
+```{r packages,  message=FALSE, warning=FALSE}
 library(tidyverse)
 library(tidymodels)
 library(ggtext)
@@ -51,6 +51,12 @@ ggplot(data = pp, aes(x = Width_in, y = Height_in)) +
 
 ---
 
+```{r out.width="98%", echo=FALSE}
+knitr::include_graphics("tidymodels.png")
+```
+
+---
+
 ## Step 1: Specify model
 
 ```{r}
@@ -85,9 +91,7 @@ linear_reg() %>%
 ```{r ref.label="fit-model", echo=FALSE}
 ```
 
-.large[
-$$\widehat{height}_{i} = 3.6214 + 0.7808 \times width_{i}$$
-]
+.large[$$\widehat{height}_{i} = 3.6214 + 0.7808 \times width_{i}$$]
 
 ---
 
@@ -100,17 +104,13 @@ linear_reg() %>%
   tidy()
 ```
 
-.large[
-$$\widehat{height}_{i} = 3.62 + 0.781 \times width_{i}$$
-]
+.large[$$\widehat{height}_{i} = 3.62 + 0.781 \times width_{i}$$]
 
 ---
 
 ## Slope and intercept
 
-.large[
-$$\widehat{height}_{i} = 3.62 + 0.781 \times width_{i}$$
-]
+.large[$$\widehat{height}_{i} = 3.62 + 0.781 \times width_{i}$$]
 
 --
 
@@ -123,6 +123,11 @@ $$\widehat{height}_{i} = 3.62 + 0.781 \times width_{i}$$
 
 ## Correlation does not imply causation
 
+Remember this when interpreting model coefficients
+
+```{r echo=FALSE, out.width="90%"}
+knitr::include_graphics("cell_phones.png")
+```
 
 .footnote[
 Source: XKCD, [Cell phones](https://xkcd.com/925/)
