@@ -60,22 +60,31 @@ options(dplyr.print_min = 10, dplyr.print_max = 6)</code></pre>
 <p>… using <strong>formula syntax</strong></p>
 <pre class="r"><code>linear_reg() %&gt;%
   set_engine(&quot;lm&quot;) %&gt;%
-  fit(Height_in ~ Width_in, data = pp)%&gt;%
-  tidy()</code></pre>
-<pre><code>## # A tibble: 2 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)    3.62    0.254        14.3 8.82e-45
-## 2 Width_in       0.781   0.00950      82.1 0</code></pre>
+  fit(Height_in ~ Width_in, data = pp)</code></pre>
+<pre><code>## parsnip model object
+## 
+## Fit time:  0ms 
+## 
+## Call:
+## stats::lm(formula = Height_in ~ Width_in, data = data)
+## 
+## Coefficients:
+## (Intercept)     Width_in  
+##      3.6214       0.7808</code></pre>
 <hr />
 </div>
 <div id="a-closer-look-at-model-output" class="section level2">
 <h2>A closer look at model output</h2>
-<pre><code>## # A tibble: 2 x 5
-##   term        estimate std.error statistic  p.value
-##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-## 1 (Intercept)    3.62    0.254        14.3 8.82e-45
-## 2 Width_in       0.781   0.00950      82.1 0</code></pre>
+<pre><code>## parsnip model object
+## 
+## Fit time:  0ms 
+## 
+## Call:
+## stats::lm(formula = Height_in ~ Width_in, data = data)
+## 
+## Coefficients:
+## (Intercept)     Width_in  
+##      3.6214       0.7808</code></pre>
 <p>.large[<span class="math display">\[\widehat{height}_{i} = 3.6214 + 0.7808 \times width_{i}\]</span>]</p>
 <hr />
 </div>
