@@ -23,11 +23,16 @@ options(dplyr.print_min = 10, dplyr.print_max = 6)
 
 
 
-## Import Data: paris-paintings
+## Import Data: paris Paintings
 
-```{r}
+```{r message=FALSE}
 pp <- read_csv("paris-paintings.csv", na = c("n/a", "", "NA"))
+
 ```
+
+- Number of observations: `r nrow(pp)`
+- Number of variables: `r ncol(pp)`
+
 
 ## Goal: Predict height from width
 

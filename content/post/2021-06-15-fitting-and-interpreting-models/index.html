@@ -17,34 +17,12 @@ tags: []
 <h2>Import Libraries</h2>
 </div>
 <div id="import-data-paris-paintings" class="section level2">
-<h2>Import Data: paris-paintings</h2>
+<h2>Import Data: paris Paintings</h2>
 <pre class="r"><code>pp &lt;- read_csv(&quot;paris-paintings.csv&quot;, na = c(&quot;n/a&quot;, &quot;&quot;, &quot;NA&quot;))</code></pre>
-<pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   .default = col_double(),
-##   name = col_character(),
-##   sale = col_character(),
-##   lot = col_character(),
-##   dealer = col_character(),
-##   origin_author = col_character(),
-##   origin_cat = col_character(),
-##   school_pntg = col_character(),
-##   price = col_number(),
-##   subject = col_character(),
-##   authorstandard = col_character(),
-##   authorstyle = col_character(),
-##   author = col_character(),
-##   winningbidder = col_character(),
-##   winningbiddertype = col_character(),
-##   endbuyer = col_character(),
-##   type_intermed = col_character(),
-##   Shape = col_character(),
-##   material = col_character(),
-##   mat = col_character(),
-##   materialCat = col_character()
-## )
-## i Use `spec()` for the full column specifications.</code></pre>
+<ul>
+<li>Number of observations: 3393</li>
+<li>Number of variables: 61</li>
+</ul>
 </div>
 <div id="goal-predict-height-from-width" class="section level2">
 <h2>Goal: Predict height from width</h2>
@@ -76,7 +54,7 @@ tags: []
   fit(Height_in ~ Width_in, data = pp)</code></pre>
 <pre><code>## parsnip model object
 ## 
-## Fit time:  0ms 
+## Fit time:  10ms 
 ## 
 ## Call:
 ## stats::lm(formula = Height_in ~ Width_in, data = data)
