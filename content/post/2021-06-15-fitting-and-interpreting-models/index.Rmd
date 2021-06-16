@@ -13,15 +13,17 @@ tags: []
 
 ```{r packages,  message=FALSE, warning=FALSE}
 library(tidyverse)
-library(tidymodels)
-library(ggtext)
+library(tidymodels) #Interesting collections of models.
+library(ggtext) #similar to ggplot but for text.
 library(knitr)
-library(kableExtra) #for creating tables
-set.seed(1234)
+library(kableExtra) #for creating tables, more readable and nice fashion.
+
+set.seed(1234) #to get exactly same dataset each time sample from dataset (number is arbitrary like a key that are used each time).
+
 options(dplyr.print_min = 10, dplyr.print_max = 6)
 ```
 
-
+# Models with numerical explanatory variables
 
 ## Import Data: paris Paintings
 
@@ -35,6 +37,8 @@ pp <- read_csv("paris-paintings.csv", na = c("n/a", "", "NA"))
 
 
 ## Goal: Predict height from width
+
+Below is a LaTeX syntax in R markdown.Wrap syntax in two pair of Dollar signs. 
 
 $$\widehat{height}_{i} = \beta_0 + \beta_1 \times width_{i}$$
 ```{r height-width-plot, echo=FALSE, warning=FALSE}
@@ -50,6 +54,7 @@ ggplot(data = pp, aes(x = Width_in, y = Height_in)) +
 ```
 
 ---
+Below image shows different packages that are included in tidymodels.
 
 ```{r out.width="98%", echo=FALSE}
 knitr::include_graphics("tidymodels.png")
@@ -81,7 +86,7 @@ linear_reg() %>%
 ```{r fit-model}
 linear_reg() %>%
   set_engine("lm") %>%
-  fit(Height_in ~ Width_in, data = pp)
+  fit(Height_in ~ Width_in, data = pp) #in: inches #we want to predict height, using width
 ```
 
 ---
@@ -89,9 +94,10 @@ linear_reg() %>%
 ## A closer look at model output
 
 ```{r ref.label="fit-model", echo=FALSE}
+
 ```
 
-.large[$$\widehat{height}_{i} = 3.6214 + 0.7808 \times width_{i}$$]
+$$\widehat{height}_{i} = 3.6214 + 0.7808 \times width_{i}$$
 
 ---
 
@@ -104,7 +110,7 @@ linear_reg() %>%
   tidy()
 ```
 
-.large[$$\widehat{height}_{i} = 3.62 + 0.781 \times width_{i}$$]
+$$\widehat{height}_{i} = 3.62 + 0.781 \times width_{i}$$
 
 ---
 

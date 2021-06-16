@@ -16,13 +16,17 @@ tags: []
 <div id="import-libraries" class="section level2">
 <h2>Import Libraries</h2>
 <pre class="r"><code>library(tidyverse)
-library(tidymodels)
-library(ggtext)
+library(tidymodels) #Interesting collections of models.
+library(ggtext) #similar to ggplot but for text.
 library(knitr)
-library(kableExtra) #for creating tables
-set.seed(1234)
+library(kableExtra) #for creating tables, more readable and nice fashion.
+
+set.seed(1234) #to get exactly same dataset each time sample from dataset (number is arbitrary like a key that are used each time).
+
 options(dplyr.print_min = 10, dplyr.print_max = 6)</code></pre>
 </div>
+<div id="models-with-numerical-explanatory-variables" class="section level1">
+<h1>Models with numerical explanatory variables</h1>
 <div id="import-data-paris-paintings" class="section level2">
 <h2>Import Data: paris Paintings</h2>
 <pre class="r"><code>pp &lt;- read_csv(&quot;paris-paintings.csv&quot;, na = c(&quot;n/a&quot;, &quot;&quot;, &quot;NA&quot;))</code></pre>
@@ -33,12 +37,23 @@ options(dplyr.print_min = 10, dplyr.print_max = 6)</code></pre>
 </div>
 <div id="goal-predict-height-from-width" class="section level2">
 <h2>Goal: Predict height from width</h2>
+<p>Below is a LaTeX syntax in R markdown.Wrap syntax in two pair of Dollar signs.</p>
 <p><span class="math display">\[\widehat{height}_{i} = \beta_0 + \beta_1 \times width_{i}\]</span></p>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/height-width-plot-1.png" width="672" /></p>
-<hr />
-<p><img src="tidymodels.png" width="98%" /></p>
-<hr />
+<table style="width:6%;">
+<colgroup>
+<col width="5%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td>Below image shows different packages that are included in tidymodels.</td>
+</tr>
+<tr class="even">
+<td><img src="tidymodels.png" width="98%" /></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="step-1-specify-model" class="section level2">
 <h2>Step 1: Specify model</h2>
@@ -60,10 +75,10 @@ options(dplyr.print_min = 10, dplyr.print_max = 6)</code></pre>
 <p>… using <strong>formula syntax</strong></p>
 <pre class="r"><code>linear_reg() %&gt;%
   set_engine(&quot;lm&quot;) %&gt;%
-  fit(Height_in ~ Width_in, data = pp)</code></pre>
+  fit(Height_in ~ Width_in, data = pp) #in: inches #we want to predict height, using width</code></pre>
 <pre><code>## parsnip model object
 ## 
-## Fit time:  10ms 
+## Fit time:  11ms 
 ## 
 ## Call:
 ## stats::lm(formula = Height_in ~ Width_in, data = data)
@@ -85,7 +100,7 @@ options(dplyr.print_min = 10, dplyr.print_max = 6)</code></pre>
 ## Coefficients:
 ## (Intercept)     Width_in  
 ##      3.6214       0.7808</code></pre>
-<p>.large[<span class="math display">\[\widehat{height}_{i} = 3.6214 + 0.7808 \times width_{i}\]</span>]</p>
+<p><span class="math display">\[\widehat{height}_{i} = 3.6214 + 0.7808 \times width_{i}\]</span></p>
 <hr />
 </div>
 <div id="a-tidy-look-at-model-output" class="section level2">
@@ -99,7 +114,7 @@ options(dplyr.print_min = 10, dplyr.print_max = 6)</code></pre>
 ##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
 ## 1 (Intercept)    3.62    0.254        14.3 8.82e-45
 ## 2 Width_in       0.781   0.00950      82.1 0</code></pre>
-<p>.large[<span class="math display">\[\widehat{height}_{i} = 3.62 + 0.781 \times width_{i}\]</span>]</p>
+<p><span class="math display">\[\widehat{height}_{i} = 3.62 + 0.781 \times width_{i}\]</span></p>
 <hr />
 </div>
 <div id="slope-and-intercept" class="section level2">
@@ -127,6 +142,7 @@ options(dplyr.print_min = 10, dplyr.print_max = 6)</code></pre>
 <p>.footnote[Source: XKCD, <a href="https://xkcd.com/925/">Cell phones</a>]</p>
 <hr />
 <p>class: middle</p>
+</div>
 </div>
 <div id="parameter-estimation" class="section level1">
 <h1>Parameter estimation</h1>
