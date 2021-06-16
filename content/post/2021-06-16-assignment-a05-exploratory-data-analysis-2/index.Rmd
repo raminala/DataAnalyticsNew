@@ -1,0 +1,11 @@
+---
+title: 'Assignment A05: Exploratory data analysis-2'
+author: ''
+date: '2021-06-16'
+slug: assignment-a05-exploratory-data-analysis-2
+categories:
+  - tidymodels
+  - tidyverse
+  - ggplot2
+tags: []
+---

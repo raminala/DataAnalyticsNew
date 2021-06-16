@@ -11,7 +11,7 @@ tags: []
 
 ## Import Libraries
 
-```{r packages,  message=FALSE, warning=FALSE}
+```{r packages, message=FALSE, warning=FALSE}
 library(tidyverse)
 library(tidymodels) #Interesting collections of models.
 library(ggtext) #similar to ggplot but for text.
