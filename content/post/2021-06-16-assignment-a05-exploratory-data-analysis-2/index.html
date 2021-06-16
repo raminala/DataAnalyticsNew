@@ -13,16 +13,92 @@ tags: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<p>Data source:</p>
+<p>(<a href="https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv" class="uri">https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv</a>)</p>
 <div id="import-data-paris-paintings" class="section level2">
 <h2>Import Data: paris Paintings</h2>
-<pre class="r"><code>#My_data &lt;- read_csv(&quot;paris-paintings.csv&quot;, na = c(&quot;n/a&quot;, &quot;&quot;, &quot;NA&quot;))</code></pre>
+<p>%&gt;%
+group_by(country_name) %&gt;%
+count()
+#summarise
+names(My_data)</p>
 </div>
-<div id="models-with-numerical-explanatory-variables" class="section level1">
-<h1>Models with numerical explanatory variables</h1>
+<div id="energy-and-mining" class="section level2">
+<h2>energy-and-mining</h2>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   .default = col_double(),
+##   `Country Name` = col_character(),
+##   `Country Code` = col_character()
+## )
+## i Use `spec()` for the full column specifications.</code></pre>
+<pre><code>##  [1] &quot;country_name&quot;                                                                          
+##  [2] &quot;country_code&quot;                                                                          
+##  [3] &quot;year&quot;                                                                                  
+##  [4] &quot;access_to_electricity_percent_of_population&quot;                                           
+##  [5] &quot;access_to_electricity_rural_percent_of_rural_population&quot;                               
+##  [6] &quot;access_to_electricity_urban_percent_of_urban_population&quot;                               
+##  [7] &quot;adjusted_savings_energy_depletion_percent_of_gni&quot;                                      
+##  [8] &quot;adjusted_savings_energy_depletion_current_us&quot;                                          
+##  [9] &quot;adjusted_savings_mineral_depletion_percent_of_gni&quot;                                     
+## [10] &quot;adjusted_savings_mineral_depletion_current_us&quot;                                         
+## [11] &quot;adjusted_savings_natural_resources_depletion_percent_of_gni&quot;                           
+## [12] &quot;alternative_and_nuclear_energy_percent_of_total_energy_use&quot;                            
+## [13] &quot;co2_emissions_from_gaseous_fuel_consumption_percent_of_total&quot;                          
+## [14] &quot;co2_emissions_from_liquid_fuel_consumption_kt&quot;                                         
+## [15] &quot;combustible_renewables_and_waste_percent_of_total_energy&quot;                              
+## [16] &quot;delay_in_obtaining_an_electrical_connection_days&quot;                                      
+## [17] &quot;electric_power_consumption_k_wh_per_capita&quot;                                            
+## [18] &quot;electric_power_transmission_and_distribution_losses_percent_of_output&quot;                 
+## [19] &quot;electricity_production_from_coal_sources_percent_of_total&quot;                             
+## [20] &quot;electricity_production_from_hydroelectric_sources_percent_of_total&quot;                    
+## [21] &quot;electricity_production_from_natural_gas_sources_percent_of_total&quot;                      
+## [22] &quot;electricity_production_from_nuclear_sources_percent_of_total&quot;                          
+## [23] &quot;electricity_production_from_oil_sources_percent_of_total&quot;                              
+## [24] &quot;electricity_production_from_oil_gas_and_coal_sources_percent_of_total&quot;                 
+## [25] &quot;electricity_production_from_renewable_sources_excluding_hydroelectric_percent_of_total&quot;
+## [26] &quot;electricity_production_from_renewable_sources_excluding_hydroelectric_k_wh&quot;            
+## [27] &quot;energy_imports_net_percent_of_energy_use&quot;                                              
+## [28] &quot;energy_intensity_level_of_primary_energy_mj_2011_ppp_gdp&quot;                              
+## [29] &quot;energy_related_methane_emissions_percent_of_total&quot;                                     
+## [30] &quot;energy_use_kg_of_oil_equivalent_per_capita&quot;                                            
+## [31] &quot;energy_use_kg_of_oil_equivalent_per_1_000_gdp_constant_2011_ppp&quot;                       
+## [32] &quot;firms_using_banks_to_finance_investment_percent_of_firms&quot;                              
+## [33] &quot;fossil_fuel_energy_consumption_percent_of_total&quot;                                       
+## [34] &quot;fuel_exports_percent_of_merchandise_exports&quot;                                           
+## [35] &quot;fuel_imports_percent_of_merchandise_imports&quot;                                           
+## [36] &quot;gdp_per_unit_of_energy_use_ppp_per_kg_of_oil_equivalent&quot;                               
+## [37] &quot;gdp_per_unit_of_energy_use_constant_2011_ppp_per_kg_of_oil_equivalent&quot;                 
+## [38] &quot;investment_in_energy_with_private_participation_current_us&quot;                            
+## [39] &quot;methane_emissions_in_energy_sector_thousand_metric_tons_of_co2_equivalent&quot;             
+## [40] &quot;mineral_rents_percent_of_gdp&quot;                                                          
+## [41] &quot;natural_gas_rents_percent_of_gdp&quot;                                                      
+## [42] &quot;nitrous_oxide_emissions_in_energy_sector_percent_of_total&quot;                             
+## [43] &quot;nitrous_oxide_emissions_in_energy_sector_thousand_metric_tons_of_co2_equivalent&quot;       
+## [44] &quot;oil_rents_percent_of_gdp&quot;                                                              
+## [45] &quot;ores_and_metals_exports_percent_of_merchandise_exports&quot;                                
+## [46] &quot;ores_and_metals_imports_percent_of_merchandise_imports&quot;                                
+## [47] &quot;pump_price_for_diesel_fuel_us_per_liter&quot;                                               
+## [48] &quot;pump_price_for_gasoline_us_per_liter&quot;                                                  
+## [49] &quot;renewable_electricity_output_percent_of_total_electricity_output&quot;                      
+## [50] &quot;renewable_energy_consumption_percent_of_total_final_energy_consumption&quot;                
+## [51] &quot;time_required_to_get_electricity_days&quot;                                                 
+## [52] &quot;total_natural_resources_rents_percent_of_gdp&quot;                                          
+## [53] &quot;value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms&quot;</code></pre>
+<pre class="r"><code>My_data2 %&gt;%
+  ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+ geom_point()</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>#+geom_smooth(method = &quot;lm&quot;)</code></pre>
+<p>-Number of variables: 522</p>
+<p>-Number of observations: 53</p>
+</div>
+<div id="initial-analysis-questions" class="section level1">
+<h1>Initial Analysis Questions</h1>
+<ol style="list-style-type: decimal">
+<li></li>
+</ol>
 <div id="captioned-visualizations-that-convey-key-insights-gained-during-your-analysis" class="section level2">
 <h2>captioned visualizations that convey key insights gained during your analysis</h2>
-</div>
-<div id="four-questions" class="section level2">
-<h2>four questions</h2>
 </div>
 </div>

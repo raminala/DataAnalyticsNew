@@ -26,9 +26,14 @@ options(dplyr.print_min = 10, dplyr.print_max = 6)
 ## Import Data: paris Paintings
 
 ```{r message=FALSE}
-#My_data <- read_csv("paris-paintings.csv", na = c("n/a", "", "NA"))
+My_data <- read_csv("2.csv", na = c("n/a", "", "NA"))
 
+ncol(My_data)
+nrow(My_data)
 ```
+{r }
+
+
 
 # Models with numerical explanatory variables
 
