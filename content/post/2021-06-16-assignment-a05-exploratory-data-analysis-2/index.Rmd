@@ -17,32 +17,84 @@ library(tidymodels) #Interesting collections of models.
 library(ggtext) #similar to ggplot but for text.
 library(knitr)
 library(kableExtra) #for creating tables, more readable and nice fashion.
+library(janitor)
 
-set.seed(1234) #to get exactly same dataset each time sample from dataset (number is arbitrary like a key that are used each time).
+set.seed(1234) 
 
 options(dplyr.print_min = 10, dplyr.print_max = 6)
 ```
 
+
+Data source:
+
+(https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv)
+
+
 ## Import Data: paris Paintings
 
-```{r message=FALSE}
-My_data <- read_csv("2.csv", na = c("n/a", "", "NA"))
+```{r message=FALSE, echo=FALSE}
+My_data <- read_csv("2.csv", na = c("n/a", "", "NA")) %>%
+  janitor::clean_names() %>%
+  
+  filter(country_name =="China" |
+         country_name =="India" |
+         country_name =="United States" |
+         country_name =="Indonesia" |
+         country_name =="Pakistan" |
+         country_name =="Brazil" |
+         country_name =="Nigeria" |
+         country_name =="Bangladesh" |
+         country_name =="Russia" |
+         country_name =="Mexico") 
 
-ncol(My_data)
-nrow(My_data)
+
+#names(My_data)
+
 ```
-{r }
+
+%>%
+  group_by(country_name) %>%
+  count()
+#summarise
+names(My_data)
+
+## energy-and-mining
+
+
+```{r, echo=FALSE}
+My_data2 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA"))%>%
+  janitor::clean_names() %>%
+filter(country_name =="China" |
+         country_name =="India" |
+         country_name =="United States" |
+         country_name =="Indonesia" |
+         country_name =="Pakistan" |
+         country_name =="Brazil" |
+         country_name =="Nigeria" |
+         country_name =="Bangladesh" |
+         country_name =="Russia" |
+         country_name =="Japan") #, year=="2010"
+
+names(My_data2)
+```
+```{r}
+My_data2 %>%
+  ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+ geom_point()
+#+geom_smooth(method = "lm")
+  
+```
 
 
 
-# Models with numerical explanatory variables
+-Number of variables: `r nrow(My_data)`
+
+-Number of observations: `r ncol(My_data)`
+
+# Initial Analysis Questions
+
+1. 
 
 
 
 
 ## captioned visualizations that convey key insights gained during your analysis
-
-
-
-
-## four questions
