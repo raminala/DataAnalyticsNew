@@ -18,7 +18,7 @@ library(ggtext) #similar to ggplot but for text.
 library(knitr)
 library(kableExtra) #for creating tables, more readable and nice fashion.
 library(janitor)
-
+library(naniar)
 set.seed(1234) 
 
 options(dplyr.print_min = 10, dplyr.print_max = 6)
@@ -73,10 +73,24 @@ filter(country_name =="China" |
          country_name =="Nigeria" |
          country_name =="Bangladesh" |
          country_name =="Russia" |
-         country_name =="Japan") #, year=="2010"
+         country_name =="Japan")%>%
+
+  replace_with_na(replace = list(access_to_electricity_percent_of_population > 100))
+  
+  
+  
+  #access_to_electricity_percent_of_population
 
 names(My_data2)
 ```
+
+
+replace_with_na($access_to_electricity_percent_of_population > 100, access_to_electricity_percent_of_population <- 20)
+
+
+
+
+
 ```{r}
 My_data2 %>%
   ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+ geom_point()
