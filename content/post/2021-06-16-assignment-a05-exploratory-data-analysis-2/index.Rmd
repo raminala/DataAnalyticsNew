@@ -9,3 +9,35 @@ categories:
   - ggplot2
 tags: []
 ---
+
+
+```{r packages, message=FALSE, warning=FALSE, echo=FALSE}
+library(tidyverse)
+library(tidymodels) #Interesting collections of models.
+library(ggtext) #similar to ggplot but for text.
+library(knitr)
+library(kableExtra) #for creating tables, more readable and nice fashion.
+
+set.seed(1234) #to get exactly same dataset each time sample from dataset (number is arbitrary like a key that are used each time).
+
+options(dplyr.print_min = 10, dplyr.print_max = 6)
+```
+
+## Import Data: paris Paintings
+
+```{r message=FALSE}
+#My_data <- read_csv("paris-paintings.csv", na = c("n/a", "", "NA"))
+
+```
+
+# Models with numerical explanatory variables
+
+
+
+
+## captioned visualizations that convey key insights gained during your analysis
+
+
+
+
+## four questions
