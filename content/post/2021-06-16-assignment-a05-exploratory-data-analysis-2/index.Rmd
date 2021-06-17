@@ -45,7 +45,7 @@ My_data <- read_csv("2.csv", na = c("n/a", "", "NA")) %>%
          country_name =="Nigeria" |
          country_name =="Bangladesh" |
          country_name =="Russia" |
-         country_name =="Mexico") 
+         country_name =="Mexico" ) 
 
 
 #names(My_data)
@@ -62,7 +62,7 @@ names(My_data)
 
 
 ```{r, echo=FALSE}
-My_data2 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA"))%>%
+My_data2 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
   janitor::clean_names() %>%
 filter(country_name =="China" |
          country_name =="India" |
@@ -73,13 +73,18 @@ filter(country_name =="China" |
          country_name =="Nigeria" |
          country_name =="Bangladesh" |
          country_name =="Russia" |
-         country_name =="Japan")%>%
+         country_name =="Japan"|
+         country_name =="Iran, Islamic Rep.") %>%
+  
+mutate(access_to_electricity_percent_of_population=replace(access_to_electricity_percent_of_population, access_to_electricity_percent_of_population > 100, NA)) %>%
+mutate(renewable_energy_consumption_percent_of_total_final_energy_consumption=replace(renewable_energy_consumption_percent_of_total_final_energy_consumption, renewable_energy_consumption_percent_of_total_final_energy_consumption > 100, NA))
 
-  replace_with_na(replace = list(access_to_electricity_percent_of_population > 100))
+
+
+
+# rename(access_to_electricity_percent_of_population = access_to_electricity_percent_of_population) 
   
-  
-  
-  #access_to_electricity_percent_of_population
+ 
 
 names(My_data2)
 ```
@@ -99,6 +104,13 @@ My_data2 %>%
 ```
 
 
+
+```{r}
+My_data2 %>%
+  filter(country_name=="Pakistan")%>%
+  ggplot(aes(year, pump_price_for_diesel_fuel_us_per_liter))+ geom_line(color="red")+geom_smooth(method = "lm")
+  
+```
 
 -Number of variables: `r nrow(My_data)`
 
