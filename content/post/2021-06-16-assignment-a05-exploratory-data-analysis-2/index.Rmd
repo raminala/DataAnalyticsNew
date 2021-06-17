@@ -139,7 +139,7 @@ anim_save("1.gif")
 
 ## 3. Fuel price by countries
 
-
+Fuel price in these populated countries are represented here as well as a linear regression fitting line. As expected, Fuel price is increasing in all countries. Interesting conclusion from these plots is while gas price was always relatively expensive in Japan, China started with very low price and end up with the most expensive gas price in the examined countries in 2017. 
 
 
 
@@ -155,5 +155,15 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
   
 ```
 
+## 4. value_lost
 
+```{r}
+
+
+energy3 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
+  janitor::clean_names() %>%
+  select(country_name, value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms)
+
+names(energy3)
+```
 
