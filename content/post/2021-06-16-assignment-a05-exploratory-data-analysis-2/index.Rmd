@@ -31,7 +31,7 @@ library(janitor)
 
 
 
-```{r, echo=FALSE, message=FALSE, include=FALSE}
+```{r, echo=FALSE, message=FALSE, include=FALSE, warning=FALSE}
 
 energy <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
   janitor::clean_names() %>%
@@ -79,7 +79,7 @@ energy %>%
 
 
 
-```{r}
+```{r, warning=FALSE, echo=FALSE}
 energy%>%
   
 mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fuel_us_per_liter, pump_price_for_diesel_fuel_us_per_liter == 00, NA)) %>% 
@@ -101,22 +101,10 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
 
 
 
-ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
-  geom_point(alpha = 0.7, show.legend = FALSE) +
-  
-  scale_colour_manual(values = country_colors) +
-  scale_size(range = c(2, 12)) +
-  scale_x_log10() +
-  facet_wrap(~continent) +
-  
-  # Here comes the gganimate specific bits
-  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
-  transition_time(year) +
-  ease_aes('linear')
 
 
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(gganimate)
 
 
@@ -165,6 +153,6 @@ anim_save("1.gif")
 
 ```
 
-```{r out.width="98%", echo=FALSE}
-knitr::include_graphics("1.gif")
+```{r out.width="98%", echo=FALSE, warning=FALSE}
+#knitr::include_graphics("1.gif")
 ```
