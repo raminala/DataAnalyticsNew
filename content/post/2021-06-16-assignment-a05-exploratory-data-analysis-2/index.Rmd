@@ -103,10 +103,12 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
 
 ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
   geom_point(alpha = 0.7, show.legend = FALSE) +
+  
   scale_colour_manual(values = country_colors) +
   scale_size(range = c(2, 12)) +
   scale_x_log10() +
   facet_wrap(~continent) +
+  
   # Here comes the gganimate specific bits
   labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
   transition_time(year) +
@@ -114,24 +116,55 @@ ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
 
 
 
-```{r}
+```{r, echo=FALSE}
 library(gganimate)
 
 
+energy2 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
+  janitor::clean_names() %>%
+  filter(between(year,1990,2017)) %>%
+filter(country_name =="China" |
+         country_name =="India" |
+         country_name =="United States" |
+         country_name =="Indonesia" |
+         country_name =="Pakistan" |
+         country_name =="Brazil" |
+         country_name =="Nigeria" |
+         country_name =="Bangladesh" |
+         country_name =="Russia" |
+         country_name =="Japan"|
+         country_name =="Iran, Islamic Rep."|
+         country_name =="Mexico" |
+         country_name =="Germany" |
+         country_name =="New Zealand" |
+         country_name =="Sweden" |
+         country_name =="Turkey" |
+         country_name =="Argentina" |
+         country_name =="Singapore") %>%
+  
+mutate(access_to_electricity_percent_of_population=replace(access_to_electricity_percent_of_population, access_to_electricity_percent_of_population > 100, NA)) %>%
+mutate(renewable_energy_consumption_percent_of_total_final_energy_consumption=replace(renewable_energy_consumption_percent_of_total_final_energy_consumption, renewable_energy_consumption_percent_of_total_final_energy_consumption > 100, NA))
 
 
-cc <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA"))
-
-
-#gg <- 
  
- cc %>%
-  janitor::clean_names()%>%
-  filter(year=="1999") %>%
+ 
+ energy2 %>%
+  
   ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+
-  geom_point()
+  geom_point(size=4)+
+   
+   
+   labs(
+        x = 'access to electricity (%)',
+        y = 'renewable energy portion') +
+  transition_time(year) +
+  ease_aes('linear')
 
-
+# Save at gif:
+anim_save("1.gif")
 
 ```
 
+```{r out.width="98%", echo=FALSE}
+knitr::include_graphics("1.gif")
+```

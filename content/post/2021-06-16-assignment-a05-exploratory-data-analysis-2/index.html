@@ -16,7 +16,7 @@ tags: []
 <hr />
 <div id="import-data-energy-mining" class="section level2">
 <h2>Import Data: Energy &amp; Mining</h2>
-<p>This post consists of exploratory analysis of a dataset provided by the world bank. It includes 53 variable and 571 observations that represent many countries around the world between 1960 to 2017. Variables include varieties of parameters related to welfare and sustainability in examined countries. These variables include but not limited to access and consumption of different types of energies from different sources.</p>
+<p>This post consists of exploratory analysis of a dataset provided by the world bank. It includes 53 variable and 513 observations that represent many countries around the world between 1960 to 2017. Variables include varieties of parameters related to welfare and sustainability in examined countries. These variables include but not limited to access and consumption of different types of energies from different sources.</p>
 <p>This dataset could be find in the below link:</p>
 <p>(<a href="https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv" class="uri">https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv</a>)</p>
 </div>
@@ -32,8 +32,8 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
   ggplot(aes(year, pump_price_for_diesel_fuel_us_per_liter, color=country_name))+ geom_point()+geom_smooth(method = &quot;lm&quot;,se=FALSE)+
   xlim(1990, 2010)+ylim(0, 1.1)</code></pre>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<pre><code>## Warning: Removed 490 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>## Warning: Removed 490 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 439 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 439 rows containing missing values (geom_point).</code></pre>
 <pre><code>## Warning: Removed 9 rows containing missing values (geom_smooth).</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 </div>
@@ -44,5 +44,34 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
 </ol>
 <div id="captioned-visualizations-that-convey-key-insights-gained-during-your-analysis" class="section level2">
 <h2>captioned visualizations that convey key insights gained during your analysis</h2>
+<p>ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
+geom_point(alpha = 0.7, show.legend = FALSE) +</p>
+<p>scale_colour_manual(values = country_colors) +
+scale_size(range = c(2, 12)) +
+scale_x_log10() +
+facet_wrap(~continent) +</p>
+<p># Here comes the gganimate specific bits
+labs(title = ‘Year: {frame_time}’, x = ‘GDP per capita’, y = ‘life expectancy’) +
+transition_time(year) +
+ease_aes(‘linear’)</p>
+<pre><code>## 
+## -- Column specification --------------------------------------------------------
+## cols(
+##   .default = col_double(),
+##   `Country Name` = col_character(),
+##   `Country Code` = col_character()
+## )
+## i Use `spec()` for the full column specifications.</code></pre>
+<pre><code>## Warning: Removed 17 rows containing missing values (geom_point).
+
+## Warning: Removed 17 rows containing missing values (geom_point).
+
+## Warning: Removed 17 rows containing missing values (geom_point).
+
+## Warning: Removed 17 rows containing missing values (geom_point).
+
+## Warning: Removed 17 rows containing missing values (geom_point).</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.gif" /><!-- --></p>
+<p><img src="1.gif" width="98%" /></p>
 </div>
 </div>
