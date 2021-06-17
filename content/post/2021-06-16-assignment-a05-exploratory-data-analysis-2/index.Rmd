@@ -16,53 +16,24 @@ library(tidyverse)
 library(tidymodels) #Interesting collections of models.
 library(ggtext) #similar to ggplot but for text.
 library(knitr)
-library(kableExtra) #for creating tables, more readable and nice fashion.
+library(kableExtra) 
 library(janitor)
-library(naniar)
-set.seed(1234) 
-
-options(dplyr.print_min = 10, dplyr.print_max = 6)
 ```
 
 
-Data source:
 
-(https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv)
+---
 
-
-## Import Data: paris Paintings
-
-```{r message=FALSE, echo=FALSE}
-My_data <- read_csv("2.csv", na = c("n/a", "", "NA")) %>%
-  janitor::clean_names() %>%
-  
-  filter(country_name =="China" |
-         country_name =="India" |
-         country_name =="United States" |
-         country_name =="Indonesia" |
-         country_name =="Pakistan" |
-         country_name =="Brazil" |
-         country_name =="Nigeria" |
-         country_name =="Bangladesh" |
-         country_name =="Russia" |
-         country_name =="Mexico" ) 
+## Import Data: Energy & Mining
 
 
-#names(My_data)
-
-```
-
-%>%
-  group_by(country_name) %>%
-  count()
-#summarise
-names(My_data)
-
-## energy-and-mining
 
 
-```{r, echo=FALSE}
-My_data2 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
+
+
+```{r, echo=FALSE, message=FALSE, include=FALSE}
+
+energy <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
   janitor::clean_names() %>%
 filter(country_name =="China" |
          country_name =="India" |
@@ -73,8 +44,7 @@ filter(country_name =="China" |
          country_name =="Nigeria" |
          country_name =="Bangladesh" |
          country_name =="Russia" |
-         country_name =="Japan"|
-         country_name =="Iran, Islamic Rep.") %>%
+         country_name =="Japan") %>%
   
 mutate(access_to_electricity_percent_of_population=replace(access_to_electricity_percent_of_population, access_to_electricity_percent_of_population > 100, NA)) %>%
 mutate(renewable_energy_consumption_percent_of_total_final_energy_consumption=replace(renewable_energy_consumption_percent_of_total_final_energy_consumption, renewable_energy_consumption_percent_of_total_final_energy_consumption > 100, NA))
@@ -86,18 +56,22 @@ mutate(renewable_energy_consumption_percent_of_total_final_energy_consumption=re
   
  
 
-names(My_data2)
+names(energy)
 ```
 
+This post consists of exploratory analysis of a dataset provided by the world bank. It includes `r ncol(energy)` variable and `r nrow(energy)` observations that represent many countries around the world between 1960 to 2017. Variables include varieties of parameters related to welfare and sustainability in examined countries. These variables include but not limited to access and consumption of different types of energies from different sources.
 
-replace_with_na($access_to_electricity_percent_of_population > 100, access_to_electricity_percent_of_population <- 20)
+This dataset could be find in the below link:
+
+(https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv)
+
+## Initial Analysis Questions
+
+## Initial Analysis Questions
 
 
-
-
-
-```{r}
-My_data2 %>%
+```{r, echo=FALSE, warning=FALSE}
+energy %>%
   ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+ geom_point()
 #+geom_smooth(method = "lm")
   
@@ -106,7 +80,7 @@ My_data2 %>%
 
 
 ```{r}
-My_data2%>%
+energy%>%
   
 mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fuel_us_per_liter, pump_price_for_diesel_fuel_us_per_liter == 00, NA)) %>% 
   ggplot(aes(year, pump_price_for_diesel_fuel_us_per_liter, color=country_name))+ geom_point()+geom_smooth(method = "lm",se=FALSE)+
@@ -114,9 +88,7 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
   
 ```
 
--Number of variables: `r nrow(My_data)`
 
--Number of observations: `r ncol(My_data)`
 
 # Initial Analysis Questions
 
@@ -126,3 +98,40 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
 
 
 ## captioned visualizations that convey key insights gained during your analysis
+
+
+
+ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, colour = country)) +
+  geom_point(alpha = 0.7, show.legend = FALSE) +
+  scale_colour_manual(values = country_colors) +
+  scale_size(range = c(2, 12)) +
+  scale_x_log10() +
+  facet_wrap(~continent) +
+  # Here comes the gganimate specific bits
+  labs(title = 'Year: {frame_time}', x = 'GDP per capita', y = 'life expectancy') +
+  transition_time(year) +
+  ease_aes('linear')
+
+
+
+```{r}
+library(gganimate)
+
+
+
+
+cc <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA"))
+
+
+#gg <- 
+ 
+ cc %>%
+  janitor::clean_names()%>%
+  filter(year=="1999") %>%
+  ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+
+  geom_point()
+
+
+
+```
+
