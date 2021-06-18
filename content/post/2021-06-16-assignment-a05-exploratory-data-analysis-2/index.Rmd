@@ -152,7 +152,7 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
   facet_wrap("country_name")+
   labs(x = 'year',
         y = 'Gas price per Liter (USD)') 
-  
+
 ```
 
 ## 4. value_lost
@@ -186,10 +186,12 @@ mutate(access_to_electricity_urban_percent_of_urban_population=replace(access_to
   group_by(year)  %>%
 summarise(rural=mean(access_to_electricity_rural_percent_of_rural_population), urban=mean(access_to_electricity_urban_percent_of_urban_population))  %>%
   
- pivot_longer(-year, names_to = "rural_urban", values_to = "percentage")  
+ pivot_longer(-year, names_to = "rural_urban", values_to = "percentage")    %>%
 
- ggplot(y1,aes(year, percentage, fill=as.factor(rural_urban)))+
-  geom_bar(stat="identity", width=4,position="dodge")
+ ggplot(aes(as.character(year), percentage, fill=as.factor(rural_urban)))+
+  geom_bar(stat="identity", width=0.5,position="dodge")+ylim(0,100)
+
+y1
 
 ```
 
