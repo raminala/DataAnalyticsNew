@@ -179,7 +179,7 @@ group_by(country_name) %>%
   slice(1:5) %>%
   ggplot(aes(country_name,mean_loss)) +
   geom_col(fill="blue", width=0.5)+
-  labs(x = 'country',
+  labs(title="value lost due to electrical outages in the most affected countries",x = 'country',
         y = 'value lost due to electrical outages (% of income)')
 
 energy4
@@ -197,7 +197,7 @@ We want to find top 5 countries that have been affected most due to electrical o
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 y1 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA"))  %>%
   janitor::clean_names() %>%
-select("access_to_electricity_rural_percent_of_rural_population", "access_to_electricity_urban_percent_of_urban_population",year) %>%
+select("access_to_electricity_rural_percent_of_rural_population", "access_to_electricity_urban_percent_of_urban_population","year") %>%
   
 mutate(access_to_electricity_rural_percent_of_rural_population=replace(access_to_electricity_rural_percent_of_rural_population, access_to_electricity_rural_percent_of_rural_population > 100, NA))%>%
   
@@ -219,20 +219,39 @@ This part deal with percentage of access to electricity in 5 years with availabl
 
 ---
 
-## 6. 
+## 6. Oil rents (% of GDP) - Country Ranking
 
-```{r}
 
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+y6 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
+  janitor::clean_names()  %>%
+  filter(year==2010) %>%
+  select("oil_rents_percent_of_gdp",
+  "energy_imports_net_percent_of_energy_use",
+  "country_name",
+  "co2_emissions_from_gaseous_fuel_consumption_percent_of_total") %>%
+
+  ggplot(aes(co2_emissions_from_gaseous_fuel_consumption_percent_of_total,
+             energy_imports_net_percent_of_energy_use, size=oil_rents_percent_of_gdp))+ geom_point()+
+labs(x = "co2_emissions_from_gaseous_fuel_consumption_percent_of_total",
+     y = "energy_imports_net_percent_of_energy_use",
+     title="Access to different forms of electricity")
+  
+  y6
+  
+  
+#names(y6)
 ```
 
-aaaaaaaaaaaaaaaaaa
-
+Definition: Oil rents are the difference between the value of crude oil production at world prices and total costs of production.
+First, I want to know fir
 
 ---
 
 ## 7. 
 
-```{r}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
 ```
 
@@ -242,7 +261,7 @@ aaaaaaaaaaaaaaaaaa
 
 ## 8. 
 
-```{r}
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
 ```
 
