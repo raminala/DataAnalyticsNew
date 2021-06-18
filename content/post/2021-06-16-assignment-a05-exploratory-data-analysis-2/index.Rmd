@@ -10,12 +10,6 @@ categories:
 tags: []
 ---
 
-```{r}
-y <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) 
-names(y)
-```
-
-
 
 
 
@@ -163,14 +157,18 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
 
 ## 4. value_lost
 
-```{r}
-
 
 energy3 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
   janitor::clean_names() %>%
   select(country_name, value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms)
 
 names(energy3)
+
+
+```{r}
+
+
+
 ```
 
 ## 5. Access to electricity, rural urban
@@ -188,10 +186,10 @@ mutate(access_to_electricity_urban_percent_of_urban_population=replace(access_to
   group_by(year)  %>%
 summarise(rural=mean(access_to_electricity_rural_percent_of_rural_population), urban=mean(access_to_electricity_urban_percent_of_urban_population))  %>%
   
- pivot_longer(-year, names_to = "444", values_to = "cou")  %>% 
-  
-  ggplot(aes(year,cou))+
-  geom_col()
+ pivot_longer(-year, names_to = "rural_urban", values_to = "percentage")  
+
+ ggplot(y1,aes(year, percentage, fill=as.factor(rural_urban)))+
+  geom_bar(stat="identity", width=4,position="dodge")
 
 ```
 

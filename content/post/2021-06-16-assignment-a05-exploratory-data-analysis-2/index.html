@@ -47,18 +47,15 @@ tags: []
 </div>
 <div id="value_lost" class="section level2">
 <h2>4. value_lost</h2>
-<pre class="r"><code>energy3 &lt;- read_csv(&quot;energy-and-mining.csv&quot;, na = c(&quot;n/a&quot;, &quot;&quot;, &quot;NA&quot;)) %&gt;%
-  janitor::clean_names() %&gt;%
-  select(country_name, value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms)</code></pre>
-<pre><code>## 
-## -- Column specification --------------------------------------------------------
-## cols(
-##   .default = col_double(),
-##   `Country Name` = col_character(),
-##   `Country Code` = col_character()
-## )
-## i Use `spec()` for the full column specifications.</code></pre>
-<pre class="r"><code>names(energy3)</code></pre>
-<pre><code>## [1] &quot;country_name&quot;                                                            
-## [2] &quot;value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms&quot;</code></pre>
+<p>energy3 &lt;- read_csv(“energy-and-mining.csv”, na = c(“n/a”, "“,”NA")) %&gt;%
+janitor::clean_names() %&gt;%
+select(country_name, value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms)</p>
+<p>names(energy3)</p>
+</div>
+<div id="access-to-electricity-rural-urban" class="section level2">
+<h2>5. Access to electricity, rural urban</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>ggplot(aes(year, as.factor(444)))+
+geom_bar(stat=“identity”, width=.3,position=“dodge”)</p>
+<p>#ggplot(aes(year, rainfall, fill=as.factor(year)))</p>
 </div>
