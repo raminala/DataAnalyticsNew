@@ -16,53 +16,25 @@ library(tidyverse)
 library(tidymodels) #Interesting collections of models.
 library(ggtext) #similar to ggplot but for text.
 library(knitr)
-library(kableExtra) #for creating tables, more readable and nice fashion.
+library(kableExtra) 
 library(janitor)
-library(naniar)
-set.seed(1234) 
-
-options(dplyr.print_min = 10, dplyr.print_max = 6)
+library(gganimate)
 ```
 
 
-Data source:
 
-(https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv)
+---
 
-
-## Import Data: paris Paintings
-
-```{r message=FALSE, echo=FALSE}
-My_data <- read_csv("2.csv", na = c("n/a", "", "NA")) %>%
-  janitor::clean_names() %>%
-  
-  filter(country_name =="China" |
-         country_name =="India" |
-         country_name =="United States" |
-         country_name =="Indonesia" |
-         country_name =="Pakistan" |
-         country_name =="Brazil" |
-         country_name =="Nigeria" |
-         country_name =="Bangladesh" |
-         country_name =="Russia" |
-         country_name =="Mexico" ) 
+## Import Data: Energy & Mining
 
 
-#names(My_data)
-
-```
-
-%>%
-  group_by(country_name) %>%
-  count()
-#summarise
-names(My_data)
-
-## energy-and-mining
 
 
-```{r, echo=FALSE}
-My_data2 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
+
+
+```{r, echo=FALSE, message=FALSE, include=FALSE, warning=FALSE}
+
+energy <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
   janitor::clean_names() %>%
 filter(country_name =="China" |
          country_name =="India" |
@@ -73,56 +45,125 @@ filter(country_name =="China" |
          country_name =="Nigeria" |
          country_name =="Bangladesh" |
          country_name =="Russia" |
-         country_name =="Japan"|
-         country_name =="Iran, Islamic Rep.") %>%
+         country_name =="Japan") %>%
   
 mutate(access_to_electricity_percent_of_population=replace(access_to_electricity_percent_of_population, access_to_electricity_percent_of_population > 100, NA)) %>%
 mutate(renewable_energy_consumption_percent_of_total_final_energy_consumption=replace(renewable_energy_consumption_percent_of_total_final_energy_consumption, renewable_energy_consumption_percent_of_total_final_energy_consumption > 100, NA))
 
-
-
-
-# rename(access_to_electricity_percent_of_population = access_to_electricity_percent_of_population) 
-  
+# rename(access_to_electricity_percent_of_population = xxx) 
  
-
-names(My_data2)
+names(energy)
 ```
 
+This post consists of exploratory analysis of a dataset provided by the world bank. It includes `r ncol(energy)` variable and `r nrow(energy)` observations that represent many countries around the world between 1960 to 2017. Variables include varieties of parameters related to welfare and sustainability in examined countries. These variables include but not limited to access and consumption of different types of energies from different sources.
 
-replace_with_na($access_to_electricity_percent_of_population > 100, access_to_electricity_percent_of_population <- 20)
+This dataset could be find in the below link:
+
+(https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv)
+
+## Initial Analysis Questions
+
+1. 
+2.
+3.
+4.
 
 
+## 1. Access to electricity (any form)in populated countries and portion of renewable energy
 
+Below plot shows percentage of people who have access to electricity for the first ten populous countries in the world over the period of 1960 to 2017. This scatter plot shows that countries with higher access to electricity are using less renewable form (like China and United States), but for example Nigeria is receiving its energy mainly from renewable sources, although their access is limited.
 
-
-```{r}
-My_data2 %>%
+```{r, echo=FALSE, warning=FALSE}
+energy %>%
   ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+ geom_point()
 #+geom_smooth(method = "lm")
   
 ```
 
 
+## 2. How energy access and its type changed over the years
 
-```{r}
-My_data2%>%
+The previous visualization did not show the trend over the years. One method to show this is using an animated plot as below. It shows how mentioned parameters moves over the years from 1990 to 2017 (limited years selected as data was very scarce for 1960 to 1990).This plot show most countries are moving towards providing electricity for 100% of population but in expence of using less renewable form.
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+
+
+
+energy2 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA", 0)) %>%
+  janitor::clean_names() %>%
+  filter(between(year,1990,2017)) %>%
+filter(country_name =="China" |
+         country_name =="India" |
+         country_name =="United States" |
+         country_name =="Indonesia" |
+         country_name =="Pakistan" |
+         country_name =="Brazil" |
+         country_name =="Nigeria" |
+         country_name =="Bangladesh" |
+         country_name =="Russia" |
+         country_name =="Japan"|
+         country_name =="Iran, Islamic Rep."|
+         country_name =="Mexico" |
+         country_name =="Germany" |
+         country_name =="New Zealand" |
+         country_name =="Sweden" |
+         country_name =="Turkey" |
+         country_name =="Argentina" |
+         country_name =="Singapore"|
+       country_name =="United Kingdom"|
+         country_name =="Philippines"|
+         country_name =="Mexico" ) %>%
+   
+mutate(access_to_electricity_percent_of_population=replace(access_to_electricity_percent_of_population, access_to_electricity_percent_of_population > 100, NA)) %>%
+mutate(renewable_energy_consumption_percent_of_total_final_energy_consumption=replace(renewable_energy_consumption_percent_of_total_final_energy_consumption, renewable_energy_consumption_percent_of_total_final_energy_consumption > 100, NA))
+
+
+ 
+ 
+ energy2 %>%
+  
+  ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+
+  geom_point(size=4)+
+   
+   
+   labs(
+        x = 'access to electricity (%)',
+        y = 'renewable energy portion (%)') +
+  transition_time(year) +
+  ease_aes('linear')+ theme(legend.position="none")
+
+# Save at gif:
+#anim_save("1.gif")
+
+```
+
+## 3. Fuel price by countries
+
+Fuel price in these populated countries are represented here as well as a linear regression fitting line. As expected, Fuel price is increasing in all countries. Interesting conclusion from these plots is while gas price was always relatively expensive in Japan, China started with very low price and end up with the most expensive gas price in the examined countries in 2017. 
+
+
+
+```{r, warning=FALSE, echo=FALSE, error=FALSE}
+energy%>%
   
 mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fuel_us_per_liter, pump_price_for_diesel_fuel_us_per_liter == 00, NA)) %>% 
   ggplot(aes(year, pump_price_for_diesel_fuel_us_per_liter, color=country_name))+ geom_point()+geom_smooth(method = "lm",se=FALSE)+
-  xlim(1990, 2010)+ylim(0, 1.1)
+  xlim(1990, 2010)+ylim(0, 1.1)+
+  facet_wrap("country_name")+
+  labs(x = 'year',
+        y = 'Gas price per Liter (USD)') 
   
 ```
 
--Number of variables: `r nrow(My_data)`
+## 4. value_lost
 
--Number of observations: `r ncol(My_data)`
-
-# Initial Analysis Questions
-
-1. 
+```{r}
 
 
+energy3 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
+  janitor::clean_names() %>%
+  select(country_name, value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms)
 
+names(energy3)
+```
 
-## captioned visualizations that convey key insights gained during your analysis

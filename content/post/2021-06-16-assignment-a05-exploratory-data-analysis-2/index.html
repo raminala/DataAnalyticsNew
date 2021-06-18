@@ -13,18 +13,43 @@ tags: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
-<p>Data source:</p>
+<hr />
+<div id="import-data-energy-mining" class="section level2">
+<h2>Import Data: Energy &amp; Mining</h2>
+<p>This post consists of exploratory analysis of a dataset provided by the world bank. It includes 53 variable and 513 observations that represent many countries around the world between 1960 to 2017. Variables include varieties of parameters related to welfare and sustainability in examined countries. These variables include but not limited to access and consumption of different types of energies from different sources.</p>
+<p>This dataset could be find in the below link:</p>
 <p>(<a href="https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv" class="uri">https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv</a>)</p>
-<div id="import-data-paris-paintings" class="section level2">
-<h2>Import Data: paris Paintings</h2>
-<p>%&gt;%
-group_by(country_name) %&gt;%
-count()
-#summarise
-names(My_data)</p>
 </div>
-<div id="energy-and-mining" class="section level2">
-<h2>energy-and-mining</h2>
+<div id="initial-analysis-questions" class="section level2">
+<h2>Initial Analysis Questions</h2>
+<ol style="list-style-type: decimal">
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ol>
+</div>
+<div id="access-to-electricity-any-formin-populated-countries-and-portion-of-renewable-energy" class="section level2">
+<h2>1. Access to electricity (any form)in populated countries and portion of renewable energy</h2>
+<p>Below plot shows percentage of people who have access to electricity for the first ten populous countries in the world over the period of 1960 to 2017. This scatter plot shows that countries with higher access to electricity are using less renewable form (like China and United States), but for example Nigeria is receiving its energy mainly from renewable sources, although their access is limited.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+</div>
+<div id="how-energy-access-and-its-type-changed-over-the-years" class="section level2">
+<h2>2. How energy access and its type changed over the years</h2>
+<p>The previous visualization did not show the trend over the years. One method to show this is using an animated plot as below. It shows how mentioned parameters moves over the years from 1990 to 2017 (limited years selected as data was very scarce for 1960 to 1990).This plot show most countries are moving towards providing electricity for 100% of population but in expence of using less renewable form.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.gif" /><!-- --></p>
+</div>
+<div id="fuel-price-by-countries" class="section level2">
+<h2>3. Fuel price by countries</h2>
+<p>Fuel price in these populated countries are represented here as well as a linear regression fitting line. As expected, Fuel price is increasing in all countries. Interesting conclusion from these plots is while gas price was always relatively expensive in Japan, China started with very low price and end up with the most expensive gas price in the examined countries in 2017.</p>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+</div>
+<div id="value_lost" class="section level2">
+<h2>4. value_lost</h2>
+<pre class="r"><code>energy3 &lt;- read_csv(&quot;energy-and-mining.csv&quot;, na = c(&quot;n/a&quot;, &quot;&quot;, &quot;NA&quot;)) %&gt;%
+  janitor::clean_names() %&gt;%
+  select(country_name, value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms)</code></pre>
 <pre><code>## 
 ## -- Column specification --------------------------------------------------------
 ## cols(
@@ -33,6 +58,7 @@ names(My_data)</p>
 ##   `Country Code` = col_character()
 ## )
 ## i Use `spec()` for the full column specifications.</code></pre>
+<<<<<<< HEAD
 <pre><code>##  [1] &quot;country_name&quot;                                                                          
 ##  [2] &quot;country_code&quot;                                                                          
 ##  [3] &quot;year&quot;                                                                                  
@@ -113,4 +139,9 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
 <div id="captioned-visualizations-that-convey-key-insights-gained-during-your-analysis" class="section level2">
 <h2>captioned visualizations that convey key insights gained during your analysis</h2>
 </div>
+=======
+<pre class="r"><code>names(energy3)</code></pre>
+<pre><code>## [1] &quot;country_name&quot;                                                            
+## [2] &quot;value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms&quot;</code></pre>
+>>>>>>> 081c399560b24c96d7f0578acd4ca3dd0d7b7c7c
 </div>
