@@ -86,10 +86,22 @@ names(My_data)</p>
 ## [51] &quot;time_required_to_get_electricity_days&quot;                                                 
 ## [52] &quot;total_natural_resources_rents_percent_of_gdp&quot;                                          
 ## [53] &quot;value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms&quot;</code></pre>
+<p>replace_with_na($access_to_electricity_percent_of_population &gt; 100, access_to_electricity_percent_of_population &lt;- 20)</p>
 <pre class="r"><code>My_data2 %&gt;%
   ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+ geom_point()</code></pre>
+<pre><code>## Warning: Removed 10 rows containing missing values (geom_point).</code></pre>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <pre class="r"><code>#+geom_smooth(method = &quot;lm&quot;)</code></pre>
+<pre class="r"><code>My_data2%&gt;%
+  
+mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fuel_us_per_liter, pump_price_for_diesel_fuel_us_per_liter == 00, NA)) %&gt;% 
+  ggplot(aes(year, pump_price_for_diesel_fuel_us_per_liter, color=country_name))+ geom_point()+geom_smooth(method = &quot;lm&quot;,se=FALSE)+
+  xlim(1990, 2010)+ylim(0, 1.1)</code></pre>
+<pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
+<pre><code>## Warning: Removed 490 rows containing non-finite values (stat_smooth).</code></pre>
+<pre><code>## Warning: Removed 490 rows containing missing values (geom_point).</code></pre>
+<pre><code>## Warning: Removed 9 rows containing missing values (geom_smooth).</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>-Number of variables: 522</p>
 <p>-Number of observations: 53</p>
 </div>
