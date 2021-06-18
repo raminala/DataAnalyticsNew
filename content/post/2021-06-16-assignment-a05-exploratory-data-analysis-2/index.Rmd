@@ -69,22 +69,28 @@ This dataset could be find in the below link:
 3.
 4.
 
+---
 
 ## 1. Access to electricity (any form)in populated countries and portion of renewable energy
 
-Below plot shows percentage of people who have access to electricity for the first ten populous countries in the world over the period of 1960 to 2017. This scatter plot shows that countries with higher access to electricity are using less renewable form (like China and United States), but for example Nigeria is receiving its energy mainly from renewable sources, although their access is limited.
+
+
 
 ```{r, echo=FALSE, warning=FALSE}
 energy %>%
-  ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+ geom_point()
-#+geom_smooth(method = "lm")
+  ggplot(aes(access_to_electricity_percent_of_population, renewable_energy_consumption_percent_of_total_final_energy_consumption, color=country_name))+ geom_point()+
+labs(x = "access to electricity (% of population)",
+     y = "renewable energy consumption(% of population)",
+     title="Access to different forms of electricity")
   
 ```
+Below plot shows percentage of people who have access to electricity for the first ten populous countries in the world over the period of 1960 to 2017. This scatter plot shows that countries with higher access to electricity are using less renewable form (like China and United States), but for example Nigeria is receiving its energy mainly from renewable sources, although their access is limited.
 
+---
 
 ## 2. How energy access and its type changed over the years
 
-The previous visualization did not show the trend over the years. One method to show this is using an animated plot as below. It shows how mentioned parameters moves over the years from 1990 to 2017 (limited years selected as data was very scarce for 1960 to 1990).This plot show most countries are moving towards providing electricity for 100% of population but in expence of using less renewable form.
+
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -136,12 +142,11 @@ mutate(renewable_energy_consumption_percent_of_total_final_energy_consumption=re
 anim_save("1.gif")
 
 ```
+The previous visualization did not show the trend over the years. One method to show this is using an animated plot as below. It shows how mentioned parameters moves over the years from 1990 to 2017 (limited years selected as data was very scarce for 1960 to 1990).This plot show most countries are moving towards providing electricity for 100% of population but in expence of using less renewable form.
+
+---
 
 ## 3. Fuel price by countries
-
-Fuel price in these populated countries are represented here as well as a linear regression fitting line. As expected, Fuel price is increasing in all countries. Interesting conclusion from these plots is while gas price was always relatively expensive in Japan, China started with very low price and end up with the most expensive gas price in the examined countries in 2017. 
-
-
 
 ```{r, warning=FALSE, echo=FALSE, error=FALSE}
 energy%>%
@@ -150,15 +155,17 @@ mutate(pump_price_for_diesel_fuel_us_per_liter=replace(pump_price_for_diesel_fue
   ggplot(aes(year, pump_price_for_diesel_fuel_us_per_liter, color=country_name))+ geom_point()+geom_smooth(method = "lm",se=FALSE)+
   xlim(1990, 2010)+ylim(0, 1.1)+
   facet_wrap("country_name")+
-  labs(x = 'year',
+  labs(title="change in Fuel price in nine populated countries",
+       x = 'year',
         y = 'Gas price per Liter (USD)') 
 
 ```
 
+Fuel price in these populated countries are represented here as well as a linear regression fitting line. As expected, Fuel price is increasing in all countries. Interesting conclusion from these plots is while gas price was always relatively expensive in Japan, China started with very low price and end up with the most expensive gas price in the examined countries in 2017.
+
+---
+
 ## 4. value lost due to electrical outages
-We want to find top 5 countries that have been affected most due to electrical outages in the last three years (2015, 2016, and 2017). From the bar chart it is clear that Sierra Leone's firms had lost more than 5 percent of their revenue due to electrical outrage followd by mainly asian and African countries by nearly three percent.
-
-
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -180,14 +187,12 @@ energy4
 
 ```
 
+We want to find top 5 countries that have been affected most due to electrical outages in the last three years (2015, 2016, and 2017). From the bar chart it is clear that Sierra Leone's firms had lost more than 5 percent of their revenue due to electrical outrage followd by mainly asian and African countries by nearly three percent.
 
 
-
-
+---
 
 ## 5. Access to electricity in rural and urban area
-This part deal with percentage of access to electricity in 5 years with available data (1991, 1995, 2000, 2005, 2010, and 2015) in the rural and urban area. The percentages are the mean of percentage access in all countries around the globe. As expected, access is increasing every year and access is more in urban area, but the gap is reducing.
-
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 y1 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA"))  %>%
@@ -210,5 +215,36 @@ y1
 
 ```
 
+This part deal with percentage of access to electricity in 5 years with available data (1991, 1995, 2000, 2005, 2010, and 2015) in the rural and urban area. The percentages are the mean of percentage access in all countries around the globe. As expected, access is increasing every year and access is more in urban area, but the gap is reducing.
 
+---
+
+## 6. 
+
+```{r}
+
+```
+
+aaaaaaaaaaaaaaaaaa
+
+
+---
+
+## 7. 
+
+```{r}
+
+```
+
+aaaaaaaaaaaaaaaaaa
+
+---
+
+## 8. 
+
+```{r}
+
+```
+
+aaaaaaaaaaaaaaaaaa
 
