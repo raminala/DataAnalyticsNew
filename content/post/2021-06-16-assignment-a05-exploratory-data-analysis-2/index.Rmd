@@ -90,7 +90,7 @@ The previous visualization did not show the trend over the years. One method to 
 
 energy2 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA", 0)) %>%
   janitor::clean_names() %>%
-  filter(between(year,1990,2017)) %>%
+  filter(between(year,1990,2015)) %>%
 filter(country_name =="China" |
          country_name =="India" |
          country_name =="United States" |
