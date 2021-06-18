@@ -10,6 +10,16 @@ categories:
 tags: []
 ---
 
+```{r}
+y <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) 
+names(y)
+```
+
+
+
+
+
+
 
 ```{r packages, message=FALSE, warning=FALSE, echo=FALSE}
 library(tidyverse)
@@ -27,10 +37,6 @@ library(gifski)
 ---
 
 ## Import Data: Energy & Mining
-
-
-
-
 
 
 ```{r, echo=FALSE, message=FALSE, include=FALSE, warning=FALSE}
@@ -166,4 +172,33 @@ energy3 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
 
 names(energy3)
 ```
+
+## 5. Access to electricity, rural urban
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+y1 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA"))  %>%
+  janitor::clean_names() %>%
+select("access_to_electricity_rural_percent_of_rural_population", "access_to_electricity_urban_percent_of_urban_population",year) %>%
+  
+mutate(access_to_electricity_rural_percent_of_rural_population=replace(access_to_electricity_rural_percent_of_rural_population, access_to_electricity_rural_percent_of_rural_population > 100, NA))%>%
+  
+mutate(access_to_electricity_urban_percent_of_urban_population=replace(access_to_electricity_urban_percent_of_urban_population, access_to_electricity_urban_percent_of_urban_population > 100, NA))  %>%
+  filter(year=="1991"|year=="1995"|year=="2000"|year=="2005"|year=="2010"|year=="2015")  %>%
+  group_by(year)  %>%
+summarise(rural=mean(access_to_electricity_rural_percent_of_rural_population), urban=mean(access_to_electricity_urban_percent_of_urban_population))  %>%
+  
+ pivot_longer(-year, names_to = "444", values_to = "cou")  %>% 
+  
+  ggplot(aes(year,cou))+
+  geom_col()
+
+```
+
+ggplot(aes(year, as.factor(444)))+
+  geom_bar(stat="identity", width=.3,position="dodge")
+
+
+#ggplot(aes(year, rainfall, fill=as.factor(year)))
+
 
