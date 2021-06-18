@@ -193,10 +193,5 @@ summarise(rural=mean(access_to_electricity_rural_percent_of_rural_population), u
 
 ```
 
-ggplot(aes(year, as.factor(444)))+
-  geom_bar(stat="identity", width=.3,position="dodge")
-
-
-#ggplot(aes(year, rainfall, fill=as.factor(year)))
 
 
