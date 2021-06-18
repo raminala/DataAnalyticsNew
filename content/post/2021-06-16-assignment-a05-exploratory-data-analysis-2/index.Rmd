@@ -19,6 +19,7 @@ library(knitr)
 library(kableExtra) 
 library(janitor)
 library(gganimate)
+library(gifski)
 ```
 
 
@@ -87,8 +88,6 @@ The previous visualization did not show the trend over the years. One method to 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
-
-
 energy2 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA", 0)) %>%
   janitor::clean_names() %>%
   filter(between(year,1990,2017)) %>%
@@ -126,14 +125,15 @@ mutate(renewable_energy_consumption_percent_of_total_final_energy_consumption=re
   geom_point(size=4)+
    
    
-   labs(
+   labs(title = 'Year: {as.integer(frame_time)}', 
         x = 'access to electricity (%)',
         y = 'renewable energy portion (%)') +
   transition_time(year) +
   ease_aes('linear')+ theme(legend.position="none")
 
 # Save at gif:
-#anim_save("1.gif")
+ 
+anim_save("1.gif")
 
 ```
 
