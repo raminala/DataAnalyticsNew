@@ -56,9 +56,9 @@ mutate(renewable_energy_consumption_percent_of_total_final_energy_consumption=re
 names(energy)
 ```
 
-This post consists of exploratory analysis of a dataset provided by the world bank. It includes `r ncol(energy)` variable and `r nrow(energy)` observations that represent many countries around the world between 1960 to 2017. Variables include varieties of parameters related to welfare and sustainability in examined countries. These variables include but not limited to access and consumption of different types of energies from different sources.
+This post consists of an exploratory analysis of a dataset provided by the world bank. It includes `r ncol(energy)` variables and `r nrow(energy)` observations that represent many countries around the world between 1960 to 2017. Variables include varieties of parameters related to welfare and sustainability in examined countries. These variables include but are not limited to access and consumption of different types of energies from different sources.
 
-I primarily selected this dataset because of availability of a lot of numerical and categorical variables. The problem with that was lack of knowledge about many variables and errors in data like percents more than 100% and lots of 0 and NA in dataset.
+I primarily selected this dataset because of the availability of a lot of numerical and categorical variables. The problem with that was lack of knowledge about many variables and errors in data like percents more than 100% and lots of 0 and NA in the dataset.
 
 This dataset could be find in the below link:
 
@@ -66,13 +66,13 @@ This dataset could be find in the below link:
 
 ## Initial Analysis Questions
 
-1. **How energy consumption and access has changed over the years, and in rural/urban area?**
+1. **How has energy consumption and access been changed over the years, and in rural/urban areas?**
 
-2. **How does gas price is changing in populated countries over the years?**
+2. **How does gas prices is changing in populated countries over the years?**
 
-3. **Which countries are affected most due to electrical outages and present the amount of impact?**
+3. **Which countries are more affected due to electrical outages and present the amount of impact?**
 
-4. **How United states is supplying energy to its nation? which energy type is getting more or less popular?**
+4. **How United states is supplying energy to its nation? Which energy type is getting more or less popular?**
 
 5. **To what extent do countries rely on income from metal and ore export?**
 
@@ -364,4 +364,4 @@ This barchart shows the mean of percentage of Ores and metals exports/imports in
 
 ## Summary
 
-In conclusion, people around the globe are getting richer and more comfortable by more access to different sources of energy. However, co2 emission is getting worse and renewable sources of energy are getting less available comparatively. Mining is a major source of income for some countries while others have to spend a lot to import these products.
+In conclusion, people around the globe are getting richer and more comfortable with more access to different sources of energy. However, co2 emission is getting worse and renewable sources of energy are getting less available comparatively. Mining is a major source of income for some countries while others have to spend a lot to import these products.
