@@ -206,12 +206,12 @@ mutate(access_to_electricity_urban_percent_of_urban_population=replace(access_to
   group_by(year)  %>%
 summarise(rural=mean(access_to_electricity_rural_percent_of_rural_population), urban=mean(access_to_electricity_urban_percent_of_urban_population))  %>%
   
- pivot_longer(-year, names_to = "rural_urban", values_to = "percentage")    %>%
+ pivot_longer(-year, names_to = "rural_urban", values_to = "percentage")
 
- ggplot(aes(as.character(year), percentage, fill=as.factor(rural_urban)))+
+ y1  %>% ggplot(aes(as.character(year), percentage, fill=as.factor(rural_urban)))+
   geom_bar(stat="identity", width=0.5,position="dodge")+ylim(0,100)
 
-y1
+
 
 ```
 
@@ -220,7 +220,6 @@ This part deal with percentage of access to electricity in 5 years with availabl
 ---
 
 ## 6. Oil rents (% of GDP) vs Co2 production and portion of enerty imported
-
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 
@@ -253,13 +252,44 @@ labs(x = "co2 emissions from gaseous fuel (% of_total)",
 
 ---
 
-## 7. 
+## 7. Percentage of using five sources of energy in the United States
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-energy7 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
-  janitor::clean_names() # %>%
-names(energy7)
+
+energy8 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA"))  %>%
+  janitor::clean_names() %>%
+  filter(country_name =="United States")  %>%
+  
+select("electricity_production_from_coal_sources_percent_of_total",
+       "electricity_production_from_hydroelectric_sources_percent_of_total",
+       "electricity_production_from_natural_gas_sources_percent_of_total",
+       "electricity_production_from_nuclear_sources_percent_of_total",
+       "electricity_production_from_oil_sources_percent_of_total",
+       
+       "year") %>%
+  
+  rename("Coal"="electricity_production_from_coal_sources_percent_of_total",
+       "hydroelectric"="electricity_production_from_hydroelectric_sources_percent_of_total",
+       "natural_gas"="electricity_production_from_natural_gas_sources_percent_of_total",
+       "nuclear_sources"="electricity_production_from_nuclear_sources_percent_of_total",
+       "oil_sources"="electricity_production_from_oil_sources_percent_of_total") %>%
+
+  subset(year!=1960 & year!=1970 & year!=1980 & year!=1990 & year!=2017& year!=2016) %>%
+  pivot_longer(-year, names_to = "categories", values_to = "percentage")
+
+energy8  %>%
+  ggplot(aes(year, percentage, color=categories))+
+  geom_line()+  facet_wrap("categories")+
+  
+  
+labs(x = "year",
+     y = "coal sources",
+     title="coal sources")
+#    size=2, color="red"
+
 ```
+
+
 
 aaaaaaaaaaaaaaaaaa
 
@@ -268,8 +298,11 @@ aaaaaaaaaaaaaaaaaa
 ## 8. 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
+energy7 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
+  janitor::clean_names() # %>%
 
+#names(energy7)
 ```
 
-aaaaaaaaaaaaaaaaaa
 
+aaaaaaaaaaaaaaaaaa
