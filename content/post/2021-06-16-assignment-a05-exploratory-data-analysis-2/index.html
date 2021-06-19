@@ -61,15 +61,67 @@ The previous visualization did not show the trend over the years. One method to 
 <p>This part deal with percentage of access to electricity in 5 years with available data (1991, 1995, 2000, 2005, 2010, and 2015) in the rural and urban area. The percentages are the mean of percentage access in all countries around the globe. As expected, access is increasing every year and access is more in urban area, but the gap is reducing.</p>
 <hr />
 </div>
-<div id="oil-rents-of-gdp---country-ranking" class="section level2">
-<h2>6. Oil rents (% of GDP) - Country Ranking</h2>
+<div id="oil-rents-of-gdp-vs-co2-production-and-portion-of-enerty-imported" class="section level2">
+<h2>6. Oil rents (% of GDP) vs Co2 production and portion of enerty imported</h2>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
-<p>Definition: Oil rents are the difference between the value of crude oil production at world prices and total costs of production.
-First, I want to know fir</p>
+<p><strong>Oil rents</strong>, by definition, are the difference between the value of crude oil production at world prices and total costs of production. Countries that exporting oil have a large Oil rents number. According to plot, high oil rents countries (larger circles in the plot) generally produce more co2 from liquid fuel but they are distributed uniformly in the x-axis.</p>
 <hr />
 </div>
 <div id="section" class="section level2">
 <h2>7.</h2>
+<pre><code>##  [1] &quot;country_name&quot;                                                                          
+##  [2] &quot;country_code&quot;                                                                          
+##  [3] &quot;year&quot;                                                                                  
+##  [4] &quot;access_to_electricity_percent_of_population&quot;                                           
+##  [5] &quot;access_to_electricity_rural_percent_of_rural_population&quot;                               
+##  [6] &quot;access_to_electricity_urban_percent_of_urban_population&quot;                               
+##  [7] &quot;adjusted_savings_energy_depletion_percent_of_gni&quot;                                      
+##  [8] &quot;adjusted_savings_energy_depletion_current_us&quot;                                          
+##  [9] &quot;adjusted_savings_mineral_depletion_percent_of_gni&quot;                                     
+## [10] &quot;adjusted_savings_mineral_depletion_current_us&quot;                                         
+## [11] &quot;adjusted_savings_natural_resources_depletion_percent_of_gni&quot;                           
+## [12] &quot;alternative_and_nuclear_energy_percent_of_total_energy_use&quot;                            
+## [13] &quot;co2_emissions_from_gaseous_fuel_consumption_percent_of_total&quot;                          
+## [14] &quot;co2_emissions_from_liquid_fuel_consumption_kt&quot;                                         
+## [15] &quot;combustible_renewables_and_waste_percent_of_total_energy&quot;                              
+## [16] &quot;delay_in_obtaining_an_electrical_connection_days&quot;                                      
+## [17] &quot;electric_power_consumption_k_wh_per_capita&quot;                                            
+## [18] &quot;electric_power_transmission_and_distribution_losses_percent_of_output&quot;                 
+## [19] &quot;electricity_production_from_coal_sources_percent_of_total&quot;                             
+## [20] &quot;electricity_production_from_hydroelectric_sources_percent_of_total&quot;                    
+## [21] &quot;electricity_production_from_natural_gas_sources_percent_of_total&quot;                      
+## [22] &quot;electricity_production_from_nuclear_sources_percent_of_total&quot;                          
+## [23] &quot;electricity_production_from_oil_sources_percent_of_total&quot;                              
+## [24] &quot;electricity_production_from_oil_gas_and_coal_sources_percent_of_total&quot;                 
+## [25] &quot;electricity_production_from_renewable_sources_excluding_hydroelectric_percent_of_total&quot;
+## [26] &quot;electricity_production_from_renewable_sources_excluding_hydroelectric_k_wh&quot;            
+## [27] &quot;energy_imports_net_percent_of_energy_use&quot;                                              
+## [28] &quot;energy_intensity_level_of_primary_energy_mj_2011_ppp_gdp&quot;                              
+## [29] &quot;energy_related_methane_emissions_percent_of_total&quot;                                     
+## [30] &quot;energy_use_kg_of_oil_equivalent_per_capita&quot;                                            
+## [31] &quot;energy_use_kg_of_oil_equivalent_per_1_000_gdp_constant_2011_ppp&quot;                       
+## [32] &quot;firms_using_banks_to_finance_investment_percent_of_firms&quot;                              
+## [33] &quot;fossil_fuel_energy_consumption_percent_of_total&quot;                                       
+## [34] &quot;fuel_exports_percent_of_merchandise_exports&quot;                                           
+## [35] &quot;fuel_imports_percent_of_merchandise_imports&quot;                                           
+## [36] &quot;gdp_per_unit_of_energy_use_ppp_per_kg_of_oil_equivalent&quot;                               
+## [37] &quot;gdp_per_unit_of_energy_use_constant_2011_ppp_per_kg_of_oil_equivalent&quot;                 
+## [38] &quot;investment_in_energy_with_private_participation_current_us&quot;                            
+## [39] &quot;methane_emissions_in_energy_sector_thousand_metric_tons_of_co2_equivalent&quot;             
+## [40] &quot;mineral_rents_percent_of_gdp&quot;                                                          
+## [41] &quot;natural_gas_rents_percent_of_gdp&quot;                                                      
+## [42] &quot;nitrous_oxide_emissions_in_energy_sector_percent_of_total&quot;                             
+## [43] &quot;nitrous_oxide_emissions_in_energy_sector_thousand_metric_tons_of_co2_equivalent&quot;       
+## [44] &quot;oil_rents_percent_of_gdp&quot;                                                              
+## [45] &quot;ores_and_metals_exports_percent_of_merchandise_exports&quot;                                
+## [46] &quot;ores_and_metals_imports_percent_of_merchandise_imports&quot;                                
+## [47] &quot;pump_price_for_diesel_fuel_us_per_liter&quot;                                               
+## [48] &quot;pump_price_for_gasoline_us_per_liter&quot;                                                  
+## [49] &quot;renewable_electricity_output_percent_of_total_electricity_output&quot;                      
+## [50] &quot;renewable_energy_consumption_percent_of_total_final_energy_consumption&quot;                
+## [51] &quot;time_required_to_get_electricity_days&quot;                                                 
+## [52] &quot;total_natural_resources_rents_percent_of_gdp&quot;                                          
+## [53] &quot;value_lost_due_to_electrical_outages_percent_of_sales_for_affected_firms&quot;</code></pre>
 <p>aaaaaaaaaaaaaaaaaa</p>
 <hr />
 </div>

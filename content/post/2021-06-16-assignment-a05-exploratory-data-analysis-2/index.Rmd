@@ -219,7 +219,7 @@ This part deal with percentage of access to electricity in 5 years with availabl
 
 ---
 
-## 6. Oil rents (% of GDP) - Country Ranking
+## 6. Oil rents (% of GDP) vs Co2 production and portion of enerty imported
 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -230,31 +230,35 @@ y6 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
   select("oil_rents_percent_of_gdp",
   "energy_imports_net_percent_of_energy_use",
   "country_name",
-  "co2_emissions_from_gaseous_fuel_consumption_percent_of_total") %>%
+  "co2_emissions_from_gaseous_fuel_consumption_percent_of_total",
+  
+  "co2_emissions_from_liquid_fuel_consumption_kt"
+  
+  ) 
 
-  ggplot(aes(co2_emissions_from_gaseous_fuel_consumption_percent_of_total,
-             energy_imports_net_percent_of_energy_use, size=oil_rents_percent_of_gdp))+ geom_point(color="red")+
+  y6  %>% ggplot(aes(co2_emissions_from_gaseous_fuel_consumption_percent_of_total,
+                     co2_emissions_from_liquid_fuel_consumption_kt,
+              size=oil_rents_percent_of_gdp))+ geom_point(color="red", shape = 21)+
   
+labs(x = "co2 emissions from gaseous fuel (% of_total)",
+     y = "co2 emissions from liquid fuel consumption(ktone)",
+     title="  Oil rents and polution by country (year: 2010)")+scale_y_log10()
   
-labs(x = "co2_emissions_from_gaseous_fuel_consumption_percent_of_total",
-     y = "energy_imports_net_percent_of_energy_use",
-     title="Access to different forms of electricity")
-  
-  y6
-  
+
   
 #names(y6)
 ```
 
-Definition: Oil rents are the difference between the value of crude oil production at world prices and total costs of production.
-First, I want to know fir
+**Oil rents**, by definition, are the difference between the value of crude oil production at world prices and total costs of production. Countries that exporting oil have a large Oil rents number.  According to plot, high oil rents countries (larger circles in the plot) generally produce more co2 from liquid fuel but they are distributed uniformly in the x-axis.
 
 ---
 
 ## 7. 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
-
+energy7 <- read_csv("energy-and-mining.csv", na = c("n/a", "", "NA")) %>%
+  janitor::clean_names() # %>%
+names(energy7)
 ```
 
 aaaaaaaaaaaaaaaaaa
