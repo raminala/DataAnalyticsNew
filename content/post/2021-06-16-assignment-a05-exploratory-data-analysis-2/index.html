@@ -1,6 +1,6 @@
 ---
 title: 'Assignment A05: Exploratory data analysis-2'
-author: ''
+author: 'Ramin Ala'
 date: '2021-06-16'
 slug: assignment-a05-exploratory-data-analysis-2
 categories:
@@ -13,20 +13,23 @@ tags: []
 <script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
 
 
+<p><strong>Ramin Ala</strong></p>
 <hr />
 <div id="import-data-energy-mining" class="section level2">
 <h2>Import Data: Energy &amp; Mining</h2>
 <p>This post consists of exploratory analysis of a dataset provided by the world bank. It includes 53 variable and 513 observations that represent many countries around the world between 1960 to 2017. Variables include varieties of parameters related to welfare and sustainability in examined countries. These variables include but not limited to access and consumption of different types of energies from different sources.</p>
+<p>I primarily selected this dataset because of availability of a lot of numerical and categorical variables. The problem with that was lack of knowledge about many variables and errors in data like percents more than 100% and lots of 0 and NA in dataset.</p>
 <p>This dataset could be find in the below link:</p>
 <p>(<a href="https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv" class="uri">https://github.com/ZeningQu/World-Bank-Data-by-Indicators/blob/master/engergy-and-mining/energy-and-mining.csv</a>)</p>
 </div>
 <div id="initial-analysis-questions" class="section level2">
 <h2>Initial Analysis Questions</h2>
 <ol style="list-style-type: decimal">
-<li></li>
-<li></li>
-<li></li>
-<li></li>
+<li><p><strong>How energy consumption and access has changed over the years, and in rural/urban area?</strong></p></li>
+<li><p><strong>How does gas price is changing in populated countries over the years?</strong></p></li>
+<li><p><strong>Which countries are affected most due to electrical outages and present the amount of impact?</strong></p></li>
+<li><p><strong>How United states is supplying energy to its nation? which energy type is getting more or less popular?</strong></p></li>
+<li><p><strong>To what extent do countries rely on income from metal and ore export?</strong></p></li>
 </ol>
 <hr />
 </div>
@@ -73,11 +76,12 @@ The previous visualization did not show the trend over the years. One method to 
 <p>Five sources of energy (Coal, hydroelectric, natural gas, nuclear sources, and oil sources) accounts for the majority of production of energy. These plots shows the percentage of usage over the years. It is obvious that coal is the main source despite the decline in the recent years. On the other hand, natural gas shows a rapid increase. Hydroelectric shows a steady trend over the examined time.</p>
 <hr />
 </div>
-<div id="ores_and_metals_exports_percent_of_merchandise_exports---ores_and_metals_imports_percent_of_merchandise_imports" class="section level2">
-<h2>8. ores_and_metals_exports_percent_of_merchandise_exports - ores_and_metals_imports_percent_of_merchandise_imports</h2>
+<div id="exportsimports-of-ores-and-metals-percent-of-merchandise-exportsimports" class="section level2">
+<h2>8. exports/imports of Ores and metals percent of merchandise exports/imports</h2>
 <p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
-<p>export/import</p>
+<p>This barchart shows the mean of percentage of Ores and metals exports/imports in seventeen countries in average value from 2012 to 2017. Percentage means compared to their total merchandise export/import. From this plot, Chile and Brazil demonstrated to earn a lot of their income from exporting these merchandises. China, on the other hand, is a big importer in the examined countries.</p>
 </div>
 <div id="summary" class="section level2">
 <h2>Summary</h2>
+<p>In conclusion, people around the globe are getting richer and more comfortable by more access to different sources of energy. However, co2 emission is getting worse and renewable sources of energy are getting less available comparatively. Mining is a major source of income for some countries while others have to spend a lot to import these products.</p>
 </div>
