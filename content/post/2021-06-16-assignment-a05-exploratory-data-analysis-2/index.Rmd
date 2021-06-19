@@ -283,7 +283,7 @@ energy8  %>%
   
   
 labs(x = "year",
-     y = "sources of energy",
+     y = "percentage of usage",
      title="Five sources of energy in the United States (% of usage)")
 #    size=2, color="red"
 
