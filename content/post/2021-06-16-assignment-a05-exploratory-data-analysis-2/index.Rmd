@@ -279,19 +279,19 @@ select("electricity_production_from_coal_sources_percent_of_total",
 
 energy8  %>%
   ggplot(aes(year, percentage, color=categories))+
-  geom_line()+  facet_wrap("categories")+
+  geom_line()+  facet_wrap("categories", dir = "v")+
   
   
 labs(x = "year",
-     y = "coal sources",
-     title="coal sources")
+     y = "sources of energy",
+     title="Five sources of energy in the United States (% of usage)")
 #    size=2, color="red"
 
 ```
 
 
 
-aaaaaaaaaaaaaaaaaa
+Five sources of energy (Coal, hydroelectric, natural gas, nuclear sources, and oil sources) accounts for the majority of production of energy. These plots shows the percentage of usage over the years. It is obvious that coal is the main source despite the decline in the recent years. On the other hand, natural gas shows a rapid increase. Hydroelectric shows a steady trend over the examined time.
 
 ---
 
