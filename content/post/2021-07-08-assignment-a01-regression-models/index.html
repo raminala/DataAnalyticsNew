@@ -1,0 +1,242 @@
+---
+title: 'Assignment A01: Regression Models'
+author: Ramin Ala
+date: '2021-07-08'
+slug: []
+categories: []
+tags:
+  - Regression
+  - Resampling
+  - Assignment
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<p><strong><em>Ramin Ala</em></strong></p>
+<hr />
+<div id="executive-summary" class="section level2">
+<h2>Executive Summary</h2>
+<p>This assignment is about deciding, or in a better term predicting, the price of a diamond based on available data. Since prediction would be done on a quantitative variable (price), it considers as a <em>regression problem</em>. Here, we will solve the problem using <em>linear fitting</em> to avoid over fitting.</p>
+<p>There are a dizzying array of diamond characteristics, configurations, and pricing such as carat, color, Cut, clarity, Polish, Symmetry, and certification, and data collected from three different wholesaler websites. The first step would be understanding data via visualization and then going to making a linear model and prediction based on that.</p>
+</div>
+<div id="univariate-analysis" class="section level2">
+<h2>Univariate Analysis</h2>
+<p>Univariate analysis is perhaps the simplest form of statistical analysis. The key fact is that only one variable is involved. Like other forms of statistics, it can be inferential or descriptive.</p>
+<p>Although univariate analysis can yield misleading results in cases in which multivariate analysis is more appropriate, it provides some insights.</p>
+<p><strong>Univariate Analysis on price</strong></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Apparently, there are two distinct price ranges. below $500 and above $1800. With univariate analysis, we could not understand the reasons and decisive parameters for this gap in the price. However, one might decide to model these two sections separately for more exact model. This might be the most important finding by this analysis.</p>
+<p>Now it worth to take a more statistical look at price variable.</p>
+<pre><code>## # A tibble: 1 x 6
+##   minimum    q1 median  mean    q3 maximum
+##     &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1     160   520   2169 1717. 3012.    3145</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>First point that a reader could get from these data is that maximum price ($3145) is very close to the offered price ($3100). It means that the professor might be offered the best diamond in the market. On the other hand, mean of price ($1716) is far from offered price (again, he might expect an exceptional item!).</p>
+<p>The box plot summarize these parameters in a visualization friendly manner, one look provides
+minimum, mode, median, max, first and third quarterlies. Note that the red dotted line is the offered price that laied at the very end of box plot.</p>
+</div>
+<div id="bivariate-analysis" class="section level2">
+<h2>Bivariate Analysis</h2>
+<p>Bivariate analysis is a simple forms of quantitative (statistical) analysis, however more sophesticated than the univariable analysis which done in the previous part. It involves the analysis of two variables, for the purpose of determining the empirical relationship between them.</p>
+<p><strong>Metric Data: Price, Carat</strong></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Carat is the most important parameter in this dataset and it is a determining factor for the price. This claim can be proven from its coefficient in the multiple linear regression model. This figure shows price versus carat along with a regression line. This analysis adds this knowledge to our understanding that price, possibly, has a positive relation with the carat. The word “possibly” added intentionally here because in a multi-variable dataset with existence of correlation between variables, sometime another variable is the reason for increase in target variable. It will be more obvious when all variables considered together.</p>
+</div>
+<div id="non-metric-data-color-cut-certification-polish-symmetry-clarity" class="section level2">
+<h2>Non-Metric Data: Color, Cut, Certification, Polish, Symmetry, Clarity</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>This plot shows the mean of price for nine categories of colors. Although these prices might be the indirect cause of other parameters but gives some clues. It seems that color has not a profound impact on price. Two colour catagories could be recognized from this plot, one with average price of $2500 (D, G, K, and L) and another with the average price of $1300 (E, F, H, J). Professor should be more careful on this as his diamond looks in the lower price category in terms of color.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Importance of clarity might be guesses from this plot. In contrast to color, there is big change in price average with selecting different clarity. I1, I2, Si1, and SI3 are expensive categories and professor selected his diamond from these categories.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>This plot mainly dirsct buyer to select from F category if he is looking for a perfect cut and from V if don’t want to break the bank.</p>
+<p>Bar plot is a easy way to visualize categorical variable. The mean of price versus colour, clarity and cut is depicted here.</p>
+</div>
+<div id="analysis-of-three-variables-price-considering-both-carat-and-clarity" class="section level2">
+<h2>Analysis of three variables: price considering both carat and clarity</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>Clarity is the second important parameter. To get the impression about effect of these two parameters on price, price versus carat with the additional layer of color for clarity is useful. Apparently, there is a big gap versus high and low carat items and diamond with both every color is available at both ends of price (below $500 and more than $2000).</p>
+</div>
+<div id="four-variaables-analysis-price-considering-carat-colour-and-clarity" class="section level2">
+<h2>four variaables Analysis: price considering carat, colour, and clarity</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Zoom in higher price section helps to add more layers without loosing readability. This plot shows price versus carat, colour, and clarity. Again, it emphasize the importance of clarity even for lower carat diamonds.</p>
+</div>
+<div id="correlation-covariance" class="section level2">
+<h2>Correlation, Covariance</h2>
+<p>These are measures of association between variables.</p>
+<pre><code>## [1] &quot;Correlation between price-carat:  0.925436039946847&quot;</code></pre>
+<p>This shows the expected outcome, higher carat mean higher price (, same trand for increase-decrease).</p>
+<pre><code>## [1] &quot;Covariance between price-carat:  413.23180808656&quot;</code></pre>
+<p>As expected!</p>
+<hr />
+</div>
+<div id="regression-model" class="section level2">
+<h2>Regression Model</h2>
+</div>
+<div id="simple-linear-regression" class="section level2">
+<h2>Simple Linear Regression</h2>
+<p>Here, a linear model is generated using <strong>lm()</strong> function to attribute price with carat. Coefficients are as below table.</p>
+<pre><code>## # A tibble: 2 x 5
+##   term        estimate std.error statistic   p.value
+##   &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1 (Intercept)    -200.      43.1     -4.65 4.40e-  6
+## 2 carat          2865.      56.0     51.1  1.02e-186</code></pre>
+</div>
+<div id="simple-linear-regression--prediction-carat-0.9" class="section level2">
+<h2>Simple Linear Regression- prediction, carat= 0.9</h2>
+<p>The goal is predicting the price based only on carat. To this end, generated model in the previous section is employed to predict price using <strong>predict()</strong> function. Expected price (with only consideration of carat=0.9) is as below:</p>
+<pre><code>##        1 
+## 2377.776</code></pre>
+</div>
+<div id="multiple-linear-regression" class="section level2">
+<h2>Multiple Linear Regression</h2>
+<p>A linear model is generated using <strong>lm()</strong> function. Seven variables passes to the model and intercept defined as zero (for simplicity). As result, coefficients calculated as below table.</p>
+<pre><code>## # A tibble: 34 x 5
+##    term    estimate std.error statistic   p.value
+##    &lt;chr&gt;      &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+##  1 carat      4205.      51.3     82.0  1.02e-254
+##  2 colourD   -1433.     147.      -9.77 2.25e- 20
+##  3 colourE   -1624.     144.     -11.3  6.40e- 26
+##  4 colourF   -1744.     140.     -12.5  2.13e- 30
+##  5 colourG   -1734.     143.     -12.1  5.96e- 29
+##  6 colourH   -1863.     141.     -13.2  2.26e- 33
+##  7 colourI   -1934.     142.     -13.6  6.09e- 35
+##  8 colourJ   -2068.     146.     -14.2  2.44e- 37
+##  9 colourK   -2419.     151.     -16.1  2.52e- 45
+## 10 colourL   -2606.     156.     -16.7  5.37e- 48
+## # ... with 24 more rows</code></pre>
+</div>
+<div id="multiple-linear-regression--prediction" class="section level2">
+<h2>Multiple Linear Regression- prediction</h2>
+<p>Prediction is done here base on below parameters:</p>
+<p>carat= 0.9, colour= “J”, clarity= “SI2”, cut= “V”, certification= “GIA”, polish= “G”, symmetry= “V”</p>
+<pre><code>##        1 
+## 2797.542</code></pre>
+</div>
+<div id="summary-of-findings" class="section level2">
+<h2>Summary of findings</h2>
+<ul>
+<li><p>From the exploratory data analysis and linear regression performed in this report, it seems that the offered price ($3100) is 10% higer than the predicted price ($2800).</p></li>
+<li><p>With the offered price, he could buy the same diamond with the clarity of VS1 (few inclusions at 30X) instead of SI2 (very few inclusions at 10X).</p></li>
+<li><p>From seven explanatory variables, carat is the first determinant followed by clarity and colour. On the other hand, cut has the least effect on the final price.</p></li>
+<li><p>A single variable regression (price versus carat) shows the offered price is very high for selected carat. However, the clarity of the selected diamond compensate part of its expensive price (although not all of that).</p></li>
+<li><p>The important trend in the dataset could be found with a glance at price-carat plot. That is carat has two ranges: 0.1-.03 and 0.8- 1.6. There are a substantial gap between price of these two catagories, the latter is four times more costly.</p></li>
+<li><p>Dataset was very clean dataset with nearly no need for cleaning. For example there were not any NA and outlier data in the dataset.</p></li>
+</ul>
+<hr />
+</div>
+<div id="resampling-methods" class="section level2">
+<h2>Resampling Methods</h2>
+<pre class="r"><code>library(caret)
+
+library(yardstick)</code></pre>
+</div>
+<div id="cross-validation-method" class="section level2">
+<h2>Cross-Validation method</h2>
+</div>
+<div id="loocv-leave-one-out-cross-validation" class="section level2">
+<h2>LOOCV (Leave one out cross validation)</h2>
+<p>The LOOCV method is using all data points therefore it reduces the bias.</p>
+<p>However, the execution time could be so long if n (number of observation) is large. Besides, we know that low bias means high variance and the model is more prone to overfitting.</p>
+<hr />
+<pre class="r"><code># Define training control
+train.control_LOOCV &lt;- trainControl(method = &quot;LOOCV&quot;)
+
+# Train the model
+model_LOOCV &lt;- train(price ~., data = diamonds, method = &quot;lm&quot;,
+               trControl = train.control_LOOCV)
+# Summarize the results
+print(model_LOOCV)</code></pre>
+<pre><code>## Linear Regression 
+## 
+## 440 samples
+##   7 predictor
+## 
+## No pre-processing
+## Resampling: Leave-One-Out Cross-Validation 
+## Summary of sample sizes: 439, 439, 439, 439, 439, 439, ... 
+## Resampling results:
+## 
+##   RMSE     Rsquared   MAE     
+##   212.186  0.9673791  150.5193
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+</div>
+<div id="k-fold-cross-validation" class="section level2">
+<h2>K-fold cross-validation</h2>
+<p>The obvious advantage of k-fold over LOOCV is K-fold is faster (needs less computation)). A less obvious but potentially more important advantage of k-fold CV is that it often gives more accurate estimates of the test error rate than does LOOCV.</p>
+<p>Trade-off:</p>
+<p><strong><em>low K:</em></strong> is more biased (undesirable).</p>
+<p><strong><em>high K:</em></strong> large variance (undesirable).</p>
+<p>here, we consider <em>k=5</em> for 440 observations.</p>
+<pre class="r"><code># Define training control
+set.seed(10) 
+
+train.control_K_fold &lt;- trainControl(method = &quot;repeatedcv&quot;, number = 5, repeats = 20)
+
+# Train the model
+model_K_fold &lt;- train(price ~., data = diamonds, method = &quot;lm&quot;,
+               trControl = train.control_K_fold)
+# Summarize the results
+print(model_K_fold)</code></pre>
+<pre><code>## Linear Regression 
+## 
+## 440 samples
+##   7 predictor
+## 
+## No pre-processing
+## Resampling: Cross-Validated (5 fold, repeated 20 times) 
+## Summary of sample sizes: 353, 352, 352, 351, 352, 352, ... 
+## Resampling results:
+## 
+##   RMSE      Rsquared   MAE    
+##   214.5049  0.9670232  152.254
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+</div>
+<div id="bootstrap-method" class="section level2">
+<h2>Bootstrap method</h2>
+<pre class="r"><code># Define training control
+train.control_Bootstrap &lt;- trainControl(method = &quot;boot&quot;, number = 100)
+
+# Train the model
+model_Bootstrap &lt;- train(price ~., data = diamonds, method = &quot;lm&quot;,
+               trControl = train.control_Bootstrap)
+# Summarize the results
+print(model_Bootstrap)</code></pre>
+<pre><code>## Linear Regression 
+## 
+## 440 samples
+##   7 predictor
+## 
+## No pre-processing
+## Resampling: Bootstrapped (100 reps) 
+## Summary of sample sizes: 440, 440, 440, 440, 440, 440, ... 
+## Resampling results:
+## 
+##   RMSE      Rsquared   MAE     
+##   229.2781  0.9623576  158.3777
+## 
+## Tuning parameter &#39;intercept&#39; was held constant at a value of TRUE</code></pre>
+<p>RMSE (Root Mean Squared Error)</p>
+<p>MAE(Mean Absolute Error)</p>
+<p>The R-squared represents the proportion of variation in the outcome explained by the predictor variables included in the model
+The higher the R-squared, the better the model.
+The lower the RMSE and the MAE, the better the model.</p>
+</div>
+<div id="comparing-models-using-r-squared-plot" class="section level2">
+<h2>Comparing Models using R squared plot</h2>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<pre><code>## [1] 0.8564319</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-2.png" width="672" /></p>
+<pre><code>## [1] 0.991704</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-3.png" width="672" /></p>
+<pre><code>## [1] 0.9673791</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-4.png" width="672" /></p>
+<pre><code>## [1] 0.9670232</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-5.png" width="672" /></p>
+<pre><code>## [1] 0.9623576</code></pre>
+</div>

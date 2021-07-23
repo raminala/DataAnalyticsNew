@@ -1,0 +1,247 @@
+---
+title: 'Assignment A01: Regression Models'
+author: Ramin Ala
+date: '2021-07-08'
+slug: []
+categories: []
+tags:
+  - Regression
+  - Resampling
+  - Assignment
+---
+***Ramin Ala***
+
+---
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(readxl)
+library(tidymodels)
+#diamonds_price <- read_excel("MBA6636_SM21_Professor_Proposes_Data.xlsx", col_names = TRUE, col_types = NULL, na = "", skip = 0)
+
+diamonds <- read_excel("MBA6636_SM21_Professor_Proposes_Data.xlsx") %>%
+  janitor::clean_names() %>%
+  subset(select = -wholesaler)
+
+#names(diamonds)
+
+```
+
+## Executive Summary
+
+This assignment is about deciding, or in a better term predicting, the price of a diamond based on available data. Since prediction would be done on a quantitative variable (price), it considers as a *regression problem*. Here, we will solve the problem using *linear fitting* to avoid over fitting. 
+
+There are a dizzying array of diamond characteristics, configurations, and pricing such as carat, color, Cut, clarity, Polish, Symmetry, and certification, and data collected from three different wholesaler websites. The first step would be understanding data via visualization and then going to making a linear model and prediction based on that.
+
+
+## Univariate Analysis
+
+Univariate analysis is perhaps the simplest form of statistical analysis. The key fact is that only one variable is involved. Like other forms of statistics, it can be inferential or descriptive. 
+
+Although univariate analysis can yield misleading results in cases in which multivariate analysis is more appropriate, it provides some insights.
+
+**Univariate Analysis on price**
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+diamonds %>%
+  ggplot(aes(price))+
+  geom_histogram()+
+  labs(y="frequency")
+```
+
+Apparently, there are two distinct price ranges. below $500 and above $1800. With univariate analysis, we could not understand the reasons and decisive parameters for this gap in the price. However, one might decide to model these two sections separately for more exact model. This might be the most important finding by this analysis.
+
+Now it worth to take a more statistical look at price variable.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+afg <- summary(diamonds$price) %>%
+  tidy() 
+
+print(afg)
+
+diamonds %>%
+  ggplot(aes(price))+
+  geom_boxplot()+
+  geom_vline(xintercept = 3100, linetype="dotted", 
+                color = "red", size=1.5)
+  #abline(abline(v = 3000, col = "red", lwd = 2))
+
+```
+
+First point that a reader could get from these data is that maximum price ($3145) is very close to the offered price ($3100). It means that the professor might be offered the best diamond in the market. On the other hand, mean of price ($1716) is far from offered price (again, he might expect an exceptional item!).
+
+The box plot summarize these parameters in a visualization friendly manner, one look provides
+minimum, mode, median, max, first and third quarterlies. Note that the red dotted line is the offered price that laied at the very end of box plot.
+
+## Bivariate Analysis
+
+Bivariate analysis is a simple forms of quantitative (statistical) analysis, however more sophesticated than the univariable analysis which done in the previous part. It involves the analysis of two variables, for the purpose of determining the empirical relationship between them.
+
+**Metric Data: Price, Carat**
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+diamonds %>%
+  ggplot(aes(carat, price))+
+  geom_point()+
+  geom_smooth(method="lm", se= FALSE)
+```
+
+Carat is the most important parameter in this dataset and it is a determining factor for the price. This claim can be proven from its coefficient in the multiple linear regression model. This figure shows price versus carat along with a regression line. This analysis adds this knowledge to our understanding that price, possibly, has a positive relation with the carat. The word "possibly" added intentionally here because in a multi-variable dataset with existence of correlation between variables, sometime another variable is the reason for increase in target variable. It will be more obvious when all variables considered together.
+
+## Non-Metric Data: Color, Cut, Certification, Polish, Symmetry, Clarity
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+diamonds %>%
+  group_by(colour) %>%
+  summarise(price_mean=mean(price)) %>%
+  ggplot(aes(colour,price_mean))+
+  geom_col(width = 0.5, fill="blue")+
+  labs(x="Colour", y= "Price mean ($)", title= "Price mean vs Colour")
+```
+
+This plot shows the mean of price for nine categories of colors. Although these prices might be the indirect cause of other parameters but gives some clues. It seems that color has not a profound impact on price. Two colour catagories could be recognized from this plot, one with average price of $2500 (D, G, K, and L) and another with the average price of $1300 (E, F, H, J). Professor should be more careful on this as his diamond looks in the lower price category in terms of color.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+  diamonds %>%
+  group_by(clarity) %>%
+  summarise(price_mean=mean(price)) %>%
+  arrange(desc(price_mean)) %>%
+  ggplot(aes(clarity,price_mean))+
+  geom_col(width = 0.5, fill="yellow")+
+  labs(x="Clarity", y= "Price mean ($)", title= "Price mean vs Clarity")
+```
+
+Importance of clarity might be guesses from this plot. In contrast to color, there is big change in price average with selecting different clarity. I1, I2, Si1, and SI3 are expensive categories and professor selected his diamond from these categories.
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+diamonds %>%
+  group_by(cut) %>%
+  summarise(price_mean=mean(price)) %>%
+  ggplot(aes(cut,price_mean))+
+  geom_col(width = 0.3, fill="red")+
+  labs(x="Cut", y= "Price mean ($)", title= "Price mean vs Cut")
+```
+
+This plot mainly dirsct buyer to select from F category if he is looking for a perfect cut and from V if don't want to break the bank.
+
+Bar plot is a easy way to visualize categorical variable. The mean of price versus colour, clarity and cut is depicted here. 
+
+## Analysis of three variables: price considering both carat and clarity
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+diamonds %>%
+  ggplot(aes(carat, price, color= clarity))+
+  geom_point()
+```
+
+Clarity is the second important parameter. To get the impression about effect of these two parameters on price, price versus carat with the additional layer of color for clarity is useful. Apparently, there is a big gap versus high and low carat items and diamond with both every color is available at both ends of price (below $500 and more than $2000).
+
+## four variaables Analysis: price considering carat, colour, and clarity
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+diamonds %>%
+  ggplot(aes(carat, price, color= clarity, shape= colour))+
+  geom_point()+
+  xlim(0.8, 1.3)+ylim(1750, 3250)
+```
+
+Zoom in higher price section helps to add more layers without loosing readability. This plot shows price versus carat, colour, and clarity. Again, it emphasize the importance of clarity even for lower carat diamonds.
+
+## Correlation, Covariance
+
+These are measures of association between variables.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+cor_price_carat <- cor(diamonds$price, diamonds$carat)
+
+paste("Correlation between price-carat: ", cor_price_carat)
+
+
+  
+```
+
+This shows the expected outcome, higher carat mean higher price (, same trand for increase-decrease).
+
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+cov_price_carat <- cov(diamonds$price, diamonds$carat)
+
+paste("Covariance between price-carat: ", cov_price_carat)
+
+```
+
+As expected!
+
+---
+
+## Regression Model
+
+## Simple Linear Regression
+
+Here, a linear model is generated using **lm()** function to attribute price with carat. Coefficients are as below table.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+SLR <- lm(price~ carat, data=diamonds)
+summary(SLR)  %>%
+  tidy()
+
+```
+
+## Simple Linear Regression- prediction, carat= 0.9
+
+The goal is predicting the price based only on carat. To this end, generated model in the previous section is employed to predict price using **predict()** function. Expected price (with only consideration of carat=0.9) is as below:
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+explanatory_data= data.frame(carat= 0.9,
+                             colour= "J",
+                             clarity= "SI2",
+                             cut= "V",
+                             certification= "GIA",
+                             polish= "G",
+                             symmetry= "V")
+
+
+
+predict(SLR, explanatory_data)
+```
+
+
+## Multiple Linear Regression
+
+A linear model is generated using **lm()** function. Seven variables passes to the model and intercept defined as zero (for simplicity). As result, coefficients calculated as below table.
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+MLR <- lm(price~ .+0, data=diamonds)
+summary(MLR)  %>%
+  tidy()
+
+```
+
+
+
+## Multiple Linear Regression- prediction
+
+Prediction is done here base on below parameters:
+
+ carat= 0.9, colour= "J", clarity= "SI2", cut= "V", certification= "GIA", polish= "G", symmetry= "V"
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+
+explanatory_data= data.frame(carat= 0.9,
+                             colour= "J",
+                             clarity= "SI2",
+                             cut= "V",
+                             certification= "GIA",
+                             polish= "G",
+                             symmetry= "V")
+  
+
+predict(MLR, explanatory_data)
+```
+
+
