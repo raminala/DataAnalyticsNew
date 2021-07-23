@@ -267,4 +267,3 @@ In addition, Coefficients of above analysis are all small because the number of 
 
 Finally, some parameters that seemed to be determinant in univariate analysis are not important in fact. This is because of correlation between non determinant and determinant 
 variables.
-
