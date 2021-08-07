@@ -24,8 +24,7 @@ The first piece of information for making a decision is demographic information.
 
 The second piece of information is credit bureau data. Using this information, our model would detect more bad clients, while it has a lower error rate. Providing numerical value, You will detect 50% of bad clients and will lose 25% of good customers.
 
-Please note provided percents could later be modified by a limited modification in the model. For example, when you need to attract new customers, model could accept more customers with expense of accepting more bad clients and vise versa.
-
+Please note provided percents could later be modified by a limited modification in the model. For example, when you need to attract new customers, model could accept more customers with expense of accepting more bad clients and vice versa.
 
 ## Libraries
 
