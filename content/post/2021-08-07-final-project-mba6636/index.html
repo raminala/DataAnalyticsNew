@@ -23,98 +23,23 @@ tags:
 <p>First, a short explanation about the method we used to assess the reliability of our model. This model has been tested by a population of more than 20’000 applicants. Please note that his population is new to our model. In other words, our model has not any bias about them.</p>
 <p>The first piece of information for making a decision is demographic information. This is what you are collecting from a potential client when they are applying for a new credit card. Our model shows that by this information alone, you could detect 25% of those who would miss a payment. However, you will lose 15% of your good customers. In other words, we predict 25% of bad customers, but our model predicts 15% of your good clients as bad clients. Considering the huge financial burden of a bad client on the institute, losing those clients is sensible.</p>
 <p>The second piece of information is credit bureau data. Using this information, our model would detect more bad clients, while it has a lower error rate. Providing numerical value, You will detect 50% of bad clients and will lose 25% of good customers.</p>
-<p>Please note provided percents could later be modified by a limited modification in the model. For example, when you need to attract new customers, model could accept more customers with expense of accepting more bad clients and vise versa.</p>
+<p>Please note provided percents could later be modified by a limited modification in the model. For example, when you need to attract new customers, model could accept more customers with expense of accepting more bad clients and vice versa.</p>
 </div>
 <div id="libraries" class="section level2">
 <h2>Libraries</h2>
-<pre class="r"><code>library(tidymodels)</code></pre>
-<pre><code>## Registered S3 method overwritten by &#39;tune&#39;:
-##   method                   from   
-##   required_pkgs.model_spec parsnip</code></pre>
-<pre><code>## -- Attaching packages -------------------------------------- tidymodels 0.1.3 --</code></pre>
-<pre><code>## v broom        0.7.8      v recipes      0.1.16
-## v dials        0.0.9      v rsample      0.1.0 
-## v dplyr        1.0.6      v tibble       3.1.2 
-## v ggplot2      3.3.3      v tidyr        1.1.3 
-## v infer        0.5.4      v tune         0.1.5 
-## v modeldata    0.1.0      v workflows    0.2.2 
-## v parsnip      0.1.6      v workflowsets 0.0.2 
-## v purrr        0.3.4      v yardstick    0.0.8</code></pre>
-<pre><code>## -- Conflicts ----------------------------------------- tidymodels_conflicts() --
-## x purrr::discard() masks scales::discard()
-## x dplyr::filter()  masks stats::filter()
-## x dplyr::lag()     masks stats::lag()
-## x recipes::step()  masks stats::step()
-## * Use tidymodels_prefer() to resolve common conflicts.</code></pre>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
-<pre><code>## v readr   1.4.0     v forcats 0.5.1
-## v stringr 1.4.0</code></pre>
-<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-## x readr::col_factor() masks scales::col_factor()
-## x purrr::discard()    masks scales::discard()
-## x dplyr::filter()     masks stats::filter()
-## x stringr::fixed()    masks recipes::fixed()
-## x dplyr::lag()        masks stats::lag()
-## x readr::spec()       masks yardstick::spec()</code></pre>
-<pre class="r"><code>library(Information)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;Information&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:dials&#39;:
-## 
-##     penalty</code></pre>
-<pre class="r"><code>library(ROSE)</code></pre>
-<pre><code>## Loaded ROSE 0.0-4</code></pre>
-<pre class="r"><code>library(e1071)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;e1071&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:tune&#39;:
-## 
-##     tune</code></pre>
-<pre><code>## The following object is masked from &#39;package:rsample&#39;:
-## 
-##     permutations</code></pre>
-<pre class="r"><code>library(kernlab)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;kernlab&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     cross</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     alpha</code></pre>
-<pre><code>## The following object is masked from &#39;package:scales&#39;:
-## 
-##     alpha</code></pre>
-<pre class="r"><code>library(tidyverse)
-library(caret)</code></pre>
-<pre><code>## Loading required package: lattice</code></pre>
-<pre><code>## 
-## Attaching package: &#39;caret&#39;</code></pre>
-<pre><code>## The following objects are masked from &#39;package:yardstick&#39;:
-## 
-##     precision, recall, sensitivity, specificity</code></pre>
-<pre><code>## The following object is masked from &#39;package:purrr&#39;:
-## 
-##     lift</code></pre>
-<pre class="r"><code>library(ROCit)
-library(brglm)</code></pre>
-<pre><code>## Loading required package: profileModel</code></pre>
-<pre><code>## &#39;brglm&#39; will gradually be superseded by the &#39;brglm2&#39; R package (https://cran.r-project.org/package=brglm2), which provides utilities for mean and median bias reduction for all GLMs.
-##  Methods for the detection of separation and infinite estimates in binomial-response models are provided by the &#39;detectseparation&#39; R package (https://cran.r-project.org/package=detectseparation).</code></pre>
-<pre class="r"><code>library(yardstick)
+<pre class="r"><code>library(tidymodels)
+library(tidyverse)
+library(Information)
+library(ROSE)
+library(e1071)
+library(kernlab)
+library(tidyverse)
+library(caret)
+library(ROCit)
+library(brglm)
+library(yardstick)
 library(ggplot2)
 library(randomForest)</code></pre>
-<pre><code>## randomForest 4.6-14</code></pre>
-<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
-<pre><code>## 
-## Attaching package: &#39;randomForest&#39;</code></pre>
-<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
-## 
-##     margin</code></pre>
-<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
-## 
-##     combine</code></pre>
 </div>
 <div id="import-two-dataset-and-rename-variables" class="section level2">
 <h2>import two dataset and rename variables</h2>
