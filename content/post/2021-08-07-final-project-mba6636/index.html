@@ -1,0 +1,499 @@
+---
+title: 'Final Project: Business Analytics'
+author: ''
+date: '2021-08-01'
+slug: final-project-business-analytics
+categories:
+  - Basics
+  - ggplot2
+  - tidymodels
+  - Tidyverse
+tags:
+  - Classification
+  - data_visualization
+  - data_wrangling
+---
+
+<script src="{{< blogdown/postref >}}index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="assessing-the-financial-benefit-of-the-project" class="section level2">
+<h2>Assessing the financial benefit of the project</h2>
+<p>This project would benefit credit card providers by detecting customers who have the potential of missing their credit card payments. Although this is not an unfamiliar situation for these institutions, it affects their revenue every year by making them prosecute these clients. This project gives you two options two avoid these customers based on two categories of information you already have!</p>
+<p>First, a short explanation about the method we used to assess the reliability of our model. This model has been tested by a population of more than 20’000 applicants. Please note that his population is new to our model. In other words, our model has not any bias about them.</p>
+<p>The first piece of information for making a decision is demographic information. This is what you are collecting from a potential client when they are applying for a new credit card. Our model shows that by this information alone, you could detect 25% of those who would miss a payment. However, you will lose 15% of your good customers. In other words, we predict 25% of bad customers, but our model predicts 15% of your good clients as bad clients. Considering the huge financial burden of a bad client on the institute, losing those clients is sensible.</p>
+<p>The second piece of information is credit bureau data. Using this information, our model would detect more bad clients, while it has a lower error rate. Providing numerical value, You will detect 50% of bad clients and will lose 25% of good customers.</p>
+<p>Please note provided percents could later be modified by a limited modification in the model. For example, when you need to attract new customers, model could accept more customers with expense of accepting more bad clients and vise versa.</p>
+</div>
+<div id="libraries" class="section level2">
+<h2>Libraries</h2>
+<pre class="r"><code>library(tidymodels)</code></pre>
+<pre><code>## Registered S3 method overwritten by &#39;tune&#39;:
+##   method                   from   
+##   required_pkgs.model_spec parsnip</code></pre>
+<pre><code>## -- Attaching packages -------------------------------------- tidymodels 0.1.3 --</code></pre>
+<pre><code>## v broom        0.7.8      v recipes      0.1.16
+## v dials        0.0.9      v rsample      0.1.0 
+## v dplyr        1.0.6      v tibble       3.1.2 
+## v ggplot2      3.3.3      v tidyr        1.1.3 
+## v infer        0.5.4      v tune         0.1.5 
+## v modeldata    0.1.0      v workflows    0.2.2 
+## v parsnip      0.1.6      v workflowsets 0.0.2 
+## v purrr        0.3.4      v yardstick    0.0.8</code></pre>
+<pre><code>## -- Conflicts ----------------------------------------- tidymodels_conflicts() --
+## x purrr::discard() masks scales::discard()
+## x dplyr::filter()  masks stats::filter()
+## x dplyr::lag()     masks stats::lag()
+## x recipes::step()  masks stats::step()
+## * Use tidymodels_prefer() to resolve common conflicts.</code></pre>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</code></pre>
+<pre><code>## v readr   1.4.0     v forcats 0.5.1
+## v stringr 1.4.0</code></pre>
+<pre><code>## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x readr::col_factor() masks scales::col_factor()
+## x purrr::discard()    masks scales::discard()
+## x dplyr::filter()     masks stats::filter()
+## x stringr::fixed()    masks recipes::fixed()
+## x dplyr::lag()        masks stats::lag()
+## x readr::spec()       masks yardstick::spec()</code></pre>
+<pre class="r"><code>library(Information)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;Information&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:dials&#39;:
+## 
+##     penalty</code></pre>
+<pre class="r"><code>library(ROSE)</code></pre>
+<pre><code>## Loaded ROSE 0.0-4</code></pre>
+<pre class="r"><code>library(e1071)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;e1071&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:tune&#39;:
+## 
+##     tune</code></pre>
+<pre><code>## The following object is masked from &#39;package:rsample&#39;:
+## 
+##     permutations</code></pre>
+<pre class="r"><code>library(kernlab)</code></pre>
+<pre><code>## 
+## Attaching package: &#39;kernlab&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     cross</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     alpha</code></pre>
+<pre><code>## The following object is masked from &#39;package:scales&#39;:
+## 
+##     alpha</code></pre>
+<pre class="r"><code>library(tidyverse)
+library(caret)</code></pre>
+<pre><code>## Loading required package: lattice</code></pre>
+<pre><code>## 
+## Attaching package: &#39;caret&#39;</code></pre>
+<pre><code>## The following objects are masked from &#39;package:yardstick&#39;:
+## 
+##     precision, recall, sensitivity, specificity</code></pre>
+<pre><code>## The following object is masked from &#39;package:purrr&#39;:
+## 
+##     lift</code></pre>
+<pre class="r"><code>library(ROCit)
+library(brglm)</code></pre>
+<pre><code>## Loading required package: profileModel</code></pre>
+<pre><code>## &#39;brglm&#39; will gradually be superseded by the &#39;brglm2&#39; R package (https://cran.r-project.org/package=brglm2), which provides utilities for mean and median bias reduction for all GLMs.
+##  Methods for the detection of separation and infinite estimates in binomial-response models are provided by the &#39;detectseparation&#39; R package (https://cran.r-project.org/package=detectseparation).</code></pre>
+<pre class="r"><code>library(yardstick)
+library(ggplot2)
+library(randomForest)</code></pre>
+<pre><code>## randomForest 4.6-14</code></pre>
+<pre><code>## Type rfNews() to see new features/changes/bug fixes.</code></pre>
+<pre><code>## 
+## Attaching package: &#39;randomForest&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;package:ggplot2&#39;:
+## 
+##     margin</code></pre>
+<pre><code>## The following object is masked from &#39;package:dplyr&#39;:
+## 
+##     combine</code></pre>
+</div>
+<div id="import-two-dataset-and-rename-variables" class="section level2">
+<h2>import two dataset and rename variables</h2>
+<p>For the convenience of data analysis, we have renamed the variables from the original dataset, after importing the there are as below:</p>
+<pre><code>##  [1] &quot;id&quot;                  &quot;dpd_90_6m&quot;           &quot;dpd_60_6m&quot;          
+##  [4] &quot;dpd_30_6m&quot;           &quot;dpd_90_12m&quot;          &quot;dpd_60_12m&quot;         
+##  [7] &quot;dpd_30_12m&quot;          &quot;utilization_12m&quot;     &quot;trades_6m&quot;          
+## [10] &quot;trades_opened_12m&quot;   &quot;pl_trades_6m&quot;        &quot;pl_trades_12m&quot;      
+## [13] &quot;inquiries_6m&quot;        &quot;inquiries_12m&quot;       &quot;home_loan&quot;          
+## [16] &quot;outstanding_balance&quot; &quot;total_no_of_trades&quot;  &quot;auto_loan&quot;          
+## [19] &quot;performance_tag&quot;</code></pre>
+<pre><code>##  [1] &quot;id&quot;               &quot;age&quot;              &quot;gender&quot;           &quot;marital&quot;         
+##  [5] &quot;dependents&quot;       &quot;income&quot;           &quot;education&quot;        &quot;profession&quot;      
+##  [9] &quot;residence&quot;        &quot;residence_months&quot; &quot;company_months&quot;   &quot;performance_tag&quot;</code></pre>
+</div>
+<div id="bind-two-dataset-reordering-columns-outcome-master-dataset" class="section level2">
+<h2>bind two dataset, reordering columns (outcome: master dataset)</h2>
+<p>Here two datasets of demographic and credit bureau data are combined. besides, We ordered the column names and saved the dataset named as master here.</p>
+</div>
+<div id="weight-of-evidence-woe-and-equivalently-information-value-analysis" class="section level2">
+<h2>weight of evidence (WOE) (and, equivalently, information value analysis)</h2>
+<p>As we know, weight of evidence and information value helps to explore data and screen variables and hence it will be easier for us to use those values as a benchmark to screen variables in relation to the dependent variable.Before calculating those values we need to prepare our data first.</p>
+<p><strong><em>Data Preparation</em></strong></p>
+<p>Fist of all we have omitted the missing values from the dataset as there is a lots of ‘na’ values exists and then we have removed the variable with customer ID.</p>
+<p><strong><em>Compute Information Value and WOE</em></strong></p>
+<p>As we know, for calculating WOE and IV value there several steps involved. In our data set there are both continuous and categorical variables, so first we need to split data into 10 parts and then calculate the number of events and non-events in each group (bin) and then the % of events and % of non-events in each group.Finally by taking natural log of division of % of non-events and % of events IV value is Calculated using the relevant functions.</p>
+<p><strong><em>Plot variables interms of WOE and IV values</em></strong></p>
+<p>To visualize all the variables in terms of WOE and IV values here we plotted the variables below:</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-2.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-3.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-4.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-6-5.png" width="672" /></p>
+<p><strong><em>Replace variables’ values by the corresponding WOE value</em></strong></p>
+</div>
+<div id="univariate-analysis-of-master-data" class="section level2">
+<h2>Univariate Analysis of Master data</h2>
+<p>According to the IV analysis results of the important variable we have selected the most important variables from the master data set for further analysis. As we know, the IV value 0.3 to 0.5, then the predictor has a strong relationship to the Goods or Bad odds ratio.For exploring the data set some basic univariate Analysis on Master data is done below first. This analysis will answer the questions below:
+1.What patterns No of trades in last 12 months follows?
+2. What distribution inquiries 12 months have on the data?
+3. Does outstanding balance have any affect on performance tag?
+4. How are the summary of Number of pl Trades Opened and Number Trades Opened in last 12 months?</p>
+<p><strong><em>Summary of inquiries_12m</em></strong></p>
+<pre><code>## # A tibble: 1 x 3
+##   variable      mean_inquiries_12m st_dev_cty
+##   &lt;chr&gt;                      &lt;dbl&gt;      &lt;dbl&gt;
+## 1 inquiries_12m               3.54       3.58</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##   variable       q0.2  q0.4  q0.6  q0.8
+##   &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 inquiries_12m     0     2     4     6</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>The average number of inquiries in last 12 months excluding home and auto loans is 3.5.Most of the cases the number of inquiries is zero and the maximum number of inquiries has made is almost 20.</p>
+<p><strong><em>outstanding_balance</em></strong></p>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##       0  211522  774985 1249092 2920753 5218801</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>The mean value of outstanding_balance is 1249092. And we see that the outstanding_balance are divided in to two clusters, bad performance is relatively higher for lower outstanding_balance than higher outstanding balance. We see that there are some effects of outstanding balance on performance tag.</p>
+<p><strong><em>pl_trades_12m</em></strong></p>
+<pre><code>## # A tibble: 1 x 3
+##   variable      mean_pl_trades_12m st_dev_pl_trades_12m
+##   &lt;chr&gt;                      &lt;dbl&gt;                &lt;dbl&gt;
+## 1 pl_trades_12m               2.40                 2.42</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##   variable       q0.2  q0.4  q0.6  q0.8
+##   &lt;chr&gt;         &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 pl_trades_12m     0     1     3     5</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>The highest number of pl Trades Opened in last 12 months is 5, the average number of pl trades opened is 2.4 approximately.The highest frequency has occurred for zero or no trades in last 12 months.</p>
+<p><strong><em>trades_opened_12m</em></strong></p>
+<pre><code>## # A tibble: 1 x 3
+##   variable          mean_trades_opened_12m st_dev_trades_opened_12m
+##   &lt;chr&gt;                              &lt;dbl&gt;                    &lt;dbl&gt;
+## 1 trades_opened_12m                   5.83                     5.06</code></pre>
+<pre><code>## # A tibble: 1 x 5
+##   variable           q0.2  q0.4  q0.6  q0.8
+##   &lt;chr&gt;             &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 trades_opened_12m     1     3     6    10</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>The average number of trades opened is 5.827 in last 12 months.The highest frequency has occurred for the number of trades is three in last 12 months.</p>
+</div>
+<div id="univariate-analysis-on-demographicapplication-data" class="section level2">
+<h2>Univariate Analysis on Demographic/application data</h2>
+<p>The demographic data there are 10 variables including the response variable, as we have seen earlier. According to the IV values we have selected some important variables(with IV values 0.3 to 0.5).From the exploratory analysis of demographic data following questions we will get the answer of following questions:
+1.In which age group the maximum defaulters lies?
+2.Does Marital status and Gender has any affect on the defaulter’s behaviour?
+3.Is No of dependents a significant contributor on defaulters?
+4.Are type of Residence, Education and Profession a significant contributors?
+5.Does residents month seems significant factor in the defaulting behaviour?</p>
+<p>Now for further analysis let us explore this data set more as follows according to the name listed in data set:</p>
+<p><strong><em>age</em></strong></p>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##   -3.00   37.00   45.00   44.94   53.00   65.00</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Maximum age of a customer is 65 where the median or middle age appeared is 45.The highest number of customer lies between age 40 to 55. From the summary statistics we also see that there is a customer with age -3.</p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>From the age distribution by performance we see that vary few customer are with performance tag 1 or bad customer. We can see that maximum defaulters in the age group 30-60.</p>
+<p><strong><em>GENDER</em></strong></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-14-2.png" width="672" /></p>
+<p>The count of Male customer is more than double of female customer.So, thus the case of bad male customer proportion is also higher than that of female with performance tag. Thus, we can say that gender of a customer also has some effects on their performance tag to be default or not.</p>
+<p><strong><em>residence_months</em></strong></p>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    6.00    6.00   11.00   34.56   60.00  126.00</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>This variable residence_months represents the number of months in current residence of customers, here we see that the default customer lives in the same residence for less than 10 months. The min number of months is 6 and maximum months in current resident is 126.</p>
+<p><strong><em>residence</em></strong></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-16-2.png" width="672" /></p>
+<p>From the types of residence of customers distribution by performance tag, we see that the default customer residence types is rental as the number of customer with rental residence occurs most frequently.</p>
+<p><strong><em>profession</em></strong></p>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-1.png" width="672" /><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-17-2.png" width="672" /></p>
+<p>In case of profession we also see that which profession highest frequency(SAL) has more performance tag than other professions.</p>
+<p><strong><em>Building model</em></strong></p>
+<p>As we know, the objective of model building is to know the relationship between the response variable and the independent variables.</p>
+<p><strong><em>Demographic data model</em></strong></p>
+<p>Here, from the Demographic data model, we will get the answer of the question, what relationship residence_months, income, age, dependents, marital status, gender, company_months, education, residence or profession have on the customers performance.That is, to decide whether the customer will be a defaulter or not?
+Building different models like logistic regression with demographic and woe data will answer the question which factors will minimize the risk of probability of a customer being defaulter.In other words, which factors the bank manager need to focus more significantly.</p>
+<p><strong><em>Summary of response variable</em></strong></p>
+<pre><code>## 
+##     0     1 
+## 66922  2948</code></pre>
+<pre><code>## 
+##          0          1 
+## 0.95780736 0.04219264</code></pre>
+<p>Here, we see that 2948 customer is marked as 1 or default for performance and 66922 customer is not default where as the proportion is 0.0422 and 0.9578 respectively.</p>
+<p><strong><em>Logistic regression model building</em></strong></p>
+<p>Logistic regression works for a data that contain continuous and/or categorical predictor variables. One advantage of logistic regression is that it computes a prediction probability score of an event.And, for predicting if a customer will default on a loan or not in Banking sector, binary classification or logistic regression is an effective method. Hence, it helps to identify and minimize the risk.</p>
+<p>For fitting the logistic regression model we first spitted the data into two groups of train and test data, then using all the variables except customer ID from demographic dataset the logistic regression model has built as below:</p>
+<pre><code>## 
+## Call:
+## glm(formula = performance_tag ~ age + gender + marital + dependents + 
+##     income + education + profession + residence + residence_months + 
+##     company_months, family = &quot;binomial&quot;, data = demogs_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.4648  -0.3089  -0.2854  -0.2633   2.7668  
+## 
+## Coefficients:
+##                                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                  -2.5928050  0.1995067 -12.996  &lt; 2e-16 ***
+## age                           0.0024183  0.0024380   0.992   0.3212    
+## genderM                      -0.0714856  0.0525141  -1.361   0.1734    
+## maritalSingle                 0.0266232  0.0657562   0.405   0.6856    
+## dependents                    0.0043083  0.0166526   0.259   0.7959    
+## income                       -0.0109071  0.0015132  -7.208 5.68e-13 ***
+## educationMasters              0.0148485  0.0593361   0.250   0.8024    
+## educationOthers               0.5310304  0.4265454   1.245   0.2131    
+## educationPhd                 -0.0558151  0.1019379  -0.548   0.5840    
+## educationProfessional        -0.0803775  0.0599702  -1.340   0.1802    
+## professionSE                  0.0915491  0.0581324   1.575   0.1153    
+## professionSE_PROF            -0.0613713  0.0575762  -1.066   0.2865    
+## residenceLiving with Parents -0.2312745  0.2022961  -1.143   0.2529    
+## residenceOthers              -0.5930356  0.5259025  -1.128   0.2595    
+## residenceOwned               -0.1635589  0.1463236  -1.118   0.2637    
+## residenceRented              -0.2369929  0.1401867  -1.691   0.0909 .  
+## residence_months              0.0015157  0.0006072   2.496   0.0125 *  
+## company_months               -0.0045721  0.0011350  -4.028 5.62e-05 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 16828  on 48802  degrees of freedom
+## Residual deviance: 16735  on 48785  degrees of freedom
+##   (106 observations deleted due to missingness)
+## AIC: 16771
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<p>The logistic regression model is now built.Comparing models in terms of null and residual deviance as well as AIC, we can understand which model gives the best result.</p>
+<pre><code>## [1] &quot;accuracy is 81.4179175829429 %&quot;</code></pre>
+<pre><code>##           Truth
+## Prediction     0     1
+##          0 16802   693
+##          1  3194   229</code></pre>
+<pre><code>##  performance_tag .pred_factor
+##  0:19996         0:17495     
+##  1:  922         1: 3423</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-20-1.png" width="672" />
+Here, we can see that the model accuracy of logistic regression classifier on demographic test set is 82.42% (approximately). From the confusion matrix we find that, true positive value is 229 where the true negative is 16802.False Positive or Type 1 Error here is 3194 and False Negative or Type 2 Error is 693.</p>
+<p><strong><em>Bias Reduction in Generalized Linear Models (brglm)</em></strong></p>
+<pre><code>## [1] &quot;accuracy is 81.0641552729707 %&quot;</code></pre>
+<pre><code>##           Truth
+## Prediction     0     1
+##          0 16728   693
+##          1  3268   229</code></pre>
+<p><strong><em>Logistic Model with WOE Demographic Data</em></strong></p>
+<p>To compare with the logistic regression model with Demographic data, now we will build the same model with WOE Demographic data as below following the same procedure that we have done in case of demographic data:</p>
+<pre><code>## 
+## Call:
+## glm(formula = performance_tag ~ age + gender + marital + dependents + 
+##     income + education + profession + residence + residence_months + 
+##     company_months, family = &quot;binomial&quot;, data = woe_demogs_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.5501  -0.3186  -0.2731  -0.2409   2.8619  
+## 
+## Coefficients:
+##                         Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)            -3.165856   0.060618 -52.226  &lt; 2e-16 ***
+## age                     0.991472   0.377267   2.628  0.00859 ** 
+## gender0.028254108       0.070642   0.052863   1.336  0.18145    
+## marital0.023087052     -0.004888   0.063687  -0.077  0.93882    
+## dependents              0.674405   0.420363   1.604  0.10864    
+## income                  0.801060   0.113551   7.055 1.73e-12 ***
+## education-0.0085173636  0.023501   0.096597   0.243  0.80778    
+## education-0.0155472553  0.007458   0.054914   0.136  0.89197    
+## education0.0203476113  -0.013140   0.060400  -0.218  0.82778    
+## education0.5394285801   0.520995   0.427103   1.220  0.22253    
+## profession-0.02719623  -0.047457   0.056723  -0.837  0.40280    
+## profession0.09099464    0.113980   0.067582   1.687  0.09169 .  
+## residence-0.003167738   0.047355   0.056547   0.837  0.40234    
+## residence-0.514160027  -0.382238   0.509079  -0.751  0.45275    
+## residence0.066903551    0.159246   0.149210   1.067  0.28585    
+## residence0.074093102    0.048867   0.140468   0.348  0.72793    
+## residence_months        0.971312   0.079265  12.254  &lt; 2e-16 ***
+## company_months          0.877358   0.155360   5.647 1.63e-08 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 16909  on 48801  degrees of freedom
+## Residual deviance: 16621  on 48784  degrees of freedom
+##   (111 observations deleted due to missingness)
+## AIC: 16657
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<pre><code>## [1] &quot;accuracy is 73.1087216248507 %&quot;</code></pre>
+<pre><code>##           Truth
+## Prediction     0     1
+##          0 14959   571
+##          1  5056   339</code></pre>
+<pre><code>##  performance_tag .pred_factor
+##  0:20015         0:15530     
+##  1:  910         1: 5395</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>Here we see that the model accuracy of logistic regression classifier on test set is 73.14% which less than the demographic data model accuracy (82.42%).
+As, we know,the smaller the AIC, the better the model fits the data.Also, in comparison of null and residual deviance, this model gives best result.In case of woe demographic data the AIC for logistic regression is 16645, where AIC for demographic data model is 16771, which is higher.
+From the confusion matrix in case of logistic regression with demographic data woe we find that, true positive value is 340 where the true negative is 14965.False Positive or Type 1 Error here is 5050 and False Negative or Type 2 Error is 570.</p>
+<p><strong><em>Cross Validation for demographic data</em></strong></p>
+<p>For cross validation on demographic data we will apply both the Leave-One-Out and k-Fold Cross-Validation to to make predictions on all of our data.As our dataset is too large to run the CV method, we applied this with 1,000 data from of the dataset.</p>
+<p><strong><em>Leave-One-Out Cross-Validation(loocv)</em></strong></p>
+<p>For this loocv method we have used boot and ISLR library and then after preparing the data set the method is applied step by step as follows:</p>
+<pre><code>## [1] 0.002014087 0.002015072</code></pre>
+<pre><code>## [1] 0.001996129 0.002017461 0.002017460 0.002121597 0.002000000</code></pre>
+<p><strong><em>k-Fold Cross-Validation</em></strong></p>
+<pre><code>##  [1] 0.001996666 0.002018516 0.002021749 0.002103509 0.002000000 0.002132168
+##  [7] 0.002000000 0.002101601 0.002130196 0.002000000</code></pre>
+<p>Here,from our cross-validation we see that the test error is approximately 0.002 for the estimates used in the model and the numbers are almost identical for the errors. So, we can say that,by using the cv the error can be minimize in this case compared to the logistic regression model. As we know, this means that our algorithm (and our data) is consistent and we can be confident that by training it on all the data set and deploy it in production will lead to similar performance.</p>
+<p><strong><em>Random Forest with demographic data</em></strong></p>
+<p>We know,random forest is a way of averaging multiple deep decision trees, trained on different parts of the same training set, to decrease over-fitting problem of individual decision tree.For doing that we have prepared and spitted data set with 70:30 proportions following steps as below.</p>
+<p>Our random forest method gives the accuracy of 94.21% which is higher than the previous models accuracy with demographic data. From the confusion matrix we also see that, the prediction on test data also gives the better estimate.
+<strong><em>Master data model</em></strong></p>
+<p><strong><em>logistic regression model</em></strong></p>
+<p>Now,we will build logistic regression model with our combined dataset below. For doing that we will prepare and split master data as we have done earlier for fitting this model with other dataset. Here, we will fit the model also with all the relevant variables.</p>
+<pre><code>## 
+## Call:
+## glm(formula = performance_tag ~ ., family = &quot;binomial&quot;, data = master_train)
+## 
+## Deviance Residuals: 
+##     Min       1Q   Median       3Q      Max  
+## -0.7728  -0.3311  -0.2560  -0.2071   2.9908  
+## 
+## Coefficients:
+##                                Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept)                  -3.590e+00  2.174e-01 -16.514  &lt; 2e-16 ***
+## id                            3.536e-11  7.942e-11   0.445  0.65615    
+## age                           1.247e-03  2.478e-03   0.503  0.61467    
+## genderM                       9.787e-03  5.416e-02   0.181  0.85660    
+## maritalSingle                -3.810e-03  6.633e-02  -0.057  0.95420    
+## dependents                   -6.758e-04  1.690e-02  -0.040  0.96810    
+## income                       -1.900e-03  1.580e-03  -1.202  0.22930    
+## educationMasters              4.381e-02  6.044e-02   0.725  0.46847    
+## educationOthers               3.581e-01  5.259e-01   0.681  0.49593    
+## educationPhd                 -7.538e-04  1.024e-01  -0.007  0.99412    
+## educationProfessional        -1.445e-03  6.032e-02  -0.024  0.98089    
+## professionSE                  1.603e-02  5.949e-02   0.269  0.78756    
+## professionSE_PROF             1.845e-02  5.676e-02   0.325  0.74514    
+## residenceLiving with Parents -1.603e-01  2.043e-01  -0.785  0.43263    
+## residenceOthers              -7.527e-01  6.050e-01  -1.244  0.21343    
+## residenceOwned               -1.566e-01  1.523e-01  -1.028  0.30408    
+## residenceRented              -1.955e-01  1.462e-01  -1.338  0.18094    
+## residence_months             -1.465e-03  6.840e-04  -2.142  0.03216 *  
+## company_months               -2.178e-03  1.145e-03  -1.903  0.05707 .  
+## dpd_90_6m                    -8.517e-02  9.343e-02  -0.912  0.36198    
+## dpd_60_6m                    -1.785e-01  1.011e-01  -1.765  0.07755 .  
+## dpd_30_6m                     1.478e-01  8.482e-02   1.742  0.08145 .  
+## dpd_90_12m                    1.588e-01  5.645e-02   2.813  0.00490 ** 
+## dpd_60_12m                    3.004e-02  5.465e-02   0.550  0.58250    
+## dpd_30_12m                    9.382e-02  5.440e-02   1.725  0.08460 .  
+## utilization_12m               7.486e-03  8.574e-04   8.731  &lt; 2e-16 ***
+## trades_6m                    -1.120e-02  3.759e-02  -0.298  0.76572    
+## trades_opened_12m            -3.613e-03  2.818e-02  -0.128  0.89800    
+## pl_trades_6m                  3.214e-02  4.341e-02   0.740  0.45902    
+## pl_trades_12m                 1.606e-01  7.396e-02   2.172  0.02988 *  
+## inquiries_6m                 -6.596e-02  2.531e-02  -2.605  0.00917 ** 
+## inquiries_12m                 7.713e-02  1.596e-02   4.834 1.34e-06 ***
+## home_loan                     9.666e-01  1.012e+00   0.956  0.33926    
+## outstanding_balance          -3.628e-07  3.535e-07  -1.026  0.30473    
+## total_no_of_trades           -1.456e-02  1.145e-02  -1.272  0.20340    
+## auto_loan                     3.191e-02  1.150e-01   0.278  0.78138    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 16799  on 48099  degrees of freedom
+## Residual deviance: 16127  on 48064  degrees of freedom
+##   (813 observations deleted due to missingness)
+## AIC: 16199
+## 
+## Number of Fisher Scoring iterations: 6</code></pre>
+<pre><code>## [1] &quot;accuracy is 69.589905362776 %&quot;</code></pre>
+<pre><code>##           Truth
+## Prediction     0     1
+##          0 13874   405
+##          1  5861   465</code></pre>
+<pre><code>##  performance_tag .pred_factor
+##  0:19996         0:17495     
+##  1:  922         1: 3423</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-37-1.png" width="672" />
+Here we see that the model accuracy of logistic regression classifier on test set is 69.59% which less than the demographic data model accuracy (82.42%) and woe data model(73.14%).
+In this case of combined data the AIC for logistic regression is 16199, where AIC for demographic data model is 16771 and foe woe demographic data is 16645, both of which are higher than this.
+From the confusion matrix in case of logistic regression with demographic data woe we find that, true positive value is 465 where the true negative is 13874.False Positive or Type 1 Error here is 5861 and False Negative or Type 2 Error is 465.</p>
+<p><strong><em>building a new dataset with determinant variables</em></strong></p>
+<p><strong><em>Split the data</em></strong></p>
+<pre><code>## 
+##          0          1 
+## 0.95863187 0.04136813</code></pre>
+<p><strong><em>Support Vector Machines</em></strong></p>
+<p>Support Vector Machine is a linear model for classification and regression problems. It can solve linear and non-linear problems and work well for many practical problems. The idea of SVM is creating a line or a hyperplane which separates the data into classes.</p>
+<p>SVM is an algorithm that takes the data as an input and outputs a line that separates those classes if possible.</p>
+<p>Advantages of SVM includes: it works relatively well when there is a clear margin of separation between classes. SVM is more effective in high dimensional spaces. SVM is relatively memory efficient.</p>
+<p>On downside, SVM algorithm is not suitable for large data sets. SVM does not perform very well when the data set has more noise i.e. target classes are overlapping. In cases where the number of features for each data point exceeds the number of training data samples, the SVM will underperform.</p>
+<p>Here, we are using SVM to build a model for WOE dataset.</p>
+<p><strong><em>SVM linear classifier</em></strong></p>
+<p>*** Make predictions on the test data***</p>
+<pre><code>## [1] 0 0 0 0 0 0
+## Levels: 0 1</code></pre>
+<p><strong><em>binding predictions and truth </em></strong></p>
+<pre><code>## # A tibble: 13 x 3
+##    .metric              .estimator .estimate
+##    &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+##  1 accuracy             binary         0.957
+##  2 kap                  binary         0    
+##  3 sens                 binary         1    
+##  4 spec                 binary         0    
+##  5 ppv                  binary         0.957
+##  6 npv                  binary       NaN    
+##  7 mcc                  binary        NA    
+##  8 j_index              binary         0    
+##  9 bal_accuracy         binary         0.5  
+## 10 detection_prevalence binary         1    
+## 11 precision            binary         0.957
+## 12 recall               binary         1    
+## 13 f_meas               binary         0.978</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-42-1.png" width="672" /></p>
+<p><strong><em>Undersampling</em></strong></p>
+<pre><code>## # A tibble: 2 x 2
+## # Groups:   performance_tag [2]
+##   performance_tag     n
+##             &lt;dbl&gt; &lt;int&gt;
+## 1               0  2991
+## 2               1  1709</code></pre>
+<p><strong><em>SVM linear classifier</em></strong></p>
+<pre><code>## [1] 0 0 0 0 0 0
+## Levels: 0 1</code></pre>
+<pre><code>## # A tibble: 13 x 3
+##    .metric              .estimator .estimate
+##    &lt;chr&gt;                &lt;chr&gt;          &lt;dbl&gt;
+##  1 accuracy             binary        0.715 
+##  2 kap                  binary        0.0625
+##  3 sens                 binary        0.725 
+##  4 spec                 binary        0.504 
+##  5 ppv                  binary        0.970 
+##  6 npv                  binary        0.0766
+##  7 mcc                  binary        0.103 
+##  8 j_index              binary        0.229 
+##  9 bal_accuracy         binary        0.615 
+## 10 detection_prevalence binary        0.715 
+## 11 precision            binary        0.970 
+## 12 recall               binary        0.725 
+## 13 f_meas               binary        0.830</code></pre>
+<p><img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+</div>
